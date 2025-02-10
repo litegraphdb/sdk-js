@@ -1,8 +1,8 @@
-# LiteGraph SDK Documentation
+<img src="assets/favicon.png" height="48">
 
-## Overview
+# JavaScript SDK for LiteGraph
 
-The `LiteGraphSdk` class provides various methods to interact with a graph database through an HTTP API. It allows creating, reading, updating, and deleting graphs, nodes, and edges, as well as performing searches and traversals within the graph.
+Lightweight graph database with relational and vector support built using Sqlite, designed to power knowledge and artificial intelligence persistence and retrieval.
 
 ## Development Environment setup
 
