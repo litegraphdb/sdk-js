@@ -1,6 +1,6 @@
 import superagent from 'superagent';
 import { SeverityEnum } from '../enums/SeverityEnum';
-import GenericExceptionHandlers from '../exception/GenericExcerptionHandelrs';
+import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import Logger from '../utils/Logger';
 import Serializer from '../utils/Serializer';
 import ApiErrorResponse from '../models/ApiErrorResponse';
@@ -31,10 +31,6 @@ export default class SdkBase {
     this._endpoint = endpoint.endsWith('/') ? endpoint : endpoint + '/';
     this._timeoutMs = 300000;
     this.logger = Logger.log; // Callback for logging
-
-    this.defaultHeaders = {
-      Authorization: `Bearer ${this._accessKey}`,
-    };
   }
 
   /**
@@ -398,14 +394,18 @@ export default class SdkBase {
    * @param {string} url - The URL of the objects.
    * @param {Class} model - Modal to deserialize on
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @param {Object} [headers] - Additional headers.
    * @return {Promise<Array>} Resolves with the list of retrieved objects.
    * @throws {Error} Rejects if the URL is invalid or if the request fails.
    */
-  getMany(url, model, cancellationToken) {
+  getMany(url, model, cancellationToken, headers) {
     return new Promise((resolve, reject) => {
       if (!url) return reject(new Error('URL cannot be null or empty.'));
 
-      const request = superagent.get(url).set(this.defaultHeaders).timeout({ response: this._timeoutMs });
+      const request = superagent
+        .get(url)
+        .set({ ...this.defaultHeaders, ...(headers || {}) })
+        .timeout({ response: this._timeoutMs });
       // If a cancelToken is provided, attach the abort method
       if (cancellationToken) {
         cancellationToken.abort = () => {

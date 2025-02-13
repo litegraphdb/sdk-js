@@ -2,10 +2,10 @@ var { LiteGraphSdk } = require('lite-graph');
 
 var api = new LiteGraphSdk(
   'http://ec2-18-217-169-161.us-east-2.compute.amazonaws.com:8701/',
-  '00000000-0000-0000-0000-000000000000',
+  '5317813d-99b2-4236-8c24-9827f79338c7',
   'litegraphadmin'
 );
-var guid = '01010101-0101-0101-0101-010101010101'; // {String}
+var guid = '00900db5-c9b7-4631-b250-c9e635a9036e'; // {String}
 var nodeGuid = '0fa34090-46d5-4d6a-99dd-65a53f74f3c4'; // {String}
 var toNodeGuid = '01010101-0101-0101-0101-010101010101';
 var fromNodeGuid = '01010101-0101-0101-0101-010101010101';
@@ -149,6 +149,38 @@ const createNode = async () => {
   }
 };
 
+const multipleNodes = async () => {
+  const newMultipleNodes = [
+    {
+      Name: 'Active Directory',
+      Labels: ['test'],
+      Tags: {
+        Type: 'ActiveDirectory',
+      },
+      Data: {
+        Name: 'Active Directory',
+      },
+    },
+    {
+      Name: 'Website',
+      Labels: ['test'],
+      Tags: {
+        Type: 'Website',
+      },
+      Data: {
+        Name: 'Website',
+      },
+    },
+  ];
+
+  try {
+    const createdNode = await api.createNodes(guid, newMultipleNodes);
+    console.log(createdNode, 'Node created successfully');
+  } catch (err) {
+    console.log('err: ', err);
+    console.log('Error creating node:', JSON.stringify(err));
+  }
+};
 const updateNode = async () => {
   // Node object to update
   const node = {
@@ -190,7 +222,6 @@ const searchNodes = async () => {
   // Graph object to update
 
   const searchRequest = {
-    GraphGUID: '01010101-0101-0101-0101-010101010101',
     Ordering: 'CreatedDescending',
     Expr: {
       Left: 'Hello',
@@ -200,7 +231,7 @@ const searchNodes = async () => {
   };
 
   try {
-    const response = await api.searchNodes(searchRequest);
+    const response = await api.searchNodes('00900db5-c9b7-4631-b250-c9e635a9036e', searchRequest);
     console.log(response, 'Graph searched successfully');
   } catch (err) {
     console.log('Error searching graph:', JSON.stringify(err), err);
@@ -301,7 +332,7 @@ const searchEdges = async () => {
   };
 
   try {
-    const response = await api.searchEdges(searchRequest);
+    const response = await api.searchEdges('01010101-0101-0101-0101-010101010101', searchRequest);
     console.log(response, 'Graph searched successfully');
   } catch (err) {
     console.log('Error searching graph:', JSON.stringify(err), err);
@@ -763,7 +794,7 @@ const useSdk = async () => {
   // await updateNode();
   // await deleteNodeById();
   // await checkIfNodeExistsById();
-  // await searchNodes();
+  await searchNodes();
   //region Edge calls
   // await getEdgeById();
   // await getEdgeList();
@@ -812,7 +843,7 @@ const useSdk = async () => {
   // await updateLabel();
   // await deleteLabel();
   //region Tag calls
-  await readAllTags();
+  //await readAllTags();
   // await readTag();
   // await createTag();
   // await existsTag();
@@ -825,5 +856,6 @@ const useSdk = async () => {
   // await existsVector();
   // await updateVector();
   // await deleteVector();
+  //await multipleNodes();
 };
 useSdk();

@@ -12,6 +12,10 @@ export default class Edge {
      * @param {number} [edge.Cost=0] - Cost associated with the edge (default is 0).
      * @param {Date} [edge.CreatedUtc] - Creation timestamp in UTC (defaults to current UTC time).
      * @param {Object} [edge.Data] - Additional object data associated with the edge (default is null).
+     * @param {Date} [edge.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
+     * @param {Array} [edge.Labels] - Array of labels associated with the edge.
+     * @param {Object} [edge.Tags] - Key-value pairs of tags associated with the edge.
+     * @param {Array} [edge.Vectors] - Array of vector embeddings associated with the edge.
      */
     constructor(edge?: {
         GUID?: string;
@@ -22,13 +26,21 @@ export default class Edge {
         Cost?: number;
         CreatedUtc?: Date;
         Data?: any;
+        LastUpdateUtc?: Date;
+        Labels?: any[];
+        Tags?: any;
+        Vectors?: any[];
     });
     GUID: any;
     GraphGUID: any;
-    Name: string;
-    From: any;
-    To: any;
-    Cost: number;
-    CreatedUtc: string | Date;
-    Data: any;
+    name: string;
+    from: any;
+    to: any;
+    cost: number;
+    createdUtc: string | Date;
+    data: any;
+    lastUpdateUtc: string | Date;
+    labels: any[];
+    tags: any;
+    vectors: any[];
 }

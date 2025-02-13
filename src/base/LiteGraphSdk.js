@@ -1,6 +1,6 @@
 import Graph from '../models/Graph';
 import SdkBase from './SdkBase';
-import GenericExceptionHandlers from '../exception/GenericExcerptionHandelrs';
+import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import Node from '../models/Node';
 import Edge from '../models/Edge';
 import SearchResult from '../models/SearchResult';
@@ -14,6 +14,7 @@ import LabelMetadata from '../models/LabelMetadata';
 import TenantMetaData from '../models/TenantMetaData';
 import { VectorMetadata } from '../models/VectorMetadata';
 import Token from '../models/Token';
+import { VectorSearchResult } from '../models/VectorSearchResult';
 
 /**
  * LiteGraph SDK class.
@@ -236,14 +237,15 @@ export default class LiteGraphSdk extends SdkBase {
    * @param {string} searchReq.GraphGUID - Globally unique identifier for the graph (defaults to an empty GUID).
    * @param {string} searchReq.Ordering - Ordering of the search results (default is CreatedDescending).
    * @param {Object} searchReq.Expr - Expression used for the search (default is null).
+   * @param {string} graphGuid - The GUID of the graph.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<SearchResult>} - The search result.
    */
-  async searchNodes(searchReq, cancellationToken) {
+  async searchNodes(graphGuid, searchReq, cancellationToken) {
     if (!searchReq) {
       GenericExceptionHandlers.ArgumentNullException('Search Request');
     }
-    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${searchReq.GraphGUID}/nodes/search`;
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/search`;
     const json = JSON.stringify(searchReq);
     const response = await this.post(url, json, SearchResult, cancellationToken);
     return response;
@@ -384,6 +386,7 @@ export default class LiteGraphSdk extends SdkBase {
 
   /**
    * Search edges.
+   * @param {string} graphGuid - Graph GUID.
    * @param {Object} searchReq - Information about the search request.
    * @param {string} searchReq.GraphGUID - Globally unique identifier for the graph (defaults to an empty GUID).
    * @param {string} searchReq.Ordering - Ordering of the search results (default is CreatedDescending).
@@ -391,12 +394,12 @@ export default class LiteGraphSdk extends SdkBase {
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<SearchResult>} - The search result.
    */
-  async searchEdges(searchReq, cancellationToken) {
+  async searchEdges(graphGuid, searchReq, cancellationToken) {
     if (!searchReq) {
       GenericExceptionHandlers.ArgumentNullException('searchReq');
     }
 
-    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${searchReq.GraphGUID}/edges/search`;
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/search`;
     const body = JSON.stringify(searchReq);
 
     const response = await this.post(url, body, SearchResult, cancellationToken);
@@ -1129,6 +1132,27 @@ export default class LiteGraphSdk extends SdkBase {
     return await this.delete(url, cancellationToken);
   }
 
+  /**
+   * Search Vectors.
+   * @param {Object} searchReq - Information about the search request.
+   * @param {string} searchReq.GraphGUID - Globally unique identifier for the graph (defaults to an empty GUID).
+   * @param {string} searchReq.Domain - Ordering of the search results (default is CreatedDescending).
+   * @param {String} searchReq.SearchType - Expression used for the search (default is null).
+   * @param {Array<string>} searchReq.Labels - The domain of the search type.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorSearchResult>} - The search result.
+   */
+  async searchVectors(searchReq, cancellationToken) {
+    if (!searchReq) {
+      GenericExceptionHandlers.ArgumentNullException('Search Request');
+    }
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/vectors`;
+    const json = JSON.stringify(searchReq);
+    const response = await this.post(url, json, VectorSearchResult, cancellationToken);
+
+    return response;
+  }
+
   //end region
 
   //region Authentication
@@ -1179,6 +1203,23 @@ export default class LiteGraphSdk extends SdkBase {
     };
 
     return await this.get(url, Token, cancellationToken, headers);
+  }
+
+  /**
+   * Get tenants associated with an email address.
+   * @param {string} email - The email address to lookup tenants for.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<TenantMetaData[]>} Array of tenants associated with the email
+   */
+  async getTenantsForEmail(email, cancellationToken) {
+    if (!email) {
+      GenericExceptionHandlers.ArgumentNullException('email');
+    }
+
+    const url = `${this._endpoint}v1.0/token/tenants`;
+    return await this.getMany(url, TenantMetaData, cancellationToken, {
+      'x-email': email,
+    });
   }
 
   //endregion

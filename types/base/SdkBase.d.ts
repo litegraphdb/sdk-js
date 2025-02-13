@@ -36,10 +36,8 @@ export default class SdkBase {
     _endpoint: string;
     _timeoutMs: number;
     logger: (severity: any, message: string) => void;
-    defaultHeaders: {
-        Authorization: string;
-    };
     _tenantGuid: string;
+    defaultHeaders: any;
     _accessKey: string;
     /**
      * Setter for the access token.
@@ -139,10 +137,11 @@ export default class SdkBase {
      * @param {string} url - The URL of the objects.
      * @param {Class} model - Modal to deserialize on
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+     * @param {Object} [headers] - Additional headers.
      * @return {Promise<Array>} Resolves with the list of retrieved objects.
      * @throws {Error} Rejects if the URL is invalid or if the request fails.
      */
-    getMany(url: string, model: Class, cancellationToken?: AbortController): Promise<any[]>;
+    getMany(url: string, model: Class, cancellationToken?: AbortController, headers?: any): Promise<any[]>;
     /**
      * Sends a PUT request to update an object at a given URL.
      * @param {string} url - The URL where the object is created.

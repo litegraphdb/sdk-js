@@ -99,7 +99,7 @@ describe('NodeRoute Tests', () => {
           Right: 'World',
         },
       };
-      const response = await api.searchNodes(searchRequest);
+      const response = await api.searchNodes(mockGraphGuid, searchRequest);
       expect(JSON.stringify(response)).toEqual(JSON.stringify(new SearchResult(searchNodeData[mockNodeGuid])));
     });
 
@@ -114,7 +114,7 @@ describe('NodeRoute Tests', () => {
           Right: 'World',
         },
       };
-      await api.searchNodes(searchRequest, cancellationToken);
+      await api.searchNodes(mockGraphGuid, searchRequest, cancellationToken);
       cancellationToken.abort();
     });
 

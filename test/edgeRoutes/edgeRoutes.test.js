@@ -61,7 +61,6 @@ describe('EdgeRoute Tests', () => {
 
     test('should search edges', async () => {
       const searchRequest = {
-        GraphGUID: mockEdgeGuid,
         Ordering: 'CreatedDescending',
         Expr: {
           Left: 'Hello',
@@ -69,8 +68,8 @@ describe('EdgeRoute Tests', () => {
           Right: 'World',
         },
       };
-      const response = await api.searchEdges(searchRequest);
-      expect(JSON.stringify(response)).toEqual(JSON.stringify(new SearchResult(searchEdgeData[mockEdgeGuid])));
+      const response = await api.searchEdges(mockGraphGuid, searchRequest);
+      expect(JSON.stringify(response)).toEqual(JSON.stringify(new SearchResult(searchEdgeData[mockGraphGuid])));
     });
 
     test('should read a specific edge by GUID', async () => {

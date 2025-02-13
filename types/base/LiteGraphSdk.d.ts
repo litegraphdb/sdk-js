@@ -147,10 +147,11 @@ export default class LiteGraphSdk extends SdkBase {
      * @param {string} searchReq.GraphGUID - Globally unique identifier for the graph (defaults to an empty GUID).
      * @param {string} searchReq.Ordering - Ordering of the search results (default is CreatedDescending).
      * @param {Object} searchReq.Expr - Expression used for the search (default is null).
+     * @param {string} graphGuid - The GUID of the graph.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      * @returns {Promise<SearchResult>} - The search result.
      */
-    searchNodes(searchReq: {
+    searchNodes(graphGuid: string, searchReq: {
         GraphGUID: string;
         Ordering: string;
         Expr: any;
@@ -250,6 +251,7 @@ export default class LiteGraphSdk extends SdkBase {
     readEdges(graphGuid: string, cancellationToken?: AbortController): Promise<Edge[]>;
     /**
      * Search edges.
+     * @param {string} graphGuid - Graph GUID.
      * @param {Object} searchReq - Information about the search request.
      * @param {string} searchReq.GraphGUID - Globally unique identifier for the graph (defaults to an empty GUID).
      * @param {string} searchReq.Ordering - Ordering of the search results (default is CreatedDescending).
@@ -257,7 +259,7 @@ export default class LiteGraphSdk extends SdkBase {
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      * @returns {Promise<SearchResult>} - The search result.
      */
-    searchEdges(searchReq: {
+    searchEdges(graphGuid: string, searchReq: {
         GraphGUID: string;
         Ordering: string;
         Expr: any;
@@ -661,6 +663,22 @@ export default class LiteGraphSdk extends SdkBase {
      */
     deleteVector(guid: string, cancellationToken?: AbortController): Promise<void>;
     /**
+     * Search Vectors.
+     * @param {Object} searchReq - Information about the search request.
+     * @param {string} searchReq.GraphGUID - Globally unique identifier for the graph (defaults to an empty GUID).
+     * @param {string} searchReq.Domain - Ordering of the search results (default is CreatedDescending).
+     * @param {String} searchReq.SearchType - Expression used for the search (default is null).
+     * @param {Array<string>} searchReq.Labels - The domain of the search type.
+     * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+     * @returns {Promise<VectorSearchResult>} - The search result.
+     */
+    searchVectors(searchReq: {
+        GraphGUID: string;
+        Domain: string;
+        SearchType: string;
+        Labels: Array<string>;
+    }, cancellationToken?: AbortController): Promise<VectorSearchResult>;
+    /**
      * Generate an authentication token.
      * @param {string} email - The user's email address.
      * @param {string} tenantId - The tenant ID.
@@ -676,6 +694,13 @@ export default class LiteGraphSdk extends SdkBase {
      * @returns {Promise<Object>} The token details
      */
     getTokenDetails(token: string, cancellationToken?: AbortController): Promise<any>;
+    /**
+     * Get tenants associated with an email address.
+     * @param {string} email - The email address to lookup tenants for.
+     * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+     * @returns {Promise<TenantMetaData[]>} Array of tenants associated with the email
+     */
+    getTenantsForEmail(email: string, cancellationToken?: AbortController): Promise<TenantMetaData[]>;
 }
 import SdkBase from './SdkBase';
 import Graph from '../models/Graph';
@@ -690,4 +715,5 @@ import CredentialMetadata from '../models/CredentialMetadata';
 import TagMetaData from '../models/TagMetaData';
 import LabelMetadata from '../models/LabelMetadata';
 import { VectorMetadata } from '../models/VectorMetadata';
+import { VectorSearchResult } from '../models/VectorSearchResult';
 import Token from '../models/Token';
