@@ -957,19 +957,6 @@ npm run test:coverage
 
 ### Setting up Pre-commit Hooks
 
-This project uses pre-commit hooks to ensure code quality. To set up pre-commit:
-
-```bash
-# Install pre-commit
-pip install pre-commit
-
-# Install the pre-commit hooks
-pre-commit install
-
-# (Optional) Run pre-commit on all files
-pre-commit run --all-files
-```
-
 The pre-commit hooks will run automatically on `git commit`. They help maintain:
 
 - Code formatting (using ruff)
