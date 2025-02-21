@@ -7,6 +7,7 @@ import ApiErrorResponse from '../models/ApiErrorResponse';
 
 /**
  * SDK Base class for making API calls with logging and timeout functionality.
+ * @module SdkBase
  */
 export default class SdkBase {
   /**

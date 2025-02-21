@@ -1,453 +1,127 @@
-## Members
+## Modules
 
 <dl>
-<dt><a href="#tenantGuid">tenantGuid</a> ⇒ <code>string</code></dt>
-<dd><p>Getter for the tenant GUID.</p>
+<dt><a href="#module_LiteGraphSdk">LiteGraphSdk</a> ⇐ <code>SdkBase</code></dt>
+<dd><p>LiteGraph SDK class.
+Extends the SdkBase class.</p>
 </dd>
-<dt><a href="#tenantGuid">tenantGuid</a></dt>
-<dd><p>Setter for the tenant GUID.</p>
-</dd>
-<dt><a href="#accessKey">accessKey</a> ⇒ <code>string</code></dt>
-<dd><p>Getter for the access key.</p>
-</dd>
-<dt><a href="#accessKey">accessKey</a></dt>
-<dd><p>Setter for the access key.</p>
-</dd>
-<dt><a href="#accessToken">accessToken</a> ⇒ <code>string</code></dt>
-<dd><p>Getter for the access token.</p>
-</dd>
-<dt><a href="#accessToken">accessToken</a></dt>
-<dd><p>Setter for the access token.</p>
-</dd>
-<dt><a href="#header">header</a> ⇒ <code>string</code></dt>
-<dd><p>Getter for the request header prefix.</p>
-</dd>
-<dt><a href="#header">header</a></dt>
-<dd><p>Setter for the request header prefix.</p>
-</dd>
-<dt><a href="#endpoint">endpoint</a> ⇒ <code>string</code></dt>
-<dd><p>Getter for the API endpoint.</p>
-</dd>
-<dt><a href="#endpoint">endpoint</a></dt>
-<dd><p>Setter for the API endpoint.</p>
-</dd>
-<dt><a href="#timeoutMs">timeoutMs</a> ⇒ <code>number</code></dt>
-<dd><p>Getter for the timeout in milliseconds.</p>
-</dd>
-<dt><a href="#timeoutMs">timeoutMs</a></dt>
-<dd><p>Setter for the timeout in milliseconds.</p>
+<dt><a href="#module_SdkBase">SdkBase</a></dt>
+<dd><p>SDK Base class for making API calls with logging and timeout functionality.</p>
 </dd>
 </dl>
 
-## Functions
+<a name="module_LiteGraphSdk"></a>
 
-<dl>
-<dt><a href="#graphExists">graphExists(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>Check if a graph exists by GUID.</p>
-</dd>
-<dt><a href="#createGraph">createGraph(graph, [cancellationToken])</a> ⇒ <code>Promise.&lt;Graph&gt;</code></dt>
-<dd><p>Create a graph.</p>
-</dd>
-<dt><a href="#readGraphs">readGraphs([cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Graph&gt;&gt;</code></dt>
-<dd><p>Read all graphs.</p>
-</dd>
-<dt><a href="#searchGraphs">searchGraphs(searchReq, [cancellationToken])</a> ⇒ <code>Promise.&lt;SearchResult&gt;</code></dt>
-<dd><p>Search graphs.</p>
-</dd>
-<dt><a href="#readGraph">readGraph(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Graph&gt;</code></dt>
-<dd><p>Read a specific graph.</p>
-</dd>
-<dt><a href="#updateGraph">updateGraph(graph, [cancellationToken])</a> ⇒ <code>Promise.&lt;Graph&gt;</code></dt>
-<dd><p>Update a graph.</p>
-</dd>
-<dt><a href="#deleteGraph">deleteGraph(guid, [cancellationToken], force)</a></dt>
-<dd><p>Delete a graph.</p>
-</dd>
-<dt><a href="#exportGraphToGexf">exportGraphToGexf(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;string&gt;</code></dt>
-<dd><p>Export a graph to GEXF format.</p>
-</dd>
-<dt><a href="#batchExistence">batchExistence(graphGuid, existenceRequest, [cancellationToken])</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
-<dd><p>Execute a batch existence request.</p>
-</dd>
-<dt><a href="#nodeExists">nodeExists(graphGuid, guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>Check if a node exists by GUID.</p>
-</dd>
-<dt><a href="#createNodes">createNodes(graphGuid, nodes, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Object&gt;&gt;</code></dt>
-<dd><p>Create multiple nodes.</p>
-</dd>
-<dt><a href="#createNode">createNode(node, [cancellationToken])</a> ⇒ <code>Promise.&lt;Node&gt;</code></dt>
-<dd><p>Create a node.</p>
-</dd>
-<dt><a href="#readNodes">readNodes(graphGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code></dt>
-<dd><p>Read nodes for a specific graph.</p>
-</dd>
-<dt><a href="#searchNodes">searchNodes(searchReq, graphGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;SearchResult&gt;</code></dt>
-<dd><p>Search nodes.</p>
-</dd>
-<dt><a href="#readNode">readNode(graphGuid, nodeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Node&gt;</code></dt>
-<dd><p>Read a specific node.</p>
-</dd>
-<dt><a href="#updateNode">updateNode(node, [cancellationToken])</a> ⇒ <code>Promise.&lt;Node&gt;</code></dt>
-<dd><p>Update a node.</p>
-</dd>
-<dt><a href="#deleteNode">deleteNode(graphGuid, nodeGuid, [cancellationToken])</a></dt>
-<dd><p>Delete a node.</p>
-</dd>
-<dt><a href="#deleteNodes">deleteNodes(graphGuid, [cancellationToken])</a></dt>
-<dd><p>Delete all nodes within a graph.</p>
-</dd>
-<dt><a href="#deleteMultipleNodes">deleteMultipleNodes(graphGuid, nodeGuids, [cancellationToken])</a></dt>
-<dd><p>Delete multiple nodes within a graph.</p>
-</dd>
-<dt><a href="#edgeExists">edgeExists(graphGuid, guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>Check if an edge exists by GUID.</p>
-</dd>
-<dt><a href="#createEdges">createEdges(graphGuid, edges, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Object&gt;&gt;</code></dt>
-<dd><p>Create multiple edges.</p>
-</dd>
-<dt><a href="#createEdge">createEdge(edge, [cancellationToken])</a> ⇒ <code>Promise.&lt;Edge&gt;</code></dt>
-<dd><p>Create an edge.</p>
-</dd>
-<dt><a href="#readEdges">readEdges(graphGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code></dt>
-<dd><p>Read edges.</p>
-</dd>
-<dt><a href="#searchEdges">searchEdges(graphGuid, searchReq, [cancellationToken])</a> ⇒ <code>Promise.&lt;SearchResult&gt;</code></dt>
-<dd><p>Search edges.</p>
-</dd>
-<dt><a href="#readEdge">readEdge(graphGuid, edgeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Edge&gt;</code></dt>
-<dd><p>Read an edge.</p>
-</dd>
-<dt><a href="#updateEdge">updateEdge(edge, [cancellationToken])</a> ⇒ <code>Promise.&lt;Edge&gt;</code></dt>
-<dd><p>Update an edge.</p>
-</dd>
-<dt><a href="#deleteEdge">deleteEdge(graphGuid, edgeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;void&gt;</code></dt>
-<dd><p>Delete an edge.</p>
-</dd>
-<dt><a href="#deleteEdges">deleteEdges(graphGuid, [cancellationToken])</a></dt>
-<dd><p>Delete all edges within a graph.</p>
-</dd>
-<dt><a href="#deleteMultipleEdges">deleteMultipleEdges(graphGuid, edgeGuids, [cancellationToken])</a></dt>
-<dd><p>Delete multiple edges within a graph.</p>
-</dd>
-<dt><a href="#getEdgesFromNode">getEdgesFromNode(graphGuid, nodeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code></dt>
-<dd><p>Get edges from a node.</p>
-</dd>
-<dt><a href="#getEdgesToNode">getEdgesToNode(graphGuid, nodeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code></dt>
-<dd><p>Get edges to a node.</p>
-</dd>
-<dt><a href="#getEdgesBetween">getEdgesBetween(graphGuid, fromNodeGuid, toNodeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code></dt>
-<dd><p>Get edges from a given node to a given node.</p>
-</dd>
-<dt><a href="#getAllNodeEdges">getAllNodeEdges(graphGuid, nodeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code></dt>
-<dd><p>Get all edges to or from a node.</p>
-</dd>
-<dt><a href="#getChildrenFromNode">getChildrenFromNode(graphGuid, nodeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code></dt>
-<dd><p>Get child nodes from a node.</p>
-</dd>
-<dt><a href="#getParentsFromNode">getParentsFromNode(graphGuid, nodeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code></dt>
-<dd><p>Get parent nodes from a node.</p>
-</dd>
-<dt><a href="#getNodeNeighbors">getNodeNeighbors(graphGuid, nodeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code></dt>
-<dd><p>Get neighboring nodes from a node.</p>
-</dd>
-<dt><a href="#getRoutes">getRoutes(graphGuid, fromNodeGuid, toNodeGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;RouteResult&gt;</code></dt>
-<dd><p>Get routes between two nodes.</p>
-</dd>
-<dt><a href="#readTenants">readTenants([cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code></dt>
-<dd><p>Read all tenants.</p>
-</dd>
-<dt><a href="#readTenant">readTenant(tenantGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;TenantMetaData&gt;</code></dt>
-<dd><p>Read a tenant.</p>
-</dd>
-<dt><a href="#createTenant">createTenant(tenant, [cancellationToken])</a> ⇒ <code>Promise.&lt;TenantMetaData&gt;</code></dt>
-<dd><p>Create a tenant.</p>
-</dd>
-<dt><a href="#updateTenant">updateTenant(tenant, guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;TenantMetaData&gt;</code></dt>
-<dd><p>Update a tenant.</p>
-</dd>
-<dt><a href="#deleteTenant">deleteTenant(tenantGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Boolean&gt;</code></dt>
-<dd><p>Delete a tenant.</p>
-</dd>
-<dt><a href="#tenantExists">tenantExists(tenantGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>Tenant exists.</p>
-</dd>
-<dt><a href="#tenantDeleteForce">tenantDeleteForce(tenantGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Boolean&gt;</code></dt>
-<dd><p>Tenant delete force.</p>
-</dd>
-<dt><a href="#readAllUsers">readAllUsers([cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;UserMetadata&gt;&gt;</code></dt>
-<dd><p>Read all users.</p>
-</dd>
-<dt><a href="#readUser">readUser(userGuid, [cancellationToken])</a> ⇒ <code>Promise.&lt;UserMetadata&gt;</code></dt>
-<dd><p>Read a user.</p>
-</dd>
-<dt><a href="#createUser">createUser(user, [cancellationToken])</a> ⇒ <code>Promise.&lt;UserMetadata&gt;</code></dt>
-<dd><p>Create a user.</p>
-</dd>
-<dt><a href="#existsUser">existsUser(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>User exists.</p>
-</dd>
-<dt><a href="#updateUser">updateUser(user, guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;UserMetadata&gt;</code></dt>
-<dd><p>Update a user.</p>
-</dd>
-<dt><a href="#deleteUser">deleteUser(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Boolean&gt;</code></dt>
-<dd><p>Delete a user.</p>
-</dd>
-<dt><a href="#readAllCredentials">readAllCredentials([cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;CredentialMetadata&gt;&gt;</code></dt>
-<dd><p>Read all credentials.</p>
-</dd>
-<dt><a href="#readCredential">readCredential(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code></dt>
-<dd><p>Read a credential.</p>
-</dd>
-<dt><a href="#createCredential">createCredential(credential, [cancellationToken])</a> ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code></dt>
-<dd><p>Create a credential.</p>
-</dd>
-<dt><a href="#updateCredential">updateCredential(credential, guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code></dt>
-<dd><p>Update a credential.</p>
-</dd>
-<dt><a href="#deleteCredential">deleteCredential(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;Boolean&gt;</code></dt>
-<dd><p>Delete a credential.</p>
-</dd>
-<dt><a href="#existsCredential">existsCredential(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>Credential exists.</p>
-</dd>
-<dt><a href="#readAllTags">readAllTags([cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;TagMetaData&gt;&gt;</code></dt>
-<dd><p>Read all tags.</p>
-</dd>
-<dt><a href="#readTag">readTag(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;TagMetaData&gt;</code></dt>
-<dd><p>Read a tag.</p>
-</dd>
-<dt><a href="#existsTag">existsTag(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>Tag exists.</p>
-</dd>
-<dt><a href="#createTag">createTag(tag, [cancellationToken])</a> ⇒ <code>Promise.&lt;TagMetaData&gt;</code></dt>
-<dd><p>Create a tag.</p>
-</dd>
-<dt><a href="#updateTag">updateTag(tag, guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;TagMetaData&gt;</code></dt>
-<dd><p>Update a tag.</p>
-</dd>
-<dt><a href="#deleteTag">deleteTag(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;void&gt;</code></dt>
-<dd><p>Delete a tag.</p>
-</dd>
-<dt><a href="#readAllLabels">readAllLabels([cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;LabelMetadata&gt;&gt;</code></dt>
-<dd><p>Read all labels.</p>
-</dd>
-<dt><a href="#readLabel">readLabel(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;LabelMetadata&gt;</code></dt>
-<dd><p>Read a label.</p>
-</dd>
-<dt><a href="#existsLabel">existsLabel(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>Label exists.</p>
-</dd>
-<dt><a href="#createLabel">createLabel(label, [cancellationToken])</a> ⇒ <code>Promise.&lt;LabelMetadata&gt;</code></dt>
-<dd><p>Create a label.</p>
-</dd>
-<dt><a href="#updateLabel">updateLabel(label, guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;LabelMetadata&gt;</code></dt>
-<dd><p>Update a label.</p>
-</dd>
-<dt><a href="#deleteLabel">deleteLabel(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;void&gt;</code></dt>
-<dd><p>Delete a label.</p>
-</dd>
-<dt><a href="#readAllVectors">readAllVectors([cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;VectorMetadata&gt;&gt;</code></dt>
-<dd><p>Read all vectors.</p>
-</dd>
-<dt><a href="#readVector">readVector(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;VectorMetadata&gt;</code></dt>
-<dd><p>Read a vector.</p>
-</dd>
-<dt><a href="#existsVector">existsVector(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>Vector exists.</p>
-</dd>
-<dt><a href="#createVector">createVector(vector, [cancellationToken])</a> ⇒ <code>Promise.&lt;VectorMetadata&gt;</code></dt>
-<dd><p>Create a vector.</p>
-</dd>
-<dt><a href="#updateVector">updateVector(vector, guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;VectorMetadata&gt;</code></dt>
-<dd><p>Update a vector.</p>
-</dd>
-<dt><a href="#deleteVector">deleteVector(guid, [cancellationToken])</a> ⇒ <code>Promise.&lt;void&gt;</code></dt>
-<dd><p>Delete a vector.</p>
-</dd>
-<dt><a href="#searchVectors">searchVectors(searchReq, [cancellationToken])</a> ⇒ <code>Promise.&lt;VectorSearchResult&gt;</code></dt>
-<dd><p>Search Vectors.</p>
-</dd>
-<dt><a href="#generateToken">generateToken(email, tenantId, password, [cancellationToken])</a> ⇒ <code>Promise.&lt;Token&gt;</code></dt>
-<dd><p>Generate an authentication token.</p>
-</dd>
-<dt><a href="#getTokenDetails">getTokenDetails(token, [cancellationToken])</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
-<dd><p>Fetch details about an authentication token.</p>
-</dd>
-<dt><a href="#getTenantsForEmail">getTenantsForEmail(email, [cancellationToken])</a> ⇒ <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code></dt>
-<dd><p>Get tenants associated with an email address.</p>
-</dd>
-<dt><a href="#log">log(sev, msg)</a></dt>
-<dd><p>Logs a message with a severity level.</p>
-</dd>
-<dt><a href="#validateConnectivity">validateConnectivity([cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>Validates API connectivity using a HEAD request.</p>
-</dd>
-<dt><a href="#putCreate">putCreate(url, obj, model, [cancellationToken])</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
-<dd><p>Sends a PUT request to create an object at a given URL.</p>
-</dd>
-<dt><a href="#head">head(url, [cancellationToken])</a> ⇒ <code>Promise.&lt;boolean&gt;</code></dt>
-<dd><p>Checks if an object exists at a given URL using a HEAD request.</p>
-</dd>
-<dt><a href="#get">get(url, model, [cancellationToken], [headers])</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
-<dd><p>Retrieves an object from a given URL using a GET request.</p>
-</dd>
-<dt><a href="#getDataInBytes">getDataInBytes(url, [cancellationToken])</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
-<dd><p>Retrieves raw data from a given URL using a GET request.</p>
-</dd>
-<dt><a href="#getMany">getMany(url, model, [cancellationToken], [headers])</a> ⇒ <code>Promise.&lt;Array&gt;</code></dt>
-<dd><p>Retrieves a list of objects from a given URL using a GET request.</p>
-</dd>
-<dt><a href="#putUpdate">putUpdate(url, obj, model, [cancellationToken])</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
-<dd><p>Sends a PUT request to update an object at a given URL.</p>
-</dd>
-<dt><a href="#delete">delete(url, [cancellationToken])</a> ⇒ <code>Promise.&lt;void&gt;</code></dt>
-<dd><p>Sends a DELETE request to remove an object at a given URL.</p>
-</dd>
-<dt><a href="#post">post(url, data, model, [cancellationToken])</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
-<dd><p>Submits data using a POST request to a given URL.</p>
-</dd>
-<dt><a href="#deleteMany">deleteMany(url, obj, [cancellationToken])</a> ⇒ <code>Promise.&lt;void&gt;</code></dt>
-<dd><p>Sends a DELETE request to remove an object at a given URL.</p>
-</dd>
-<dt><a href="#postBatch">postBatch(url, obj, model, [cancellationToken])</a> ⇒ <code>Promise.&lt;(Object|null)&gt;</code></dt>
-<dd><p>Submits a POST request.</p>
-</dd>
-</dl>
+## LiteGraphSdk ⇐ <code>SdkBase</code>
+LiteGraph SDK class.
+Extends the SdkBase class.
 
-<a name="tenantGuid"></a>
+**Extends**: <code>SdkBase</code>  
 
-## tenantGuid ⇒ <code>string</code>
-Getter for the tenant GUID.
+* [LiteGraphSdk](#module_LiteGraphSdk) ⇐ <code>SdkBase</code>
+    * [module.exports](#exp_module_LiteGraphSdk--module.exports) ⏏
+        * [new module.exports(endpoint, [tenantGuid], [accessKey])](#new_module_LiteGraphSdk--module.exports_new)
+        * [.graphExists(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+graphExists) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.createGraph(graph, [cancellationToken])](#module_LiteGraphSdk--module.exports+createGraph) ⇒ <code>Promise.&lt;Graph&gt;</code>
+        * [.readGraphs([cancellationToken])](#module_LiteGraphSdk--module.exports+readGraphs) ⇒ <code>Promise.&lt;Array.&lt;Graph&gt;&gt;</code>
+        * [.searchGraphs(searchReq, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchGraphs) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
+        * [.readGraph(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readGraph) ⇒ <code>Promise.&lt;Graph&gt;</code>
+        * [.updateGraph(graph, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateGraph) ⇒ <code>Promise.&lt;Graph&gt;</code>
+        * [.deleteGraph(guid, [cancellationToken], force)](#module_LiteGraphSdk--module.exports+deleteGraph)
+        * [.exportGraphToGexf(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+exportGraphToGexf) ⇒ <code>Promise.&lt;string&gt;</code>
+        * [.batchExistence(graphGuid, existenceRequest, [cancellationToken])](#module_LiteGraphSdk--module.exports+batchExistence) ⇒ <code>Promise.&lt;Object&gt;</code>
+        * [.nodeExists(graphGuid, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+nodeExists) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.createNodes(graphGuid, nodes, [cancellationToken])](#module_LiteGraphSdk--module.exports+createNodes) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
+        * [.createNode(node, [cancellationToken])](#module_LiteGraphSdk--module.exports+createNode) ⇒ <code>Promise.&lt;Node&gt;</code>
+        * [.readNodes(graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readNodes) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
+        * [.searchNodes(searchReq, graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchNodes) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
+        * [.readNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readNode) ⇒ <code>Promise.&lt;Node&gt;</code>
+        * [.updateNode(node, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateNode) ⇒ <code>Promise.&lt;Node&gt;</code>
+        * [.deleteNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteNode)
+        * [.deleteNodes(graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteNodes)
+        * [.deleteMultipleNodes(graphGuid, nodeGuids, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteMultipleNodes)
+        * [.edgeExists(graphGuid, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+edgeExists) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.createEdges(graphGuid, edges, [cancellationToken])](#module_LiteGraphSdk--module.exports+createEdges) ⇒ <code>Promise.&lt;Array.&lt;Object&gt;&gt;</code>
+        * [.createEdge(edge, [cancellationToken])](#module_LiteGraphSdk--module.exports+createEdge) ⇒ <code>Promise.&lt;Edge&gt;</code>
+        * [.readEdges(graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readEdges) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
+        * [.searchEdges(graphGuid, searchReq, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchEdges) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
+        * [.readEdge(graphGuid, edgeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readEdge) ⇒ <code>Promise.&lt;Edge&gt;</code>
+        * [.updateEdge(edge, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateEdge) ⇒ <code>Promise.&lt;Edge&gt;</code>
+        * [.deleteEdge(graphGuid, edgeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteEdge) ⇒ <code>Promise.&lt;void&gt;</code>
+        * [.deleteEdges(graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteEdges)
+        * [.deleteMultipleEdges(graphGuid, edgeGuids, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteMultipleEdges)
+        * [.getEdgesFromNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getEdgesFromNode) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
+        * [.getEdgesToNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getEdgesToNode) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
+        * [.getEdgesBetween(graphGuid, fromNodeGuid, toNodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getEdgesBetween) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
+        * [.getAllNodeEdges(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getAllNodeEdges) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
+        * [.getChildrenFromNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getChildrenFromNode) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
+        * [.getParentsFromNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getParentsFromNode) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
+        * [.getNodeNeighbors(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getNodeNeighbors) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
+        * [.getRoutes(graphGuid, fromNodeGuid, toNodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getRoutes) ⇒ <code>Promise.&lt;RouteResult&gt;</code>
+        * [.readTenants([cancellationToken])](#module_LiteGraphSdk--module.exports+readTenants) ⇒ <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code>
+        * [.readTenant(tenantGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readTenant) ⇒ <code>Promise.&lt;TenantMetaData&gt;</code>
+        * [.createTenant(tenant, [cancellationToken])](#module_LiteGraphSdk--module.exports+createTenant) ⇒ <code>Promise.&lt;TenantMetaData&gt;</code>
+        * [.updateTenant(tenant, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateTenant) ⇒ <code>Promise.&lt;TenantMetaData&gt;</code>
+        * [.deleteTenant(tenantGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteTenant) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+        * [.tenantExists(tenantGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+tenantExists) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.tenantDeleteForce(tenantGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+tenantDeleteForce) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+        * [.readAllUsers([cancellationToken])](#module_LiteGraphSdk--module.exports+readAllUsers) ⇒ <code>Promise.&lt;Array.&lt;UserMetadata&gt;&gt;</code>
+        * [.readUser(userGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readUser) ⇒ <code>Promise.&lt;UserMetadata&gt;</code>
+        * [.createUser(user, [cancellationToken])](#module_LiteGraphSdk--module.exports+createUser) ⇒ <code>Promise.&lt;UserMetadata&gt;</code>
+        * [.existsUser(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+existsUser) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.updateUser(user, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateUser) ⇒ <code>Promise.&lt;UserMetadata&gt;</code>
+        * [.deleteUser(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteUser) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+        * [.readAllCredentials([cancellationToken])](#module_LiteGraphSdk--module.exports+readAllCredentials) ⇒ <code>Promise.&lt;Array.&lt;CredentialMetadata&gt;&gt;</code>
+        * [.readCredential(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readCredential) ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code>
+        * [.createCredential(credential, [cancellationToken])](#module_LiteGraphSdk--module.exports+createCredential) ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code>
+        * [.updateCredential(credential, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateCredential) ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code>
+        * [.deleteCredential(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteCredential) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+        * [.existsCredential(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+existsCredential) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.readAllTags([cancellationToken])](#module_LiteGraphSdk--module.exports+readAllTags) ⇒ <code>Promise.&lt;Array.&lt;TagMetaData&gt;&gt;</code>
+        * [.readTag(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readTag) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
+        * [.existsTag(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+existsTag) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.createTag(tag, [cancellationToken])](#module_LiteGraphSdk--module.exports+createTag) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
+        * [.updateTag(tag, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateTag) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
+        * [.deleteTag(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteTag) ⇒ <code>Promise.&lt;void&gt;</code>
+        * [.readAllLabels([cancellationToken])](#module_LiteGraphSdk--module.exports+readAllLabels) ⇒ <code>Promise.&lt;Array.&lt;LabelMetadata&gt;&gt;</code>
+        * [.readLabel(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readLabel) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
+        * [.existsLabel(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+existsLabel) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.createLabel(label, [cancellationToken])](#module_LiteGraphSdk--module.exports+createLabel) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
+        * [.updateLabel(label, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateLabel) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
+        * [.deleteLabel(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteLabel) ⇒ <code>Promise.&lt;void&gt;</code>
+        * [.readAllVectors([cancellationToken])](#module_LiteGraphSdk--module.exports+readAllVectors) ⇒ <code>Promise.&lt;Array.&lt;VectorMetadata&gt;&gt;</code>
+        * [.readVector(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readVector) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
+        * [.existsVector(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+existsVector) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.createVector(vector, [cancellationToken])](#module_LiteGraphSdk--module.exports+createVector) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
+        * [.updateVector(vector, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateVector) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
+        * [.deleteVector(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteVector) ⇒ <code>Promise.&lt;void&gt;</code>
+        * [.searchVectors(searchReq, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchVectors) ⇒ <code>Promise.&lt;VectorSearchResult&gt;</code>
+        * [.generateToken(email, tenantId, password, [cancellationToken])](#module_LiteGraphSdk--module.exports+generateToken) ⇒ <code>Promise.&lt;Token&gt;</code>
+        * [.getTokenDetails(token, [cancellationToken])](#module_LiteGraphSdk--module.exports+getTokenDetails) ⇒ <code>Promise.&lt;Object&gt;</code>
+        * [.getTenantsForEmail(email, [cancellationToken])](#module_LiteGraphSdk--module.exports+getTenantsForEmail) ⇒ <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code>
 
-**Kind**: global variable  
-**Returns**: <code>string</code> - The tenant GUID.  
-<a name="tenantGuid"></a>
+<a name="exp_module_LiteGraphSdk--module.exports"></a>
 
-## tenantGuid
-Setter for the tenant GUID.
+### module.exports ⏏
+**Kind**: Exported class  
+<a name="new_module_LiteGraphSdk--module.exports_new"></a>
 
-**Kind**: global variable  
-**Throws**:
-
-- <code>Error</code> Throws an error if the tenant GUID is null or empty.
+#### new module.exports(endpoint, [tenantGuid], [accessKey])
+Instantiate the SDK.
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>string</code> | The tenant GUID. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| endpoint | <code>string</code> | <code>&quot;http://localhost:8701/&quot;</code> | The endpoint URL. |
+| [tenantGuid] | <code>string</code> |  | The tenant GUID. |
+| [accessKey] | <code>string</code> |  | The access key. |
 
-<a name="accessKey"></a>
+<a name="module_LiteGraphSdk--module.exports+graphExists"></a>
 
-## accessKey ⇒ <code>string</code>
-Getter for the access key.
-
-**Kind**: global variable  
-**Returns**: <code>string</code> - The access key.  
-<a name="accessKey"></a>
-
-## accessKey
-Setter for the access key.
-
-**Kind**: global variable  
-**Throws**:
-
-- <code>Error</code> Throws an error if the access key is null or empty.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>string</code> | The access key. |
-
-<a name="accessToken"></a>
-
-## accessToken ⇒ <code>string</code>
-Getter for the access token.
-
-**Kind**: global variable  
-**Returns**: <code>string</code> - The access token.  
-<a name="accessToken"></a>
-
-## accessToken
-Setter for the access token.
-
-**Kind**: global variable  
-**Throws**:
-
-- <code>Error</code> Throws an error if the access token is null or empty.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>string</code> | The access token. |
-
-<a name="header"></a>
-
-## header ⇒ <code>string</code>
-Getter for the request header prefix.
-
-**Kind**: global variable  
-**Returns**: <code>string</code> - The header prefix.  
-<a name="header"></a>
-
-## header
-Setter for the request header prefix.
-
-**Kind**: global variable  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>string</code> | The header prefix. |
-
-<a name="endpoint"></a>
-
-## endpoint ⇒ <code>string</code>
-Getter for the API endpoint.
-
-**Kind**: global variable  
-**Returns**: <code>string</code> - The endpoint URL.  
-<a name="endpoint"></a>
-
-## endpoint
-Setter for the API endpoint.
-
-**Kind**: global variable  
-**Throws**:
-
-- <code>Error</code> Throws an error if the endpoint is null or empty.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>string</code> | The endpoint URL. |
-
-<a name="timeoutMs"></a>
-
-## timeoutMs ⇒ <code>number</code>
-Getter for the timeout in milliseconds.
-
-**Kind**: global variable  
-**Returns**: <code>number</code> - The timeout in milliseconds.  
-<a name="timeoutMs"></a>
-
-## timeoutMs
-Setter for the timeout in milliseconds.
-
-**Kind**: global variable  
-**Throws**:
-
-- <code>Error</code> Throws an error if the timeout is less than 1.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>number</code> | Timeout value in milliseconds. |
-
-<a name="graphExists"></a>
-
-## graphExists(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.graphExists(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Check if a graph exists by GUID.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;boolean&gt;</code> - - True if the graph exists.  
 
 | Param | Type | Description |
@@ -455,12 +129,12 @@ Check if a graph exists by GUID.
 | guid | <code>string</code> | The GUID of the graph. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createGraph"></a>
+<a name="module_LiteGraphSdk--module.exports+createGraph"></a>
 
-## createGraph(graph, [cancellationToken]) ⇒ <code>Promise.&lt;Graph&gt;</code>
+#### module.exports.createGraph(graph, [cancellationToken]) ⇒ <code>Promise.&lt;Graph&gt;</code>
 Create a graph.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Graph&gt;</code> - - The created graph.  
 
 | Param | Type | Description |
@@ -472,24 +146,24 @@ Create a graph.
 | graph.Data | <code>Object</code> | Object data associated with the graph (default is null). |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readGraphs"></a>
+<a name="module_LiteGraphSdk--module.exports+readGraphs"></a>
 
-## readGraphs([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Graph&gt;&gt;</code>
+#### module.exports.readGraphs([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Graph&gt;&gt;</code>
 Read all graphs.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Graph&gt;&gt;</code> - - An array of graphs.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="searchGraphs"></a>
+<a name="module_LiteGraphSdk--module.exports+searchGraphs"></a>
 
-## searchGraphs(searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
+#### module.exports.searchGraphs(searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
 Search graphs.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;SearchResult&gt;</code> - - The search result.  
 
 | Param | Type | Description |
@@ -500,12 +174,12 @@ Search graphs.
 | searchReq.Expr | <code>Object</code> | Expression used for the search (default is null). |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readGraph"></a>
+<a name="module_LiteGraphSdk--module.exports+readGraph"></a>
 
-## readGraph(guid, [cancellationToken]) ⇒ <code>Promise.&lt;Graph&gt;</code>
+#### module.exports.readGraph(guid, [cancellationToken]) ⇒ <code>Promise.&lt;Graph&gt;</code>
 Read a specific graph.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Graph&gt;</code> - - The requested graph.  
 
 | Param | Type | Description |
@@ -513,12 +187,12 @@ Read a specific graph.
 | guid | <code>string</code> | The GUID of the graph. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="updateGraph"></a>
+<a name="module_LiteGraphSdk--module.exports+updateGraph"></a>
 
-## updateGraph(graph, [cancellationToken]) ⇒ <code>Promise.&lt;Graph&gt;</code>
+#### module.exports.updateGraph(graph, [cancellationToken]) ⇒ <code>Promise.&lt;Graph&gt;</code>
 Update a graph.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Graph&gt;</code> - - The updated graph.  
 
 | Param | Type | Description |
@@ -530,12 +204,12 @@ Update a graph.
 | graph.data | <code>Object</code> | Object data associated with the graph (default is null). |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteGraph"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteGraph"></a>
 
-## deleteGraph(guid, [cancellationToken], force)
+#### module.exports.deleteGraph(guid, [cancellationToken], force)
 Delete a graph.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -543,12 +217,12 @@ Delete a graph.
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 | force | <code>boolean</code> | Force recursive deletion of edges and nodes. |
 
-<a name="exportGraphToGexf"></a>
+<a name="module_LiteGraphSdk--module.exports+exportGraphToGexf"></a>
 
-## exportGraphToGexf(guid, [cancellationToken]) ⇒ <code>Promise.&lt;string&gt;</code>
+#### module.exports.exportGraphToGexf(guid, [cancellationToken]) ⇒ <code>Promise.&lt;string&gt;</code>
 Export a graph to GEXF format.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;string&gt;</code> - - The GEXF XML data.  
 
 | Param | Type | Description |
@@ -556,12 +230,12 @@ Export a graph to GEXF format.
 | guid | <code>string</code> | The GUID of the graph. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="batchExistence"></a>
+<a name="module_LiteGraphSdk--module.exports+batchExistence"></a>
 
-## batchExistence(graphGuid, existenceRequest, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
+#### module.exports.batchExistence(graphGuid, existenceRequest, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
 Execute a batch existence request.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - - The existence result.  
 
 | Param | Type | Description |
@@ -573,12 +247,12 @@ Execute a batch existence request.
 | existenceRequest.EdgesBetween | <code>Array.&lt;EdgeBetween&gt;</code> | Array of EdgeBetween instances. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="nodeExists"></a>
+<a name="module_LiteGraphSdk--module.exports+nodeExists"></a>
 
-## nodeExists(graphGuid, guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.nodeExists(graphGuid, guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Check if a node exists by GUID.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;boolean&gt;</code> - - True if the node exists.  
 
 | Param | Type | Description |
@@ -587,13 +261,13 @@ Check if a node exists by GUID.
 | guid | <code>string</code> | The GUID of the node. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createNodes"></a>
+<a name="module_LiteGraphSdk--module.exports+createNodes"></a>
 
-## createNodes(graphGuid, nodes, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Object&gt;&gt;</code>
+#### module.exports.createNodes(graphGuid, nodes, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
 Create multiple nodes.
 
-**Kind**: global function  
-**Returns**: <code>Promise.&lt;Array.&lt;Object&gt;&gt;</code> - - The list of created nodes.  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
+**Returns**: <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code> - - The list of created nodes.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -601,12 +275,12 @@ Create multiple nodes.
 | nodes | <code>Array.&lt;Object&gt;</code> | List of node objects. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createNode"></a>
+<a name="module_LiteGraphSdk--module.exports+createNode"></a>
 
-## createNode(node, [cancellationToken]) ⇒ <code>Promise.&lt;Node&gt;</code>
+#### module.exports.createNode(node, [cancellationToken]) ⇒ <code>Promise.&lt;Node&gt;</code>
 Create a node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Node&gt;</code> - - The created node.  
 
 | Param | Type | Description |
@@ -619,12 +293,12 @@ Create a node.
 | node.CreatedUtc | <code>Date</code> | Creation timestamp in UTC (defaults to now). |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readNodes"></a>
+<a name="module_LiteGraphSdk--module.exports+readNodes"></a>
 
-## readNodes(graphGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
+#### module.exports.readNodes(graphGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
 Read nodes for a specific graph.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code> - - An array of nodes.  
 
 | Param | Type | Description |
@@ -632,12 +306,12 @@ Read nodes for a specific graph.
 | graphGuid | <code>string</code> | The GUID of the graph. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="searchNodes"></a>
+<a name="module_LiteGraphSdk--module.exports+searchNodes"></a>
 
-## searchNodes(searchReq, graphGuid, [cancellationToken]) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
+#### module.exports.searchNodes(searchReq, graphGuid, [cancellationToken]) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
 Search nodes.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;SearchResult&gt;</code> - - The search result.  
 
 | Param | Type | Description |
@@ -649,12 +323,12 @@ Search nodes.
 | graphGuid | <code>string</code> | The GUID of the graph. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readNode"></a>
+<a name="module_LiteGraphSdk--module.exports+readNode"></a>
 
-## readNode(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Node&gt;</code>
+#### module.exports.readNode(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Node&gt;</code>
 Read a specific node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Node&gt;</code> - - The requested node.  
 
 | Param | Type | Description |
@@ -663,12 +337,12 @@ Read a specific node.
 | nodeGuid | <code>string</code> | The GUID of the node. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="updateNode"></a>
+<a name="module_LiteGraphSdk--module.exports+updateNode"></a>
 
-## updateNode(node, [cancellationToken]) ⇒ <code>Promise.&lt;Node&gt;</code>
+#### module.exports.updateNode(node, [cancellationToken]) ⇒ <code>Promise.&lt;Node&gt;</code>
 Update a node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Node&gt;</code> - - The updated node.  
 
 | Param | Type | Description |
@@ -681,12 +355,12 @@ Update a node.
 | node.CreatedUtc | <code>Date</code> | Creation timestamp in UTC (defaults to now). |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteNode"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteNode"></a>
 
-## deleteNode(graphGuid, nodeGuid, [cancellationToken])
+#### module.exports.deleteNode(graphGuid, nodeGuid, [cancellationToken])
 Delete a node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -694,24 +368,24 @@ Delete a node.
 | nodeGuid | <code>string</code> | The GUID of the node. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteNodes"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteNodes"></a>
 
-## deleteNodes(graphGuid, [cancellationToken])
+#### module.exports.deleteNodes(graphGuid, [cancellationToken])
 Delete all nodes within a graph.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | graphGuid | <code>string</code> | The GUID of the graph. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteMultipleNodes"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteMultipleNodes"></a>
 
-## deleteMultipleNodes(graphGuid, nodeGuids, [cancellationToken])
+#### module.exports.deleteMultipleNodes(graphGuid, nodeGuids, [cancellationToken])
 Delete multiple nodes within a graph.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -719,12 +393,12 @@ Delete multiple nodes within a graph.
 | nodeGuids | <code>Array.&lt;string&gt;</code> | The list of node GUIDs to delete. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="edgeExists"></a>
+<a name="module_LiteGraphSdk--module.exports+edgeExists"></a>
 
-## edgeExists(graphGuid, guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.edgeExists(graphGuid, guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Check if an edge exists by GUID.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;boolean&gt;</code> - - True if exists.  
 
 | Param | Type | Description |
@@ -733,12 +407,12 @@ Check if an edge exists by GUID.
 | guid | <code>string</code> | Edge GUID. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createEdges"></a>
+<a name="module_LiteGraphSdk--module.exports+createEdges"></a>
 
-## createEdges(graphGuid, edges, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Object&gt;&gt;</code>
+#### module.exports.createEdges(graphGuid, edges, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Object&gt;&gt;</code>
 Create multiple edges.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Object&gt;&gt;</code> - - The list of created edges.  
 
 | Param | Type | Description |
@@ -747,12 +421,12 @@ Create multiple edges.
 | edges | <code>Array.&lt;Object&gt;</code> | List of edge objects. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createEdge"></a>
+<a name="module_LiteGraphSdk--module.exports+createEdge"></a>
 
-## createEdge(edge, [cancellationToken]) ⇒ <code>Promise.&lt;Edge&gt;</code>
+#### module.exports.createEdge(edge, [cancellationToken]) ⇒ <code>Promise.&lt;Edge&gt;</code>
 Create an edge.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Edge&gt;</code> - - The created edge.  
 
 | Param | Type | Default | Description |
@@ -768,12 +442,12 @@ Create an edge.
 | [edge.Data] | <code>Object</code> |  | Additional object data associated with the edge (default is null). |
 | [cancellationToken] | <code>AbortController</code> |  | Optional cancellation token for cancelling the request. |
 
-<a name="readEdges"></a>
+<a name="module_LiteGraphSdk--module.exports+readEdges"></a>
 
-## readEdges(graphGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
+#### module.exports.readEdges(graphGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
 Read edges.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code> - - List of edges.  
 
 | Param | Type | Description |
@@ -781,12 +455,12 @@ Read edges.
 | graphGuid | <code>string</code> | Graph GUID. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="searchEdges"></a>
+<a name="module_LiteGraphSdk--module.exports+searchEdges"></a>
 
-## searchEdges(graphGuid, searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
+#### module.exports.searchEdges(graphGuid, searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
 Search edges.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;SearchResult&gt;</code> - - The search result.  
 
 | Param | Type | Description |
@@ -798,12 +472,12 @@ Search edges.
 | searchReq.Expr | <code>Object</code> | Expression used for the search (default is null). |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readEdge"></a>
+<a name="module_LiteGraphSdk--module.exports+readEdge"></a>
 
-## readEdge(graphGuid, edgeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Edge&gt;</code>
+#### module.exports.readEdge(graphGuid, edgeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Edge&gt;</code>
 Read an edge.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Edge&gt;</code> - - The requested edge.  
 
 | Param | Type | Description |
@@ -812,12 +486,12 @@ Read an edge.
 | edgeGuid | <code>string</code> | Edge GUID. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="updateEdge"></a>
+<a name="module_LiteGraphSdk--module.exports+updateEdge"></a>
 
-## updateEdge(edge, [cancellationToken]) ⇒ <code>Promise.&lt;Edge&gt;</code>
+#### module.exports.updateEdge(edge, [cancellationToken]) ⇒ <code>Promise.&lt;Edge&gt;</code>
 Update an edge.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Edge&gt;</code> - - The updated edge.  
 
 | Param | Type | Default | Description |
@@ -833,12 +507,12 @@ Update an edge.
 | [edge.Data] | <code>Object</code> |  | Additional object data associated with the edge (default is null). |
 | [cancellationToken] | <code>AbortController</code> |  | Optional cancellation token for cancelling the request. |
 
-<a name="deleteEdge"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteEdge"></a>
 
-## deleteEdge(graphGuid, edgeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
+#### module.exports.deleteEdge(graphGuid, edgeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
 Delete an edge.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;void&gt;</code> - - Promise representing the completion of the deletion.  
 
 | Param | Type | Description |
@@ -847,24 +521,24 @@ Delete an edge.
 | edgeGuid | <code>string</code> | Edge GUID. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteEdges"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteEdges"></a>
 
-## deleteEdges(graphGuid, [cancellationToken])
+#### module.exports.deleteEdges(graphGuid, [cancellationToken])
 Delete all edges within a graph.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | graphGuid | <code>string</code> | The GUID of the graph. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteMultipleEdges"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteMultipleEdges"></a>
 
-## deleteMultipleEdges(graphGuid, edgeGuids, [cancellationToken])
+#### module.exports.deleteMultipleEdges(graphGuid, edgeGuids, [cancellationToken])
 Delete multiple edges within a graph.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -872,12 +546,12 @@ Delete multiple edges within a graph.
 | edgeGuids | <code>Array.&lt;string&gt;</code> | The list of edge GUIDs to delete. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="getEdgesFromNode"></a>
+<a name="module_LiteGraphSdk--module.exports+getEdgesFromNode"></a>
 
-## getEdgesFromNode(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
+#### module.exports.getEdgesFromNode(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
 Get edges from a node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code> - - Edges.  
 
 | Param | Type | Description |
@@ -886,12 +560,12 @@ Get edges from a node.
 | nodeGuid | <code>string</code> | Node GUID. |
 | [cancellationToken] | <code>AbortSignal</code> | Abort signal for cancellation. |
 
-<a name="getEdgesToNode"></a>
+<a name="module_LiteGraphSdk--module.exports+getEdgesToNode"></a>
 
-## getEdgesToNode(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
+#### module.exports.getEdgesToNode(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
 Get edges to a node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code> - - Edges.  
 
 | Param | Type | Description |
@@ -900,12 +574,12 @@ Get edges to a node.
 | nodeGuid | <code>string</code> | Node GUID. |
 | [cancellationToken] | <code>AbortSignal</code> | Abort signal for cancellation. |
 
-<a name="getEdgesBetween"></a>
+<a name="module_LiteGraphSdk--module.exports+getEdgesBetween"></a>
 
-## getEdgesBetween(graphGuid, fromNodeGuid, toNodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
+#### module.exports.getEdgesBetween(graphGuid, fromNodeGuid, toNodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
 Get edges from a given node to a given node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code> - - Edges.  
 
 | Param | Type | Description |
@@ -915,12 +589,12 @@ Get edges from a given node to a given node.
 | toNodeGuid | <code>string</code> | To node GUID. |
 | [cancellationToken] | <code>AbortSignal</code> | Abort signal for cancellation. |
 
-<a name="getAllNodeEdges"></a>
+<a name="module_LiteGraphSdk--module.exports+getAllNodeEdges"></a>
 
-## getAllNodeEdges(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
+#### module.exports.getAllNodeEdges(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
 Get all edges to or from a node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code> - - Edges.  
 
 | Param | Type | Description |
@@ -929,12 +603,12 @@ Get all edges to or from a node.
 | nodeGuid | <code>string</code> | Node GUID. |
 | [cancellationToken] | <code>AbortSignal</code> | Abort signal for cancellation. |
 
-<a name="getChildrenFromNode"></a>
+<a name="module_LiteGraphSdk--module.exports+getChildrenFromNode"></a>
 
-## getChildrenFromNode(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
+#### module.exports.getChildrenFromNode(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
 Get child nodes from a node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code> - - Child nodes.  
 
 | Param | Type | Description |
@@ -943,12 +617,12 @@ Get child nodes from a node.
 | nodeGuid | <code>string</code> | Node GUID. |
 | [cancellationToken] | <code>AbortSignal</code> | Abort signal for cancellation. |
 
-<a name="getParentsFromNode"></a>
+<a name="module_LiteGraphSdk--module.exports+getParentsFromNode"></a>
 
-## getParentsFromNode(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
+#### module.exports.getParentsFromNode(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
 Get parent nodes from a node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code> - - Parent nodes.  
 
 | Param | Type | Description |
@@ -957,12 +631,12 @@ Get parent nodes from a node.
 | nodeGuid | <code>string</code> | Node GUID. |
 | [cancellationToken] | <code>AbortSignal</code> | Abort signal for cancellation. |
 
-<a name="getNodeNeighbors"></a>
+<a name="module_LiteGraphSdk--module.exports+getNodeNeighbors"></a>
 
-## getNodeNeighbors(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
+#### module.exports.getNodeNeighbors(graphGuid, nodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
 Get neighboring nodes from a node.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code> - - Neighboring nodes.  
 
 | Param | Type | Description |
@@ -971,12 +645,12 @@ Get neighboring nodes from a node.
 | nodeGuid | <code>string</code> | Node GUID. |
 | [cancellationToken] | <code>AbortSignal</code> | Abort signal for cancellation. |
 
-<a name="getRoutes"></a>
+<a name="module_LiteGraphSdk--module.exports+getRoutes"></a>
 
-## getRoutes(graphGuid, fromNodeGuid, toNodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;RouteResult&gt;</code>
+#### module.exports.getRoutes(graphGuid, fromNodeGuid, toNodeGuid, [cancellationToken]) ⇒ <code>Promise.&lt;RouteResult&gt;</code>
 Get routes between two nodes.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;RouteResult&gt;</code> - - Routes.  
 
 | Param | Type | Description |
@@ -986,24 +660,24 @@ Get routes between two nodes.
 | toNodeGuid | <code>string</code> | To node GUID. |
 | [cancellationToken] | <code>AbortSignal</code> | Abort signal for cancellation. |
 
-<a name="readTenants"></a>
+<a name="module_LiteGraphSdk--module.exports+readTenants"></a>
 
-## readTenants([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code>
+#### module.exports.readTenants([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code>
 Read all tenants.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code> - - An array of tenants.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readTenant"></a>
+<a name="module_LiteGraphSdk--module.exports+readTenant"></a>
 
-## readTenant(tenantGuid, [cancellationToken]) ⇒ <code>Promise.&lt;TenantMetaData&gt;</code>
+#### module.exports.readTenant(tenantGuid, [cancellationToken]) ⇒ <code>Promise.&lt;TenantMetaData&gt;</code>
 Read a tenant.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;TenantMetaData&gt;</code> - - The tenant.  
 
 | Param | Type | Description |
@@ -1011,12 +685,12 @@ Read a tenant.
 | tenantGuid | <code>string</code> | The GUID of the tenant. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createTenant"></a>
+<a name="module_LiteGraphSdk--module.exports+createTenant"></a>
 
-## createTenant(tenant, [cancellationToken]) ⇒ <code>Promise.&lt;TenantMetaData&gt;</code>
+#### module.exports.createTenant(tenant, [cancellationToken]) ⇒ <code>Promise.&lt;TenantMetaData&gt;</code>
 Create a tenant.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;TenantMetaData&gt;</code> - - The created tenant.  
 
 | Param | Type | Description |
@@ -1026,12 +700,12 @@ Create a tenant.
 | tenant.Active | <code>boolean</code> | Indicates if tenant is active. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="updateTenant"></a>
+<a name="module_LiteGraphSdk--module.exports+updateTenant"></a>
 
-## updateTenant(tenant, guid, [cancellationToken]) ⇒ <code>Promise.&lt;TenantMetaData&gt;</code>
+#### module.exports.updateTenant(tenant, guid, [cancellationToken]) ⇒ <code>Promise.&lt;TenantMetaData&gt;</code>
 Update a tenant.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;TenantMetaData&gt;</code> - - The updated tenant.  
 
 | Param | Type | Description |
@@ -1042,60 +716,60 @@ Update a tenant.
 | guid | <code>string</code> | The GUID of the tenant. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteTenant"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteTenant"></a>
 
-## deleteTenant(tenantGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+#### module.exports.deleteTenant(tenantGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Boolean&gt;</code>
 Delete a tenant.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | tenantGuid | <code>string</code> | The GUID of the tenant. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="tenantExists"></a>
+<a name="module_LiteGraphSdk--module.exports+tenantExists"></a>
 
-## tenantExists(tenantGuid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.tenantExists(tenantGuid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Tenant exists.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | tenantGuid | <code>string</code> | The GUID of the tenant. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="tenantDeleteForce"></a>
+<a name="module_LiteGraphSdk--module.exports+tenantDeleteForce"></a>
 
-## tenantDeleteForce(tenantGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+#### module.exports.tenantDeleteForce(tenantGuid, [cancellationToken]) ⇒ <code>Promise.&lt;Boolean&gt;</code>
 Tenant delete force.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | tenantGuid | <code>string</code> | The GUID of the tenant. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readAllUsers"></a>
+<a name="module_LiteGraphSdk--module.exports+readAllUsers"></a>
 
-## readAllUsers([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;UserMetadata&gt;&gt;</code>
+#### module.exports.readAllUsers([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;UserMetadata&gt;&gt;</code>
 Read all users.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;UserMetadata&gt;&gt;</code> - - An array of users.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readUser"></a>
+<a name="module_LiteGraphSdk--module.exports+readUser"></a>
 
-## readUser(userGuid, [cancellationToken]) ⇒ <code>Promise.&lt;UserMetadata&gt;</code>
+#### module.exports.readUser(userGuid, [cancellationToken]) ⇒ <code>Promise.&lt;UserMetadata&gt;</code>
 Read a user.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;UserMetadata&gt;</code> - - The user.  
 
 | Param | Type | Description |
@@ -1103,12 +777,12 @@ Read a user.
 | userGuid | <code>string</code> | The GUID of the user. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createUser"></a>
+<a name="module_LiteGraphSdk--module.exports+createUser"></a>
 
-## createUser(user, [cancellationToken]) ⇒ <code>Promise.&lt;UserMetadata&gt;</code>
+#### module.exports.createUser(user, [cancellationToken]) ⇒ <code>Promise.&lt;UserMetadata&gt;</code>
 Create a user.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;UserMetadata&gt;</code> - - The created user.  
 
 | Param | Type | Description |
@@ -1121,24 +795,24 @@ Create a user.
 | user.Password | <code>string</code> | The password of the user. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="existsUser"></a>
+<a name="module_LiteGraphSdk--module.exports+existsUser"></a>
 
-## existsUser(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.existsUser(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 User exists.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the user. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="updateUser"></a>
+<a name="module_LiteGraphSdk--module.exports+updateUser"></a>
 
-## updateUser(user, guid, [cancellationToken]) ⇒ <code>Promise.&lt;UserMetadata&gt;</code>
+#### module.exports.updateUser(user, guid, [cancellationToken]) ⇒ <code>Promise.&lt;UserMetadata&gt;</code>
 Update a user.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;UserMetadata&gt;</code> - - The updated user.  
 
 | Param | Type | Description |
@@ -1152,36 +826,36 @@ Update a user.
 | guid | <code>string</code> | The GUID of the user. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteUser"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteUser"></a>
 
-## deleteUser(guid, [cancellationToken]) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+#### module.exports.deleteUser(guid, [cancellationToken]) ⇒ <code>Promise.&lt;Boolean&gt;</code>
 Delete a user.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the user. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readAllCredentials"></a>
+<a name="module_LiteGraphSdk--module.exports+readAllCredentials"></a>
 
-## readAllCredentials([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;CredentialMetadata&gt;&gt;</code>
+#### module.exports.readAllCredentials([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;CredentialMetadata&gt;&gt;</code>
 Read all credentials.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;CredentialMetadata&gt;&gt;</code> - - An array of credentials.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readCredential"></a>
+<a name="module_LiteGraphSdk--module.exports+readCredential"></a>
 
-## readCredential(guid, [cancellationToken]) ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code>
+#### module.exports.readCredential(guid, [cancellationToken]) ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code>
 Read a credential.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;CredentialMetadata&gt;</code> - - The credential.  
 
 | Param | Type | Description |
@@ -1189,12 +863,12 @@ Read a credential.
 | guid | <code>string</code> | The GUID of the credential. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createCredential"></a>
+<a name="module_LiteGraphSdk--module.exports+createCredential"></a>
 
-## createCredential(credential, [cancellationToken]) ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code>
+#### module.exports.createCredential(credential, [cancellationToken]) ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code>
 Create a credential.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;CredentialMetadata&gt;</code> - - The created credential.  
 
 | Param | Type | Description |
@@ -1205,12 +879,12 @@ Create a credential.
 | credential.Active | <code>boolean</code> | Indicates if credential is active. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="updateCredential"></a>
+<a name="module_LiteGraphSdk--module.exports+updateCredential"></a>
 
-## updateCredential(credential, guid, [cancellationToken]) ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code>
+#### module.exports.updateCredential(credential, guid, [cancellationToken]) ⇒ <code>Promise.&lt;CredentialMetadata&gt;</code>
 Update a credential.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;CredentialMetadata&gt;</code> - - The updated credential.  
 
 | Param | Type | Description |
@@ -1222,83 +896,83 @@ Update a credential.
 | guid | <code>string</code> | The GUID of the credential. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteCredential"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteCredential"></a>
 
-## deleteCredential(guid, [cancellationToken]) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+#### module.exports.deleteCredential(guid, [cancellationToken]) ⇒ <code>Promise.&lt;Boolean&gt;</code>
 Delete a credential.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the credential. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="existsCredential"></a>
+<a name="module_LiteGraphSdk--module.exports+existsCredential"></a>
 
-## existsCredential(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.existsCredential(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Credential exists.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the credential. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readAllTags"></a>
+<a name="module_LiteGraphSdk--module.exports+readAllTags"></a>
 
-## readAllTags([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;TagMetaData&gt;&gt;</code>
+#### module.exports.readAllTags([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;TagMetaData&gt;&gt;</code>
 Read all tags.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readTag"></a>
+<a name="module_LiteGraphSdk--module.exports+readTag"></a>
 
-## readTag(guid, [cancellationToken]) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
+#### module.exports.readTag(guid, [cancellationToken]) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
 Read a tag.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the tag. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="existsTag"></a>
+<a name="module_LiteGraphSdk--module.exports+existsTag"></a>
 
-## existsTag(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.existsTag(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Tag exists.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the tag. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createTag"></a>
+<a name="module_LiteGraphSdk--module.exports+createTag"></a>
 
-## createTag(tag, [cancellationToken]) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
+#### module.exports.createTag(tag, [cancellationToken]) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
 Create a tag.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | tag | <code>TagMetaData</code> | The tag to create. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="updateTag"></a>
+<a name="module_LiteGraphSdk--module.exports+updateTag"></a>
 
-## updateTag(tag, guid, [cancellationToken]) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
+#### module.exports.updateTag(tag, guid, [cancellationToken]) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
 Update a tag.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1306,71 +980,71 @@ Update a tag.
 | guid | <code>string</code> | The GUID of the tag. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteTag"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteTag"></a>
 
-## deleteTag(guid, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
+#### module.exports.deleteTag(guid, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
 Delete a tag.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the tag. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readAllLabels"></a>
+<a name="module_LiteGraphSdk--module.exports+readAllLabels"></a>
 
-## readAllLabels([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;LabelMetadata&gt;&gt;</code>
+#### module.exports.readAllLabels([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;LabelMetadata&gt;&gt;</code>
 Read all labels.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readLabel"></a>
+<a name="module_LiteGraphSdk--module.exports+readLabel"></a>
 
-## readLabel(guid, [cancellationToken]) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
+#### module.exports.readLabel(guid, [cancellationToken]) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
 Read a label.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the label. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="existsLabel"></a>
+<a name="module_LiteGraphSdk--module.exports+existsLabel"></a>
 
-## existsLabel(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.existsLabel(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Label exists.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the label. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createLabel"></a>
+<a name="module_LiteGraphSdk--module.exports+createLabel"></a>
 
-## createLabel(label, [cancellationToken]) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
+#### module.exports.createLabel(label, [cancellationToken]) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
 Create a label.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | label | <code>LabelMetadata</code> | The label to create. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="updateLabel"></a>
+<a name="module_LiteGraphSdk--module.exports+updateLabel"></a>
 
-## updateLabel(label, guid, [cancellationToken]) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
+#### module.exports.updateLabel(label, guid, [cancellationToken]) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
 Update a label.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1378,71 +1052,71 @@ Update a label.
 | guid | <code>string</code> | The GUID of the label. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteLabel"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteLabel"></a>
 
-## deleteLabel(guid, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
+#### module.exports.deleteLabel(guid, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
 Delete a label.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the label. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readAllVectors"></a>
+<a name="module_LiteGraphSdk--module.exports+readAllVectors"></a>
 
-## readAllVectors([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;VectorMetadata&gt;&gt;</code>
+#### module.exports.readAllVectors([cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;VectorMetadata&gt;&gt;</code>
 Read all vectors.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="readVector"></a>
+<a name="module_LiteGraphSdk--module.exports+readVector"></a>
 
-## readVector(guid, [cancellationToken]) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
+#### module.exports.readVector(guid, [cancellationToken]) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
 Read a vector.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the vector. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="existsVector"></a>
+<a name="module_LiteGraphSdk--module.exports+existsVector"></a>
 
-## existsVector(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.existsVector(guid, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Vector exists.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the vector. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="createVector"></a>
+<a name="module_LiteGraphSdk--module.exports+createVector"></a>
 
-## createVector(vector, [cancellationToken]) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
+#### module.exports.createVector(vector, [cancellationToken]) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
 Create a vector.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | vector | <code>VectorMetadata</code> | The vector to create. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="updateVector"></a>
+<a name="module_LiteGraphSdk--module.exports+updateVector"></a>
 
-## updateVector(vector, guid, [cancellationToken]) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
+#### module.exports.updateVector(vector, guid, [cancellationToken]) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
 Update a vector.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1450,24 +1124,24 @@ Update a vector.
 | guid | <code>string</code> | The GUID of the vector. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteVector"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteVector"></a>
 
-## deleteVector(guid, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
+#### module.exports.deleteVector(guid, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
 Delete a vector.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the vector. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="searchVectors"></a>
+<a name="module_LiteGraphSdk--module.exports+searchVectors"></a>
 
-## searchVectors(searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;VectorSearchResult&gt;</code>
+#### module.exports.searchVectors(searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;VectorSearchResult&gt;</code>
 Search Vectors.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;VectorSearchResult&gt;</code> - - The search result.  
 
 | Param | Type | Description |
@@ -1479,12 +1153,12 @@ Search Vectors.
 | searchReq.Labels | <code>Array.&lt;string&gt;</code> | The domain of the search type. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="generateToken"></a>
+<a name="module_LiteGraphSdk--module.exports+generateToken"></a>
 
-## generateToken(email, tenantId, password, [cancellationToken]) ⇒ <code>Promise.&lt;Token&gt;</code>
+#### module.exports.generateToken(email, tenantId, password, [cancellationToken]) ⇒ <code>Promise.&lt;Token&gt;</code>
 Generate an authentication token.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Token&gt;</code> - The generated authentication token  
 
 | Param | Type | Description |
@@ -1494,12 +1168,12 @@ Generate an authentication token.
 | password | <code>string</code> | The user's password. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="getTokenDetails"></a>
+<a name="module_LiteGraphSdk--module.exports+getTokenDetails"></a>
 
-## getTokenDetails(token, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
+#### module.exports.getTokenDetails(token, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
 Fetch details about an authentication token.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - The token details  
 
 | Param | Type | Description |
@@ -1507,12 +1181,12 @@ Fetch details about an authentication token.
 | token | <code>string</code> | The authentication token to inspect. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="getTenantsForEmail"></a>
+<a name="module_LiteGraphSdk--module.exports+getTenantsForEmail"></a>
 
-## getTenantsForEmail(email, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code>
+#### module.exports.getTenantsForEmail(email, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code>
 Get tenants associated with an email address.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
 **Returns**: <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code> - Array of tenants associated with the email  
 
 | Param | Type | Description |
@@ -1520,24 +1194,206 @@ Get tenants associated with an email address.
 | email | <code>string</code> | The email address to lookup tenants for. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="log"></a>
+<a name="module_SdkBase"></a>
 
-## log(sev, msg)
+## SdkBase
+SDK Base class for making API calls with logging and timeout functionality.
+
+
+* [SdkBase](#module_SdkBase)
+    * [module.exports](#exp_module_SdkBase--module.exports) ⏏
+        * [new module.exports(endpoint, [tenantGuid], [accessKey])](#new_module_SdkBase--module.exports_new)
+        * [.tenantGuid](#module_SdkBase--module.exports+tenantGuid) ⇒ <code>string</code>
+        * [.tenantGuid](#module_SdkBase--module.exports+tenantGuid)
+        * [.accessKey](#module_SdkBase--module.exports+accessKey) ⇒ <code>string</code>
+        * [.accessKey](#module_SdkBase--module.exports+accessKey)
+        * [.accessToken](#module_SdkBase--module.exports+accessToken) ⇒ <code>string</code>
+        * [.accessToken](#module_SdkBase--module.exports+accessToken)
+        * [.header](#module_SdkBase--module.exports+header) ⇒ <code>string</code>
+        * [.header](#module_SdkBase--module.exports+header)
+        * [.endpoint](#module_SdkBase--module.exports+endpoint) ⇒ <code>string</code>
+        * [.endpoint](#module_SdkBase--module.exports+endpoint)
+        * [.timeoutMs](#module_SdkBase--module.exports+timeoutMs) ⇒ <code>number</code>
+        * [.timeoutMs](#module_SdkBase--module.exports+timeoutMs)
+        * [.log(sev, msg)](#module_SdkBase--module.exports+log)
+        * [.validateConnectivity([cancellationToken])](#module_SdkBase--module.exports+validateConnectivity) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.putCreate(url, obj, model, [cancellationToken])](#module_SdkBase--module.exports+putCreate) ⇒ <code>Promise.&lt;Object&gt;</code>
+        * [.head(url, [cancellationToken])](#module_SdkBase--module.exports+head) ⇒ <code>Promise.&lt;boolean&gt;</code>
+        * [.get(url, model, [cancellationToken], [headers])](#module_SdkBase--module.exports+get) ⇒ <code>Promise.&lt;Object&gt;</code>
+        * [.getDataInBytes(url, [cancellationToken])](#module_SdkBase--module.exports+getDataInBytes) ⇒ <code>Promise.&lt;Object&gt;</code>
+        * [.getMany(url, model, [cancellationToken], [headers])](#module_SdkBase--module.exports+getMany) ⇒ <code>Promise.&lt;Array&gt;</code>
+        * [.putUpdate(url, obj, model, [cancellationToken])](#module_SdkBase--module.exports+putUpdate) ⇒ <code>Promise.&lt;Object&gt;</code>
+        * [.delete(url, [cancellationToken])](#module_SdkBase--module.exports+delete) ⇒ <code>Promise.&lt;void&gt;</code>
+        * [.post(url, data, model, [cancellationToken])](#module_SdkBase--module.exports+post) ⇒ <code>Promise.&lt;Object&gt;</code>
+        * [.deleteMany(url, obj, [cancellationToken])](#module_SdkBase--module.exports+deleteMany) ⇒ <code>Promise.&lt;void&gt;</code>
+        * [.postBatch(url, obj, model, [cancellationToken])](#module_SdkBase--module.exports+postBatch) ⇒ <code>Promise.&lt;(Object\|null)&gt;</code>
+
+<a name="exp_module_SdkBase--module.exports"></a>
+
+### module.exports ⏏
+**Kind**: Exported class  
+<a name="new_module_SdkBase--module.exports_new"></a>
+
+#### new module.exports(endpoint, [tenantGuid], [accessKey])
+Creates an instance of SdkBase.
+
+**Throws**:
+
+- <code>Error</code> Throws an error if the endpoint is null or empty.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| endpoint | <code>string</code> | The API endpoint base URL. |
+| [tenantGuid] | <code>string</code> | The tenant GUID. |
+| [accessKey] | <code>string</code> | The access key. |
+
+<a name="module_SdkBase--module.exports+tenantGuid"></a>
+
+#### module.exports.tenantGuid ⇒ <code>string</code>
+Getter for the tenant GUID.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Returns**: <code>string</code> - The tenant GUID.  
+<a name="module_SdkBase--module.exports+tenantGuid"></a>
+
+#### module.exports.tenantGuid
+Setter for the tenant GUID.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Throws**:
+
+- <code>Error</code> Throws an error if the tenant GUID is null or empty.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>string</code> | The tenant GUID. |
+
+<a name="module_SdkBase--module.exports+accessKey"></a>
+
+#### module.exports.accessKey ⇒ <code>string</code>
+Getter for the access key.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Returns**: <code>string</code> - The access key.  
+<a name="module_SdkBase--module.exports+accessKey"></a>
+
+#### module.exports.accessKey
+Setter for the access key.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Throws**:
+
+- <code>Error</code> Throws an error if the access key is null or empty.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>string</code> | The access key. |
+
+<a name="module_SdkBase--module.exports+accessToken"></a>
+
+#### module.exports.accessToken ⇒ <code>string</code>
+Getter for the access token.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Returns**: <code>string</code> - The access token.  
+<a name="module_SdkBase--module.exports+accessToken"></a>
+
+#### module.exports.accessToken
+Setter for the access token.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Throws**:
+
+- <code>Error</code> Throws an error if the access token is null or empty.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>string</code> | The access token. |
+
+<a name="module_SdkBase--module.exports+header"></a>
+
+#### module.exports.header ⇒ <code>string</code>
+Getter for the request header prefix.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Returns**: <code>string</code> - The header prefix.  
+<a name="module_SdkBase--module.exports+header"></a>
+
+#### module.exports.header
+Setter for the request header prefix.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>string</code> | The header prefix. |
+
+<a name="module_SdkBase--module.exports+endpoint"></a>
+
+#### module.exports.endpoint ⇒ <code>string</code>
+Getter for the API endpoint.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Returns**: <code>string</code> - The endpoint URL.  
+<a name="module_SdkBase--module.exports+endpoint"></a>
+
+#### module.exports.endpoint
+Setter for the API endpoint.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Throws**:
+
+- <code>Error</code> Throws an error if the endpoint is null or empty.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>string</code> | The endpoint URL. |
+
+<a name="module_SdkBase--module.exports+timeoutMs"></a>
+
+#### module.exports.timeoutMs ⇒ <code>number</code>
+Getter for the timeout in milliseconds.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Returns**: <code>number</code> - The timeout in milliseconds.  
+<a name="module_SdkBase--module.exports+timeoutMs"></a>
+
+#### module.exports.timeoutMs
+Setter for the timeout in milliseconds.
+
+**Kind**: instance property of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
+**Throws**:
+
+- <code>Error</code> Throws an error if the timeout is less than 1.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>number</code> | Timeout value in milliseconds. |
+
+<a name="module_SdkBase--module.exports+log"></a>
+
+#### module.exports.log(sev, msg)
 Logs a message with a severity level.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | sev | <code>string</code> | The severity level (e.g., SeverityEnum.Debug, 'warn'). |
 | msg | <code>string</code> | The message to log. |
 
-<a name="validateConnectivity"></a>
+<a name="module_SdkBase--module.exports+validateConnectivity"></a>
 
-## validateConnectivity([cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.validateConnectivity([cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Validates API connectivity using a HEAD request.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;boolean&gt;</code> - Resolves to true if the connection is successful.  
 **Throws**:
 
@@ -1548,12 +1404,12 @@ Validates API connectivity using a HEAD request.
 | --- | --- | --- |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="putCreate"></a>
+<a name="module_SdkBase--module.exports+putCreate"></a>
 
-## putCreate(url, obj, model, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
+#### module.exports.putCreate(url, obj, model, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
 Sends a PUT request to create an object at a given URL.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - Resolves with the created object.  
 **Throws**:
 
@@ -1567,12 +1423,12 @@ Sends a PUT request to create an object at a given URL.
 | model | <code>Class</code> | Modal to deserialize on |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="head"></a>
+<a name="module_SdkBase--module.exports+head"></a>
 
-## head(url, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
+#### module.exports.head(url, [cancellationToken]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Checks if an object exists at a given URL using a HEAD request.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;boolean&gt;</code> - Resolves to true if the object exists.  
 **Throws**:
 
@@ -1584,12 +1440,12 @@ Checks if an object exists at a given URL using a HEAD request.
 | url | <code>string</code> | The URL to check. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="get"></a>
+<a name="module_SdkBase--module.exports+get"></a>
 
-## get(url, model, [cancellationToken], [headers]) ⇒ <code>Promise.&lt;Object&gt;</code>
+#### module.exports.get(url, model, [cancellationToken], [headers]) ⇒ <code>Promise.&lt;Object&gt;</code>
 Retrieves an object from a given URL using a GET request.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - Resolves with the retrieved object.  
 **Throws**:
 
@@ -1603,12 +1459,12 @@ Retrieves an object from a given URL using a GET request.
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 | [headers] | <code>Object</code> | Additional headers. |
 
-<a name="getDataInBytes"></a>
+<a name="module_SdkBase--module.exports+getDataInBytes"></a>
 
-## getDataInBytes(url, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
+#### module.exports.getDataInBytes(url, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
 Retrieves raw data from a given URL using a GET request.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - Resolves with the retrieved data.  
 **Throws**:
 
@@ -1620,12 +1476,12 @@ Retrieves raw data from a given URL using a GET request.
 | url | <code>string</code> | The URL of the object. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="getMany"></a>
+<a name="module_SdkBase--module.exports+getMany"></a>
 
-## getMany(url, model, [cancellationToken], [headers]) ⇒ <code>Promise.&lt;Array&gt;</code>
+#### module.exports.getMany(url, model, [cancellationToken], [headers]) ⇒ <code>Promise.&lt;Array&gt;</code>
 Retrieves a list of objects from a given URL using a GET request.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;Array&gt;</code> - Resolves with the list of retrieved objects.  
 **Throws**:
 
@@ -1639,12 +1495,12 @@ Retrieves a list of objects from a given URL using a GET request.
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 | [headers] | <code>Object</code> | Additional headers. |
 
-<a name="putUpdate"></a>
+<a name="module_SdkBase--module.exports+putUpdate"></a>
 
-## putUpdate(url, obj, model, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
+#### module.exports.putUpdate(url, obj, model, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
 Sends a PUT request to update an object at a given URL.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - Resolves with the created object.  
 **Throws**:
 
@@ -1658,12 +1514,12 @@ Sends a PUT request to update an object at a given URL.
 | model | <code>Class</code> | Modal to deserialize on |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="delete"></a>
+<a name="module_SdkBase--module.exports+delete"></a>
 
-## delete(url, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
+#### module.exports.delete(url, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
 Sends a DELETE request to remove an object at a given URL.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;void&gt;</code> - Resolves if the object is successfully deleted.  
 **Throws**:
 
@@ -1675,12 +1531,12 @@ Sends a DELETE request to remove an object at a given URL.
 | url | <code>string</code> | The URL of the object to delete. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="post"></a>
+<a name="module_SdkBase--module.exports+post"></a>
 
-## post(url, data, model, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
+#### module.exports.post(url, data, model, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
 Submits data using a POST request to a given URL.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - Resolves with the response data.  
 **Throws**:
 
@@ -1694,12 +1550,12 @@ Submits data using a POST request to a given URL.
 | model | <code>Class</code> | Modal to deserialize on |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="deleteMany"></a>
+<a name="module_SdkBase--module.exports+deleteMany"></a>
 
-## deleteMany(url, obj, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
+#### module.exports.deleteMany(url, obj, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
 Sends a DELETE request to remove an object at a given URL.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;void&gt;</code> - Resolves if the object is successfully deleted.  
 **Throws**:
 
@@ -1712,12 +1568,12 @@ Sends a DELETE request to remove an object at a given URL.
 | obj | <code>Object</code> | The object to be created. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="postBatch"></a>
+<a name="module_SdkBase--module.exports+postBatch"></a>
 
-## postBatch(url, obj, model, [cancellationToken]) ⇒ <code>Promise.&lt;(Object\|null)&gt;</code>
+#### module.exports.postBatch(url, obj, model, [cancellationToken]) ⇒ <code>Promise.&lt;(Object\|null)&gt;</code>
 Submits a POST request.
 
-**Kind**: global function  
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_SdkBase--module.exports)  
 **Returns**: <code>Promise.&lt;(Object\|null)&gt;</code> - The response data parsed as an object of type Object, or null if unsuccessful.  
 **Throws**:
 

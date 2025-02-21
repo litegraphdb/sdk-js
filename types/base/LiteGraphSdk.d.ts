@@ -1,6 +1,8 @@
 /**
  * LiteGraph SDK class.
  * Extends the SdkBase class.
+ * @module  LiteGraphSdk
+ * @extends SdkBase
  */
 export default class LiteGraphSdk extends SdkBase {
     /**
@@ -113,9 +115,9 @@ export default class LiteGraphSdk extends SdkBase {
      * @param {string} graphGuid - The GUID of the graph.
      * @param {Array<Object>} nodes - List of node objects.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-     * @returns {Promise<Array<Object>>} - The list of created nodes.
+     * @returns {Promise<Array<Node>>} - The list of created nodes.
      */
-    createNodes(graphGuid: string, nodes: Array<any>, cancellationToken?: AbortController): Promise<Array<any>>;
+    createNodes(graphGuid: string, nodes: Array<any>, cancellationToken?: AbortController): Promise<Array<Node>>;
     /**
      * Create a node.
      * @param {Object} node - Information about the node.
