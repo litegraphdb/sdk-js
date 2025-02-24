@@ -51,17 +51,18 @@ export default class LiteGraphSdk extends SdkBase {
    * @param {Object} graph - Information about the graph.
    * @param {string} graph.GUID - Globally unique identifier (automatically generated if not provided).
    * @param {string} graph.Name - Name of the graph.
-   * @param {Date} graph.CreatedUtc - Creation timestamp in UTC (defaults to now).
+   * @param {string[]} graph.Labels - Array of labels associated with the graph.
+   * @param {Object} graph.Tags - Key-value pairs of tags.
+   * @param {Array<VectorMetadata>} graph.Vectors - Array of vector embeddings.
    * @param {Object} graph.Data - Object data associated with the graph (default is null).
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<Graph>} - The created graph.
    */
-  async createGraph(guid, name, data = null, cancellationToken) {
-    if (!name) {
-      GenericExceptionHandlers.ArgumentNullException('Name');
+  async createGraph(graph, cancellationToken) {
+    if (!graph) {
+      GenericExceptionHandlers.ArgumentNullException('Graph');
     }
     const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs`;
-    const graph = { GUID: guid, Name: name, Data: data };
     return await this.putCreate(url, graph, Graph, cancellationToken);
   }
 

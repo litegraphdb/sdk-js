@@ -142,7 +142,9 @@ Create a graph.
 | graph | <code>Object</code> | Information about the graph. |
 | graph.GUID | <code>string</code> | Globally unique identifier (automatically generated if not provided). |
 | graph.Name | <code>string</code> | Name of the graph. |
-| graph.CreatedUtc | <code>Date</code> | Creation timestamp in UTC (defaults to now). |
+| graph.Labels | <code>Array.&lt;string&gt;</code> | Array of labels associated with the graph. |
+| graph.Tags | <code>Object</code> | Key-value pairs of tags. |
+| graph.Vectors | <code>Array.&lt;VectorMetadata&gt;</code> | Array of vector embeddings. |
 | graph.Data | <code>Object</code> | Object data associated with the graph (default is null). |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 

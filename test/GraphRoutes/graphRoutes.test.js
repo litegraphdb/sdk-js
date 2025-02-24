@@ -29,18 +29,15 @@ describe('GraphRoute Tests', () => {
     });
 
     test('should create a graph', async () => {
-      const response = await api.createGraph(
-        {
-          GUID: '01010101-0101-0101-0101-010101010101',
-          GraphGUID: '01010101-0101-0101-0101-010101010101',
-          Name: 'Sample Node',
-          Data: {
-            key1: 'value1',
-          },
-          CreatedUtc: '2024-10-19T14:35:20.351Z',
+      const response = await api.createGraph({
+        GUID: '01010101-0101-0101-0101-010101010101',
+        GraphGUID: '01010101-0101-0101-0101-010101010101',
+        Name: 'Sample Node',
+        Data: {
+          key1: 'value1',
         },
-        'Custom GUID'
-      );
+        CreatedUtc: '2024-10-19T14:35:20.351Z',
+      });
       expect(response.GUID).toEqual(mockGraphGuid);
       expect(true).toBe(response instanceof Graph);
       expect(JSON.stringify(response)).toBe(JSON.stringify(new Graph(graphData[mockGraphGuid])));
@@ -51,7 +48,7 @@ describe('GraphRoute Tests', () => {
         await api.createGraph();
       } catch (err) {
         expect(err instanceof Error).toBe(true);
-        expect(err.toString()).toBe('Error: ArgumentNullException: Name is null or empty');
+        expect(err.toString()).toBe('Error: ArgumentNullException: Graph is null or empty');
       }
     });
 

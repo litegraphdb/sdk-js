@@ -24,12 +24,19 @@ export default class LiteGraphSdk extends SdkBase {
      * @param {Object} graph - Information about the graph.
      * @param {string} graph.GUID - Globally unique identifier (automatically generated if not provided).
      * @param {string} graph.Name - Name of the graph.
-     * @param {Date} graph.CreatedUtc - Creation timestamp in UTC (defaults to now).
+     * @param {string[]} graph.Labels - Array of labels associated with the graph.
+     * @param {Object} graph.Tags - Key-value pairs of tags.
+     * @param {[]VectorMetadata} graph.Vectors - Array of vector embeddings.
      * @param {Object} graph.Data - Object data associated with the graph (default is null).
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      * @returns {Promise<Graph>} - The created graph.
      */
-    createGraph(guid: any, name: any, data?: any, cancellationToken?: AbortController): Promise<Graph>;
+    createGraph(graph: {
+        GUID: string;
+        Name: string;
+        Labels: string[];
+        Tags: any;
+    }, cancellationToken?: AbortController): Promise<Graph>;
     /**
      * Read all graphs.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
