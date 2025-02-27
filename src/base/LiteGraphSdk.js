@@ -1193,7 +1193,7 @@ export default class LiteGraphSdk extends SdkBase {
    * Fetch details about an authentication token.
    * @param {string} token - The authentication token to inspect.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<Object>} The token details
+   * @returns {Promise<Token>} The token details
    */
   async getTokenDetails(token, cancellationToken) {
     if (!token) {

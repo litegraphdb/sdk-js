@@ -26,7 +26,7 @@ export default class LiteGraphSdk extends SdkBase {
      * @param {string} graph.Name - Name of the graph.
      * @param {string[]} graph.Labels - Array of labels associated with the graph.
      * @param {Object} graph.Tags - Key-value pairs of tags.
-     * @param {[]VectorMetadata} graph.Vectors - Array of vector embeddings.
+     * @param {Array<VectorMetadata>} graph.Vectors - Array of vector embeddings.
      * @param {Object} graph.Data - Object data associated with the graph (default is null).
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      * @returns {Promise<Graph>} - The created graph.
@@ -36,6 +36,8 @@ export default class LiteGraphSdk extends SdkBase {
         Name: string;
         Labels: string[];
         Tags: any;
+        Vectors: Array<VectorMetadata>;
+        Data: any;
     }, cancellationToken?: AbortController): Promise<Graph>;
     /**
      * Read all graphs.
@@ -700,9 +702,9 @@ export default class LiteGraphSdk extends SdkBase {
      * Fetch details about an authentication token.
      * @param {string} token - The authentication token to inspect.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-     * @returns {Promise<Object>} The token details
+     * @returns {Promise<Token>} The token details
      */
-    getTokenDetails(token: string, cancellationToken?: AbortController): Promise<any>;
+    getTokenDetails(token: string, cancellationToken?: AbortController): Promise<Token>;
     /**
      * Get tenants associated with an email address.
      * @param {string} email - The email address to lookup tenants for.
@@ -712,6 +714,7 @@ export default class LiteGraphSdk extends SdkBase {
     getTenantsForEmail(email: string, cancellationToken?: AbortController): Promise<TenantMetaData[]>;
 }
 import SdkBase from './SdkBase';
+import { VectorMetadata } from '../models/VectorMetadata';
 import Graph from '../models/Graph';
 import SearchResult from '../models/SearchResult';
 import EdgeBetween from '../models/EdgeBetween';
@@ -723,6 +726,5 @@ import UserMetadata from '../models/UserMetadata';
 import CredentialMetadata from '../models/CredentialMetadata';
 import TagMetaData from '../models/TagMetaData';
 import LabelMetadata from '../models/LabelMetadata';
-import { VectorMetadata } from '../models/VectorMetadata';
 import { VectorSearchResult } from '../models/VectorSearchResult';
 import Token from '../models/Token';

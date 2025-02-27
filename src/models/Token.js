@@ -1,3 +1,6 @@
+import TenantMetaData from './TenantMetaData';
+import UserMetadata from './UserMetadata';
+
 /**
  * Token class representing authentication token details.
  */
@@ -9,6 +12,8 @@ export default class Token {
    * @param {boolean} [token.IsExpired=false] - Indicates whether the token is expired.
    * @param {string} [token.TenantGUID] - Globally unique identifier for the tenant.
    * @param {string} [token.UserGUID] - Globally unique identifier for the user.
+   * @param {UserMetadata} [token.User] - User metadata
+   * @param {TenantMetaData} {token.Tenant} - Tenant metadata
    * @param {string} [token.Token] - The actual token string.
    * @param {boolean} [token.Valid=true] - Indicates whether the token is valid.
    */
@@ -21,6 +26,8 @@ export default class Token {
       UserGUID = '00000000-0000-0000-0000-000000000000',
       Token = null,
       Valid = true,
+      User = {},
+      Tenant = {},
     } = token;
 
     this.TimestampUtc = new Date(TimestampUtc); // Token creation timestamp
@@ -30,5 +37,7 @@ export default class Token {
     this.UserGUID = UserGUID; // User identifier
     this.Token = Token; // The token string
     this.Valid = Valid; // Token validity status
+    this.User = new UserMetadata(User); // User metadata
+    this.Tenant = new TenantMetaData(Tenant); // Tenant metadata
   }
 }

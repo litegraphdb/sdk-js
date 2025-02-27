@@ -9,6 +9,8 @@ export default class Token {
      * @param {boolean} [token.IsExpired=false] - Indicates whether the token is expired.
      * @param {string} [token.TenantGUID] - Globally unique identifier for the tenant.
      * @param {string} [token.UserGUID] - Globally unique identifier for the user.
+     * @param {UserMetadata} [token.User] - User metadata
+     * @param {TenantMetaData} {token.Tenant} - Tenant metadata
      * @param {string} [token.Token] - The actual token string.
      * @param {boolean} [token.Valid=true] - Indicates whether the token is valid.
      */
@@ -18,14 +20,17 @@ export default class Token {
         IsExpired?: boolean;
         TenantGUID?: string;
         UserGUID?: string;
-        Token?: string;
-        Valid?: boolean;
+        User?: UserMetadata;
     });
     TimestampUtc: Date;
     ExpirationUtc: Date;
     IsExpired: boolean;
     TenantGUID: string;
     UserGUID: string;
-    Token: string;
-    Valid: boolean;
+    Token: any;
+    Valid: any;
+    User: UserMetadata;
+    Tenant: TenantMetaData;
 }
+import UserMetadata from './UserMetadata';
+import TenantMetaData from './TenantMetaData';

@@ -97,7 +97,7 @@ Extends the SdkBase class.
         * [.deleteVector(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteVector) ⇒ <code>Promise.&lt;void&gt;</code>
         * [.searchVectors(searchReq, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchVectors) ⇒ <code>Promise.&lt;VectorSearchResult&gt;</code>
         * [.generateToken(email, tenantId, password, [cancellationToken])](#module_LiteGraphSdk--module.exports+generateToken) ⇒ <code>Promise.&lt;Token&gt;</code>
-        * [.getTokenDetails(token, [cancellationToken])](#module_LiteGraphSdk--module.exports+getTokenDetails) ⇒ <code>Promise.&lt;Object&gt;</code>
+        * [.getTokenDetails(token, [cancellationToken])](#module_LiteGraphSdk--module.exports+getTokenDetails) ⇒ <code>Promise.&lt;Token&gt;</code>
         * [.getTenantsForEmail(email, [cancellationToken])](#module_LiteGraphSdk--module.exports+getTenantsForEmail) ⇒ <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code>
 
 <a name="exp_module_LiteGraphSdk--module.exports"></a>
@@ -1172,11 +1172,11 @@ Generate an authentication token.
 
 <a name="module_LiteGraphSdk--module.exports+getTokenDetails"></a>
 
-#### module.exports.getTokenDetails(token, [cancellationToken]) ⇒ <code>Promise.&lt;Object&gt;</code>
+#### module.exports.getTokenDetails(token, [cancellationToken]) ⇒ <code>Promise.&lt;Token&gt;</code>
 Fetch details about an authentication token.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - The token details  
+**Returns**: <code>Promise.&lt;Token&gt;</code> - The token details  
 
 | Param | Type | Description |
 | --- | --- | --- |
