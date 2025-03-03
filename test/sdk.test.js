@@ -4,7 +4,7 @@ import { api, mockEndpoint, sdk, mockTenantId, mockAccessToken } from './setupTe
 
 const server = getServer(handlers);
 
-describe('Lite-Graph SDK', () => {
+describe('LiteGraph SDK', () => {
   beforeAll(() => {
     server.listen();
   });
