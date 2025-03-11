@@ -23,57 +23,28 @@ LiteGraph is a lightweight graph database with both relational and vector suppor
 
 ### Dependencies
 
-Use the command `npm i` to install dependencies.
+-  `jest` - for testing
+-  `msw` - for mocking the api
+-  `superagent` - for making the api calls
+-  `url` - for url parsing
+-  `util` - for utility functions
+-  `uuid` - for generating unique ids
 
 ## Installation
 
 Use the command below to install the package.
 
 ```bash
-npm install litegraph
-```
-
-### Linking the project locally (for development and testing)
-
-To use the library locally without publishing to a remote npm registry, first install the dependencies with the command:
-
-```shell
-npm install
-```
-
-Next, [link](https://docs.npmjs.com/cli/link) it globally in local system's npm with the following command:
-
-```shell
-npm link
-```
-
-To use the link you just defined in your project, switch to the directory you want to use your litegraph from, and run:
-
-```shell
-npm link litegraph
-```
-
-Finally, you need to build the sdk, use command:
-
-```shell
-npm run build
-```
-
-You can then import the SDK with either import or require based on the ES Module (esm) or CommonJS (cjs) project, as shown below:
-
-```javascript
-import sdk from 'litegraph';
-//or
-var sdk = require('litegraph');
+npm i litegraphdb
 ```
 
 ## Quick Start
 
 ```js
-import LiteGraphSdk from 'litegraph';
+import { LiteGraphSdk } from 'litegraphdb';
 
-const api = new LiteGraphSdk(
-    'https://api.litegraph.com',
+const sdk = new LiteGraphSdk(
+    'https://api.litegraphdb.com',
     'your-tenant-guid',
     'your-access-key'
 );
@@ -314,10 +285,10 @@ sdk.searchNodes(searchRequest).then((response) => {
 ### Graphs
 
 ```javascript
-const LiteGraphSdk = require('litegraph');
+const { LiteGraphSdk } = require('litegraphdb');
 
 const api = new LiteGraphSdk(
-    'https://api.litegraph.com',
+    'https://api.litegraphdb.com',
     'your-tenant-guid',
     'your-access-key'
 );
@@ -929,6 +900,41 @@ api.batchExistence('graph-guid',existenceRequest )
 
 
 ## Development
+
+### Linking the project locally (for development and testing)
+
+To use the library locally without publishing to a remote npm registry, first install the dependencies with the command:
+
+```shell
+npm install
+```
+
+Next, [link](https://docs.npmjs.com/cli/link) it globally in local system's npm with the following command:
+
+```shell
+npm link
+```
+
+To use the link you just defined in your project, switch to the directory you want to use your litegraphdb from, and run:
+
+```shell
+npm link litegraphdb
+```
+
+Finally, you need to build the sdk, use command:
+
+```shell
+npm run build
+```
+
+You can then import the SDK with either import or require based on the ES Module (esm) or CommonJS (cjs) project, as shown below:
+
+```javascript
+import { LiteGraphSdk } from 'litegraphdb';
+//or
+var { LiteGraphSdk } = require('litegraphdb');
+```
+
 
 ### Setting up Pre-commit Hooks
 

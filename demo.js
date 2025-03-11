@@ -1,4 +1,4 @@
-var { LiteGraphSdk } = require('litegraph');
+var { LiteGraphSdk } = require('litegraphdb');
 
 var api = new LiteGraphSdk(
   'http://ec2-18-217-169-161.us-east-2.compute.amazonaws.com:8701/',

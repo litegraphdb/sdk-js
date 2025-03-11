@@ -31,10 +31,10 @@ Next, [link](https://docs.npmjs.com/cli/link) it globally in local system's npm 
 npm link
 ```
 
-To use the link you just defined in your project, switch to the directory you want to use your litegraph from, and run:
+To use the link you just defined in your project, switch to the directory you want to use your litegraphdb from, and run:
 
 ```shell
-npm link litegraph
+npm link litegraphdb
 ```
 
 Finally, you need to build the sdk, use command:
@@ -46,9 +46,9 @@ npm run build
 You can then import the SDK with either import or require based on the ES Module (esm) or CommonJS (cjs) project, as shown below:
 
 ```javascript
-import sdk from 'litegraph';
+import sdk from 'litegraphdb';
 //or
-var sdk = require('litegraph');
+var sdk = require('litegraphdb');
 ```
 
 ## Code Style
@@ -106,7 +106,7 @@ Steps to reproduce: (How can we replicate the issue?)
 
 Sample code demonstrating the problem:
 ```javascript
-var { LiteGraphSdk } = require('litegraph');
+var { LiteGraphSdk } = require('litegraphdb');
 
 var api = new LiteGraphSdk(
   'http://example.com', //endpoint
