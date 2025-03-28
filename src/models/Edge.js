@@ -20,32 +20,19 @@ export default class Edge {
    * @param {Array} [edge.Vectors] - Array of vector embeddings associated with the edge.
    */
   constructor(edge = {}) {
-    const {
-      GUID = uuidV4(),
-      GraphGUID = uuidV4(),
-      Name = null,
-      From = uuidV4(),
-      To = uuidV4(),
-      Cost = 0,
-      CreatedUtc = new Date().toISOString(),
-      Data = null,
-      LastUpdateUtc = new Date().toISOString(),
-      Labels = [],
-      Tags = {},
-      Vectors = [],
-    } = edge;
+    const { GUID, GraphGUID, Name, From, To, Cost, CreatedUtc, Data, LastUpdateUtc, Labels, Tags, Vectors } = edge;
 
     this.GUID = GUID; // Unique identifier for the edge
     this.GraphGUID = GraphGUID; // Unique identifier for the graph
-    this.name = Name; // Name of the edge
-    this.from = From; // From node identifier
-    this.to = To; // To node identifier
-    this.cost = Cost; // Cost associated with the edge
-    this.createdUtc = CreatedUtc; // Creation timestamp
-    this.data = Data; // Additional data associated with the edge
-    this.lastUpdateUtc = LastUpdateUtc; // Last update timestamp
-    this.labels = Labels; // Array of labels
-    this.tags = Tags; // Key-value pairs of tags
-    this.vectors = Vectors; // Array of vector embeddings
+    this.Name = Name; // Name of the edge
+    this.From = From; // From node identifier
+    this.To = To; // To node identifier
+    this.Cost = Cost; // Cost associated with the edge
+    this.CreatedUtc = CreatedUtc; // Creation timestamp
+    this.Data = Data; // Additional data associated with the edge
+    this.LastUpdateUtc = LastUpdateUtc; // Last update timestamp
+    this.Labels = Labels; // Array of labels
+    this.Tags = Tags; // Key-value pairs of tags
+    this.Vectors = Vectors; // Array of vector embeddings
   }
 }

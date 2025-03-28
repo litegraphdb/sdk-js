@@ -9,7 +9,7 @@ export default class ApiErrorResponse {
      * @param {Object} [context=null] - Additional contextual information.
      * @param {string} [description=null] - Description of the error.
      */
-    constructor(error?: ApiErrorEnum, context?: any, description?: string);
+    constructor(error: ApiErrorEnum, context?: any, description?: string);
     error: string;
     context: any;
     description: string;

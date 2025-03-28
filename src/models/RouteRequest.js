@@ -13,18 +13,12 @@ export default class RouteRequest {
    * @param {Object} request.NodeFilter - Expression used to filter nodes (default is null).
    */
   constructor(request = {}) {
-    const {
-      Graph = uuidV4(), // Assuming default(Guid) means an empty or new GUID in C#
-      From = uuidV4(), // Assuming default(Guid) means an empty or new GUID in C#
-      To = uuidV4(), // Assuming default(Guid) means an empty or new GUID in C#
-      EdgeFilter = null,
-      NodeFilter = null,
-    } = request;
+    const { Graph, From, To, EdgeFilter, NodeFilter } = request;
 
-    this.graph = Graph; // Unique identifier for the graph
-    this.from = From; // Unique identifier for the from node
-    this.to = To; // Unique identifier for the to node
-    this.edgeFilter = EdgeFilter; // Expression for filtering edges
-    this.nodeFilter = NodeFilter; // Expression for filtering nodes
+    this.Graph = Graph; // Unique identifier for the graph
+    this.From = From; // Unique identifier for the from node
+    this.To = To; // Unique identifier for the to node
+    this.EdgeFilter = EdgeFilter; // Expression for filtering edges
+    this.NodeFilter = NodeFilter; // Expression for filtering nodes
   }
 }

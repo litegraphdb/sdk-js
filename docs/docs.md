@@ -13,8 +13,7 @@ Extends the SdkBase class.</p>
 <a name="module_LiteGraphSdk"></a>
 
 ## LiteGraphSdk ⇐ <code>SdkBase</code>
-LiteGraph SDK class.
-Extends the SdkBase class.
+LiteGraph SDK class.Extends the SdkBase class.
 
 **Extends**: <code>SdkBase</code>  
 
@@ -34,7 +33,7 @@ Extends the SdkBase class.
         * [.createNodes(graphGuid, nodes, [cancellationToken])](#module_LiteGraphSdk--module.exports+createNodes) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
         * [.createNode(node, [cancellationToken])](#module_LiteGraphSdk--module.exports+createNode) ⇒ <code>Promise.&lt;Node&gt;</code>
         * [.readNodes(graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readNodes) ⇒ <code>Promise.&lt;Array.&lt;Node&gt;&gt;</code>
-        * [.searchNodes(searchReq, graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchNodes) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
+        * [.searchNodes(searchReq, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchNodes) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
         * [.readNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readNode) ⇒ <code>Promise.&lt;Node&gt;</code>
         * [.updateNode(node, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateNode) ⇒ <code>Promise.&lt;Node&gt;</code>
         * [.deleteNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteNode)
@@ -44,7 +43,7 @@ Extends the SdkBase class.
         * [.createEdges(graphGuid, edges, [cancellationToken])](#module_LiteGraphSdk--module.exports+createEdges) ⇒ <code>Promise.&lt;Array.&lt;Object&gt;&gt;</code>
         * [.createEdge(edge, [cancellationToken])](#module_LiteGraphSdk--module.exports+createEdge) ⇒ <code>Promise.&lt;Edge&gt;</code>
         * [.readEdges(graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readEdges) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
-        * [.searchEdges(graphGuid, searchReq, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchEdges) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
+        * [.searchEdges(searchReq, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchEdges) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
         * [.readEdge(graphGuid, edgeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readEdge) ⇒ <code>Promise.&lt;Edge&gt;</code>
         * [.updateEdge(edge, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateEdge) ⇒ <code>Promise.&lt;Edge&gt;</code>
         * [.deleteEdge(graphGuid, edgeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteEdge) ⇒ <code>Promise.&lt;void&gt;</code>
@@ -95,7 +94,7 @@ Extends the SdkBase class.
         * [.createVector(vector, [cancellationToken])](#module_LiteGraphSdk--module.exports+createVector) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
         * [.updateVector(vector, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateVector) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
         * [.deleteVector(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteVector) ⇒ <code>Promise.&lt;void&gt;</code>
-        * [.searchVectors(searchReq, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchVectors) ⇒ <code>Promise.&lt;VectorSearchResult&gt;</code>
+        * [.searchVectors(searchReq, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchVectors) ⇒ <code>Promise.&lt;Array.&lt;VectorSearchResult&gt;&gt;</code>
         * [.generateToken(email, tenantId, password, [cancellationToken])](#module_LiteGraphSdk--module.exports+generateToken) ⇒ <code>Promise.&lt;Token&gt;</code>
         * [.getTokenDetails(token, [cancellationToken])](#module_LiteGraphSdk--module.exports+getTokenDetails) ⇒ <code>Promise.&lt;Token&gt;</code>
         * [.getTenantsForEmail(email, [cancellationToken])](#module_LiteGraphSdk--module.exports+getTenantsForEmail) ⇒ <code>Promise.&lt;Array.&lt;TenantMetaData&gt;&gt;</code>
@@ -171,8 +170,10 @@ Search graphs.
 | Param | Type | Description |
 | --- | --- | --- |
 | searchReq | <code>Object</code> | Information about the search request. |
-| searchReq.GraphGUID | <code>string</code> | Globally unique identifier for the graph (defaults to an empty GUID). |
-| searchReq.Ordering | <code>string</code> | Ordering of the search results (default is CreatedDescending). |
+| [searchReq.GraphGUID] | <code>string</code> | Globally unique identifier for the graph (defaults to an empty GUID). |
+| searchReq.Labels | <code>Array.&lt;string&gt;</code> | Array of labels associated with the graph. |
+| searchReq.Tags | <code>Object</code> | Array of tags associated with the graph. |
+| searchReq.Ordering | <code>EnumerationOrderEnum</code> | Ordering of the search results (default is CreatedDescending). |
 | searchReq.Expr | <code>Object</code> | Expression used for the search (default is null). |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
@@ -310,7 +311,7 @@ Read nodes for a specific graph.
 
 <a name="module_LiteGraphSdk--module.exports+searchNodes"></a>
 
-#### module.exports.searchNodes(searchReq, graphGuid, [cancellationToken]) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
+#### module.exports.searchNodes(searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
 Search nodes.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
@@ -320,9 +321,10 @@ Search nodes.
 | --- | --- | --- |
 | searchReq | <code>Object</code> | Information about the search request. |
 | searchReq.GraphGUID | <code>string</code> | Globally unique identifier for the graph (defaults to an empty GUID). |
-| searchReq.Ordering | <code>string</code> | Ordering of the search results (default is CreatedDescending). |
+| searchReq.Labels | <code>Array.&lt;string&gt;</code> | Array of labels associated with the graph. |
+| searchReq.Tags | <code>Object</code> | Array of tags associated with the graph. |
+| searchReq.Ordering | <code>EnumerationOrderEnum</code> | Ordering of the search results (default is CreatedDescending). |
 | searchReq.Expr | <code>Object</code> | Expression used for the search (default is null). |
-| graphGuid | <code>string</code> | The GUID of the graph. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
 <a name="module_LiteGraphSdk--module.exports+readNode"></a>
@@ -459,7 +461,7 @@ Read edges.
 
 <a name="module_LiteGraphSdk--module.exports+searchEdges"></a>
 
-#### module.exports.searchEdges(graphGuid, searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
+#### module.exports.searchEdges(searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;SearchResult&gt;</code>
 Search edges.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
@@ -467,10 +469,11 @@ Search edges.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| graphGuid | <code>string</code> | Graph GUID. |
 | searchReq | <code>Object</code> | Information about the search request. |
-| searchReq.GraphGUID | <code>string</code> | Globally unique identifier for the graph (defaults to an empty GUID). |
-| searchReq.Ordering | <code>string</code> | Ordering of the search results (default is CreatedDescending). |
+| [searchReq.GraphGUID] | <code>string</code> | Globally unique identifier for the graph (defaults to an empty GUID). |
+| searchReq.Labels | <code>Array.&lt;string&gt;</code> | Array of labels associated with the graph. |
+| searchReq.Tags | <code>Object</code> | Array of tags associated with the graph. |
+| searchReq.Ordering | <code>EnumerationOrderEnum</code> | Ordering of the search results (default is CreatedDescending). |
 | searchReq.Expr | <code>Object</code> | Expression used for the search (default is null). |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
@@ -1140,11 +1143,11 @@ Delete a vector.
 
 <a name="module_LiteGraphSdk--module.exports+searchVectors"></a>
 
-#### module.exports.searchVectors(searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;VectorSearchResult&gt;</code>
+#### module.exports.searchVectors(searchReq, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;VectorSearchResult&gt;&gt;</code>
 Search Vectors.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
-**Returns**: <code>Promise.&lt;VectorSearchResult&gt;</code> - - The search result.  
+**Returns**: <code>Promise.&lt;Array.&lt;VectorSearchResult&gt;&gt;</code> - - The search result.  
 
 | Param | Type | Description |
 | --- | --- | --- |

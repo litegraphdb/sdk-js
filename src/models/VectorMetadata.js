@@ -1,5 +1,3 @@
-import { v4 as uuidV4 } from 'uuid';
-
 /**
  * VectorMetadata class representing metadata for a vector.
  */
@@ -15,22 +13,22 @@ export class VectorMetadata {
    * @param {number} [vector.Dimensionality=0] - Dimensionality of the vector.
    * @param {string} [vector.Content=''] - Content of the vector.
    * @param {Array<number>} [vector.Vectors=[]] - List of float values representing the vector.
-   * @param {Date|string} [vector.CreatedUtc] - Creation timestamp in UTC (defaults to current UTC time).
-   * @param {Date|string} [vector.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
+   * @param {string} [vector.CreatedUtc] - Creation timestamp in UTC (defaults to current UTC time).
+   * @param {string} [vector.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
    */
   constructor(vector = {}) {
     const {
-      GUID = uuidV4(),
-      TenantGUID = uuidV4(),
-      GraphGUID = null,
-      NodeGUID = null,
-      EdgeGUID = null,
-      Model = null,
-      Dimensionality = 0,
-      Content = '',
-      Vectors = [],
-      CreatedUtc = new Date().toISOString(),
-      LastUpdateUtc = new Date().toISOString(),
+      GUID,
+      TenantGUID,
+      GraphGUID,
+      NodeGUID,
+      EdgeGUID,
+      Model,
+      Dimensionality,
+      Content,
+      Vectors,
+      CreatedUtc,
+      LastUpdateUtc,
     } = vector;
 
     this.GUID = GUID; // Unique identifier for the vector
@@ -42,8 +40,8 @@ export class VectorMetadata {
     this.Dimensionality = Dimensionality; // Dimensionality of the vector
     this.Content = Content; // Content of the vector
     this.Vectors = Vectors; // List of float values representing the vector
-    this.CreatedUtc = new Date(CreatedUtc); // Creation timestamp
-    this.LastUpdateUtc = new Date(LastUpdateUtc); // Last update timestamp
+    this.CreatedUtc = CreatedUtc; // Creation timestamp
+    this.LastUpdateUtc = LastUpdateUtc; // Last update timestamp
 
     // Validate dimensionality
     this._validateDimensionality();

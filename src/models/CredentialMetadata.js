@@ -1,5 +1,3 @@
-import { v4 as uuidV4 } from 'uuid';
-
 /**
  * CredentialMetadata class representing metadata for a credential.
  */
@@ -16,16 +14,7 @@ export default class CredentialMetadata {
    * @param {Date|string} [credential.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
    */
   constructor(credential = {}) {
-    const {
-      GUID = uuidV4(),
-      TenantGUID = 'default',
-      UserGUID = 'default',
-      Name = '',
-      BearerToken = '',
-      Active = false,
-      CreatedUtc = new Date().toISOString(),
-      LastUpdateUtc = new Date().toISOString(),
-    } = credential;
+    const { GUID, TenantGUID, UserGUID, Name, BearerToken, Active, CreatedUtc, LastUpdateUtc } = credential;
 
     this.GUID = GUID; // Unique identifier for the credential
     this.TenantGUID = TenantGUID; // Unique identifier for the tenant

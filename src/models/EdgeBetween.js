@@ -10,9 +10,9 @@ export default class EdgeBetween {
    * @param {string} edgeBetween.To - The GUID for the ending node.
    */
   constructor(edgeBetween = {}) {
-    const { From = uuidV4(), To = uuidV4() } = edgeBetween;
+    const { From, To } = edgeBetween;
 
-    this.from = From; // Starting node GUID
-    this.to = To; // Ending node GUID
+    this.From = From; // Starting node GUID
+    this.To = To; // Ending node GUID
   }
 }

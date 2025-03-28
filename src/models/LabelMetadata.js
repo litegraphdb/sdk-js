@@ -16,16 +16,7 @@ export default class LabelMetadata {
    * @param {Date|string} [label.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
    */
   constructor(label = {}) {
-    const {
-      GUID = uuidV4(),
-      TenantGUID = uuidV4(),
-      GraphGUID = null,
-      NodeGUID = null,
-      EdgeGUID = null,
-      Label = '',
-      CreatedUtc = new Date().toISOString(),
-      LastUpdateUtc = new Date().toISOString(),
-    } = label;
+    const { GUID, TenantGUID, GraphGUID, NodeGUID, EdgeGUID, Label, CreatedUtc, LastUpdateUtc } = label;
 
     this.GUID = GUID; // Unique identifier for the label
     this.TenantGUID = TenantGUID; // Unique identifier for the tenant

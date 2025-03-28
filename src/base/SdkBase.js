@@ -542,7 +542,7 @@ export default class SdkBase {
       const request = superagent
         .post(url)
         .set(this.defaultHeaders)
-        // .set('Content-Type', contentType)
+        .set('Content-Type', 'application/json')
         .send(data)
         .timeout({ response: this._timeoutMs });
       // If a cancelToken is provided, attach the abort method

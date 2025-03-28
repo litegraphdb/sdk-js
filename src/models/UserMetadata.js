@@ -17,17 +17,7 @@ export default class UserMetadata {
    * @param {Date|string} [user.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
    */
   constructor(user = {}) {
-    const {
-      GUID = uuidV4(),
-      TenantGUID = uuidV4(),
-      FirstName = '',
-      LastName = '',
-      Email = '',
-      Password = '',
-      Active = false,
-      CreatedUtc = new Date().toISOString(),
-      LastUpdateUtc = new Date().toISOString(),
-    } = user;
+    const { GUID, TenantGUID, FirstName, LastName, Email, Password, Active, CreatedUtc, LastUpdateUtc } = user;
 
     this.GUID = GUID; // Unique identifier for the user
     this.TenantGUID = TenantGUID; // Unique identifier for the tenant
@@ -36,7 +26,7 @@ export default class UserMetadata {
     this.Email = Email; // Email of the user
     this.Password = Password; // Password for the user
     this.Active = Active; // Indicates if the user is active
-    this.CreatedUtc = new Date(CreatedUtc); // Creation timestamp
-    this.LastUpdateUtc = new Date(LastUpdateUtc); // Last update timestamp
+    this.CreatedUtc = CreatedUtc; // Creation timestamp
+    this.LastUpdateUtc = LastUpdateUtc; // Last update timestamp
   }
 }

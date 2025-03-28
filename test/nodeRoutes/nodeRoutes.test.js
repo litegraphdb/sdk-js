@@ -99,7 +99,7 @@ describe('NodeRoute Tests', () => {
           Right: 'World',
         },
       };
-      const response = await api.searchNodes(mockGraphGuid, searchRequest);
+      const response = await api.searchNodes(searchRequest);
       expect(JSON.stringify(response)).toEqual(JSON.stringify(new SearchResult(searchNodeData[mockNodeGuid])));
     });
 
@@ -114,7 +114,7 @@ describe('NodeRoute Tests', () => {
           Right: 'World',
         },
       };
-      await api.searchNodes(mockGraphGuid, searchRequest, cancellationToken);
+      await api.searchNodes(searchRequest, cancellationToken);
       cancellationToken.abort();
     });
 
@@ -231,9 +231,9 @@ describe('NodeRoute Tests', () => {
           GraphGUID: '02020202-0202-0202-0202-020202020202',
           Name: 'Custom GUID',
           Data: {
-            Hello: "World 1"
+            Hello: 'World 1',
           },
-          CreatedUtc: '2024-10-19T14:35:20.351Z'
+          CreatedUtc: '2024-10-19T14:35:20.351Z',
         },
       ];
 
@@ -283,6 +283,5 @@ describe('NodeRoute Tests', () => {
         expect(err.toString()).toBe('Error: ArgumentNullException: Nodes is null or empty');
       }
     });
-
   });
 });

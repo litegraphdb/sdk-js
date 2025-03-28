@@ -22,8 +22,8 @@ export default class Token {
         UserGUID?: string;
         User?: UserMetadata;
     });
-    TimestampUtc: Date;
-    ExpirationUtc: Date;
+    TimestampUtc: string | Date;
+    ExpirationUtc: string | Date;
     IsExpired: boolean;
     TenantGUID: string;
     UserGUID: string;

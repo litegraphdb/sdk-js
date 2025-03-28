@@ -48,15 +48,19 @@ export default class LiteGraphSdk extends SdkBase {
     /**
      * Search graphs.
      * @param {Object} searchReq - Information about the search request.
-     * @param {string} searchReq.GraphGUID - Globally unique identifier for the graph (defaults to an empty GUID).
-     * @param {string} searchReq.Ordering - Ordering of the search results (default is CreatedDescending).
+     * @param {string} [searchReq.GraphGUID] - Globally unique identifier for the graph (defaults to an empty GUID).
+     * @param {string[]} searchReq.Labels - Array of labels associated with the graph.
+     * @param {Object} searchReq.Tags - Array of tags associated with the graph.
+     * @param {EnumerationOrderEnum} searchReq.Ordering - Ordering of the search results (default is CreatedDescending).
      * @param {Object} searchReq.Expr - Expression used for the search (default is null).
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      * @returns {Promise<SearchResult>} - The search result.
      */
     searchGraphs(searchReq: {
-        GraphGUID: string;
-        Ordering: string;
+        GraphGUID?: string;
+        Labels: string[];
+        Tags: any;
+        Ordering: EnumerationOrderEnum;
         Expr: any;
     }, cancellationToken?: AbortController): Promise<SearchResult>;
     /**
@@ -156,15 +160,18 @@ export default class LiteGraphSdk extends SdkBase {
      * Search nodes.
      * @param {Object} searchReq - Information about the search request.
      * @param {string} searchReq.GraphGUID - Globally unique identifier for the graph (defaults to an empty GUID).
-     * @param {string} searchReq.Ordering - Ordering of the search results (default is CreatedDescending).
+     * @param {string[]} searchReq.Labels - Array of labels associated with the graph.
+     * @param {Object} searchReq.Tags - Array of tags associated with the graph.
+     * @param {EnumerationOrderEnum} searchReq.Ordering - Ordering of the search results (default is CreatedDescending).
      * @param {Object} searchReq.Expr - Expression used for the search (default is null).
-     * @param {string} graphGuid - The GUID of the graph.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      * @returns {Promise<SearchResult>} - The search result.
      */
-    searchNodes(graphGuid: string, searchReq: {
+    searchNodes(searchReq: {
         GraphGUID: string;
-        Ordering: string;
+        Labels: string[];
+        Tags: any;
+        Ordering: EnumerationOrderEnum;
         Expr: any;
     }, cancellationToken?: AbortController): Promise<SearchResult>;
     /**
@@ -262,17 +269,20 @@ export default class LiteGraphSdk extends SdkBase {
     readEdges(graphGuid: string, cancellationToken?: AbortController): Promise<Edge[]>;
     /**
      * Search edges.
-     * @param {string} graphGuid - Graph GUID.
      * @param {Object} searchReq - Information about the search request.
-     * @param {string} searchReq.GraphGUID - Globally unique identifier for the graph (defaults to an empty GUID).
-     * @param {string} searchReq.Ordering - Ordering of the search results (default is CreatedDescending).
+     * @param {string} [searchReq.GraphGUID] - Globally unique identifier for the graph (defaults to an empty GUID).
+     * @param {string[]} searchReq.Labels - Array of labels associated with the graph.
+     * @param {Object} searchReq.Tags - Array of tags associated with the graph.
+     * @param {EnumerationOrderEnum} searchReq.Ordering - Ordering of the search results (default is CreatedDescending).
      * @param {Object} searchReq.Expr - Expression used for the search (default is null).
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      * @returns {Promise<SearchResult>} - The search result.
      */
-    searchEdges(graphGuid: string, searchReq: {
-        GraphGUID: string;
-        Ordering: string;
+    searchEdges(searchReq: {
+        GraphGUID?: string;
+        Labels: string[];
+        Tags: any;
+        Ordering: EnumerationOrderEnum;
         Expr: any;
     }, cancellationToken?: AbortController): Promise<SearchResult>;
     /**
@@ -681,14 +691,14 @@ export default class LiteGraphSdk extends SdkBase {
      * @param {String} searchReq.SearchType - Expression used for the search (default is null).
      * @param {Array<string>} searchReq.Labels - The domain of the search type.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-     * @returns {Promise<VectorSearchResult>} - The search result.
+     * @returns {Promise<VectorSearchResult[]>} - The search result.
      */
     searchVectors(searchReq: {
         GraphGUID: string;
         Domain: string;
         SearchType: string;
         Labels: Array<string>;
-    }, cancellationToken?: AbortController): Promise<VectorSearchResult>;
+    }, cancellationToken?: AbortController): Promise<VectorSearchResult[]>;
     /**
      * Generate an authentication token.
      * @param {string} email - The user's email address.
@@ -716,6 +726,7 @@ export default class LiteGraphSdk extends SdkBase {
 import SdkBase from './SdkBase';
 import { VectorMetadata } from '../models/VectorMetadata';
 import Graph from '../models/Graph';
+import { EnumerationOrderEnum } from '../enums/EnumerationOrderEnum';
 import SearchResult from '../models/SearchResult';
 import EdgeBetween from '../models/EdgeBetween';
 import Node from '../models/Node';

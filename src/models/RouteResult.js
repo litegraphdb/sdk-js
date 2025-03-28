@@ -9,13 +9,10 @@ export default class RouteResult {
    * @param {Array<RouteDetail>} response.Routes - Array of RouteDetail objects (default is an empty array).
    */
   constructor(response = {}) {
-    const {
-      Timestamp = Date.now(), // Default to a new Timestamp object
-      Routes = [], // Default to an empty array
-    } = response;
+    const { Timestamp, Routes } = response;
 
-    this._timestamp = Timestamp; // Private property for Timestamp
-    this._routes = Routes; // Private property for Routes
+    this.Timestamp = Timestamp; // Private property for Timestamp
+    this.Routes = Routes; // Private property for Routes
   }
 
   /**

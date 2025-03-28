@@ -21,11 +21,11 @@ export default class Graph {
         Vectors: [];
         Data: any;
     });
-    GUID: any;
-    name: string;
-    createdUtc: Date;
-    data: any;
-    labels: string[];
-    tags: any;
-    vectors: [];
+    GUID: string;
+    Name: string;
+    CreatedUtc: Date;
+    Data: any;
+    Labels: string[];
+    Tags: any;
+    Vectors: [];
 }

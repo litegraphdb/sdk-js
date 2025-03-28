@@ -13,18 +13,12 @@ export default class TenantMetaData {
    * @param {Date|string} [tenant.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
    */
   constructor(tenant = {}) {
-    const {
-      GUID = uuidV4(),
-      Name = null,
-      Active = false,
-      CreatedUtc = new Date().toISOString(),
-      LastUpdateUtc = new Date().toISOString(),
-    } = tenant;
+    const { GUID, Name, Active, CreatedUtc, LastUpdateUtc } = tenant;
 
     this.GUID = GUID; // Unique identifier for the tenant
     this.Name = Name; // Name of the tenant
     this.Active = Active; // Indicates if the tenant is active
-    this.CreatedUtc = new Date(CreatedUtc); // Creation timestamp
-    this.LastUpdateUtc = new Date(LastUpdateUtc); // Last update timestamp
+    this.CreatedUtc = CreatedUtc; // Creation timestamp
+    this.LastUpdateUtc = LastUpdateUtc; // Last update timestamp
   }
 }

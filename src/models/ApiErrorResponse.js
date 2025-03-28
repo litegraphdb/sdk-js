@@ -11,7 +11,7 @@ export default class ApiErrorResponse {
    * @param {Object} [context=null] - Additional contextual information.
    * @param {string} [description=null] - Description of the error.
    */
-  constructor(error = ApiErrorEnum.AuthenticationFailed, context = null, description = null) {
+  constructor(error, context, description) {
     this.error = error;
     this.context = context;
     this.description = description;

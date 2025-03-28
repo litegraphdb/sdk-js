@@ -13,8 +13,8 @@ export class VectorMetadata {
      * @param {number} [vector.Dimensionality=0] - Dimensionality of the vector.
      * @param {string} [vector.Content=''] - Content of the vector.
      * @param {Array<number>} [vector.Vectors=[]] - List of float values representing the vector.
-     * @param {Date|string} [vector.CreatedUtc] - Creation timestamp in UTC (defaults to current UTC time).
-     * @param {Date|string} [vector.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
+     * @param {string} [vector.CreatedUtc] - Creation timestamp in UTC (defaults to current UTC time).
+     * @param {string} [vector.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
      */
     constructor(vector?: {
         GUID?: string;
@@ -26,11 +26,11 @@ export class VectorMetadata {
         Dimensionality?: number;
         Content?: string;
         Vectors?: Array<number>;
-        CreatedUtc?: Date | string;
-        LastUpdateUtc?: Date | string;
+        CreatedUtc?: string;
+        LastUpdateUtc?: string;
     });
-    GUID: any;
-    TenantGUID: any;
+    GUID: string;
+    TenantGUID: string;
     GraphGUID: string;
     NodeGUID: string;
     EdgeGUID: string;
@@ -38,8 +38,8 @@ export class VectorMetadata {
     Dimensionality: number;
     Content: string;
     Vectors: number[];
-    CreatedUtc: Date;
-    LastUpdateUtc: Date;
+    CreatedUtc: string;
+    LastUpdateUtc: string;
     /**
      * Validates the dimensionality of the vector.
      * @private

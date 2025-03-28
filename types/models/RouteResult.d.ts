@@ -11,8 +11,6 @@ export default class RouteResult {
         Timestamp: any;
         Routes: Array<RouteDetail>;
     });
-    _timestamp: any;
-    _routes: RouteDetail[];
     /**
      * Sets the Timestamp.
      * @param {Timestamp} value - The Timestamp to set.
@@ -34,5 +32,7 @@ export default class RouteResult {
      * @returns {Array<RouteDetail>} The array of RouteDetail objects.
      */
     get Routes(): Array<RouteDetail>;
+    _timestamp: Timestamp;
+    _routes: RouteDetail[];
 }
 import RouteDetail from './RouteDetail';

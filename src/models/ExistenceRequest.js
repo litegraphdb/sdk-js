@@ -1,4 +1,3 @@
-import { v4 as uuidV4 } from 'uuid';
 import EdgeBetween from './EdgeBetween';
 
 /**
@@ -14,9 +13,9 @@ export default class ExistenceRequest {
   constructor(existenceRequest = {}) {
     const { Nodes = [], Edges = [], EdgesBetween = [] } = existenceRequest;
 
-    this.nodes = Nodes; // Array of node GUIDs
-    this.edges = Edges; // Array of edge GUIDs
-    this.edgesBetween = EdgesBetween.map((edge) => new EdgeBetween(edge)); // Array of EdgeBetween objects
+    this.Nodes = Nodes; // Array of node GUIDs
+    this.Edges = Edges; // Array of edge GUIDs
+    this.EdgesBetween = EdgesBetween.map((edge) => new EdgeBetween(edge)); // Array of EdgeBetween objects
   }
 
   /**
@@ -25,9 +24,9 @@ export default class ExistenceRequest {
    */
   containsExistenceRequest() {
     return (
-      (this.nodes && this.nodes.length > 0) ||
-      (this.edges && this.edges.length > 0) ||
-      (this.edgesBetween && this.edgesBetween.length > 0)
+      (this.Nodes && this.Nodes.length > 0) ||
+      (this.Edges && this.Edges.length > 0) ||
+      (this.EdgesBetween && this.EdgesBetween.length > 0)
     );
   }
 }

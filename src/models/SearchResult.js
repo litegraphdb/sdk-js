@@ -1,3 +1,8 @@
+import Serializer from '../utils/Serializer';
+import Edge from './Edge';
+import Graph from './Graph';
+import Node from './Node';
+
 /**
  * SearchResult class representing the result of a search operation in the graph.
  */
@@ -11,8 +16,11 @@ export default class SearchResult {
   constructor(result = {}) {
     const { Graphs = null, Nodes = null, Edges = null } = result;
 
-    this.graphs = Graphs; // Array of Graph objects
-    this.nodes = Nodes; // Array of Node objects
-    this.edges = Edges; // Array of Edge objects
+    /** @type {Array<Graph>} */
+    this.Graphs = Serializer.deserializeJson(Graphs, Graph); // Array of Graph objects
+    /** @type {Array<Node>} */
+    this.Nodes = Serializer.deserializeJson(Nodes, Node); // Array of Node objects
+    /** @type {Array<Edge>} */
+    this.Edges = Serializer.deserializeJson(Edges, Edge); // Array of Edge objects
   }
 }

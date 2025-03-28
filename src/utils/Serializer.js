@@ -21,6 +21,12 @@ export default class Serializer {
         return json;
         //in case fails return data as it as
       }
+    } else if (typeof json === 'object' && json !== null) {
+      if (Array.isArray(json)) {
+        return json.map((item) => new TypeConstructor(item));
+      } else {
+        return new TypeConstructor(json);
+      }
     } else if (ArrayBuffer.isView(json)) {
       try {
         return this.deserializeJson(new util.TextDecoder().decode(json));
@@ -28,6 +34,8 @@ export default class Serializer {
         console.log(err, 'chk err');
         throw new Error('Invalid JSON input');
       }
+    } else {
+      return json;
     }
   }
 

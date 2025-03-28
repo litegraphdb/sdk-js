@@ -9,21 +9,11 @@ export default class RouteDetail {
     constructor(detail?: {
         Edges: Array<Edge>;
     });
-    _edges: Edge[];
+    Edges: Edge[];
     /**
      * Gets the total cost of the route.
      * @returns {number} The total cost of the route.
      */
     get TotalCost(): number;
-    /**
-     * Sets the Edges.
-     * @param {Array<Edge>} value - The array of Edge objects to set.
-     */
-    set Edges(value: Array<Edge>);
-    /**
-     * Gets the Edges.
-     * @returns {Array<Edge>} The array of Edge objects.
-     */
-    get Edges(): Array<Edge>;
 }
 import Edge from './Edge';

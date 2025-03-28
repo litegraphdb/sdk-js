@@ -13,21 +13,11 @@ export default class TagMetaData {
    * @param {string} [tag.EdgeGUID] - Globally unique identifier for the edge.
    * @param {string} [tag.Key] - Key of the tag.
    * @param {string} [tag.Value] - Value of the tag.
-   * @param {Date|string} [tag.CreatedUtc] - Creation timestamp in UTC (defaults to current UTC time).
-   * @param {Date|string} [tag.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
+   * @param {string} [tag.CreatedUtc] - Creation timestamp in UTC (defaults to current UTC time).
+   * @param {string} [tag.LastUpdateUtc] - Last update timestamp in UTC (defaults to current UTC time).
    */
   constructor(tag = {}) {
-    const {
-      GUID = uuidV4(),
-      TenantGUID = 'default',
-      GraphGUID = null,
-      NodeGUID = null,
-      EdgeGUID = null,
-      Key = '',
-      Value = '',
-      CreatedUtc = new Date().toISOString(),
-      LastUpdateUtc = new Date().toISOString(),
-    } = tag;
+    const { GUID, TenantGUID, GraphGUID, NodeGUID, EdgeGUID, Key, Value, CreatedUtc, LastUpdateUtc } = tag;
 
     this.GUID = GUID; // Unique identifier for the tag
     this.TenantGUID = TenantGUID; // Unique identifier for the tenant
@@ -36,7 +26,7 @@ export default class TagMetaData {
     this.EdgeGUID = EdgeGUID; // Unique identifier for the edge
     this.Key = Key; // Key of the tag
     this.Value = Value; // Value of the tag
-    this.CreatedUtc = new Date(CreatedUtc); // Creation timestamp
-    this.LastUpdateUtc = new Date(LastUpdateUtc); // Last update timestamp
+    this.CreatedUtc = CreatedUtc; // Creation timestamp
+    this.LastUpdateUtc = LastUpdateUtc; // Last update timestamp
   }
 }

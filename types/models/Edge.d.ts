@@ -31,16 +31,16 @@ export default class Edge {
         Tags?: any;
         Vectors?: any[];
     });
-    GUID: any;
-    GraphGUID: any;
-    name: string;
-    from: any;
-    to: any;
-    cost: number;
-    createdUtc: string | Date;
-    data: any;
-    lastUpdateUtc: string | Date;
-    labels: any[];
-    tags: any;
-    vectors: any[];
+    GUID: string;
+    GraphGUID: string;
+    Name: string;
+    From: string;
+    To: string;
+    Cost: number;
+    CreatedUtc: Date;
+    Data: any;
+    LastUpdateUtc: Date;
+    Labels: any[];
+    Tags: any;
+    Vectors: any[];
 }

@@ -15,21 +15,13 @@ export default class Graph {
    * @param {Object} graph.Data - Object data associated with the graph (default is null).
    */
   constructor(graph = {}) {
-    const {
-      GUID = uuidV4(),
-      Name = null,
-      CreatedUtc = new Date(),
-      Data = null,
-      Labels = [],
-      Tags = {},
-      Vectors = [],
-    } = graph;
+    const { GUID, Name, CreatedUtc, Data, Labels, Tags, Vectors } = graph;
     this.GUID = GUID; // Unique identifier
-    this.name = Name; // Name of the graph
-    this.createdUtc = CreatedUtc; // Creation timestamp
-    this.data = Data; // Object data
-    this.labels = Labels; // Array of labels
-    this.tags = Tags; // Key-value pairs of tags
-    this.vectors = Vectors; // Array of vector embeddings
+    this.Name = Name; // Name of the graph
+    this.CreatedUtc = CreatedUtc; // Creation timestamp
+    this.Data = Data; // Object data
+    this.Labels = Labels; // Array of labels
+    this.Tags = Tags; // Key-value pairs of tags
+    this.Vectors = Vectors; // Array of vector embeddings
   }
 }

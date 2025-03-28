@@ -25,13 +25,13 @@ export default class Node {
         Tags: any;
         Vectors: [];
     });
-    GUID: any;
-    GraphGUID: any;
-    name: string;
-    data: any;
-    createdUtc: Date;
-    lastUpdateUtc: Date;
-    labels: string[];
-    tags: any;
-    vectors: [];
+    GUID: string;
+    GraphGUID: string;
+    Name: string;
+    Data: any;
+    CreatedUtc: Date;
+    LastUpdateUtc: Date;
+    Labels: string[];
+    Tags: any;
+    Vectors: [];
 }

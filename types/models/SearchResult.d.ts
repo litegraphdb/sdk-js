@@ -13,7 +13,13 @@ export default class SearchResult {
         Nodes: Array<Node>;
         Edges: Array<Edge>;
     });
-    graphs: Graph[];
-    nodes: Node[];
-    edges: Edge[];
+    /** @type {Array<Graph>} */
+    Graphs: Array<Graph>;
+    /** @type {Array<Node>} */
+    Nodes: Array<Node>;
+    /** @type {Array<Edge>} */
+    Edges: Array<Edge>;
 }
+import Graph from './Graph';
+import Node from './Node';
+import Edge from './Edge';

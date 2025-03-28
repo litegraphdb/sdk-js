@@ -14,14 +14,8 @@ export default class ExistenceResult {
    * @param {EdgeBetween[]} existenceResult.MissingEdgesBetween - Array of EdgeBetween instances for missing edges.
    */
   constructor(existenceResult = {}) {
-    const {
-      ExistingNodes = [],
-      MissingNodes = [],
-      ExistingEdges = [],
-      MissingEdges = [],
-      ExistingEdgesBetween = [],
-      MissingEdgesBetween = [],
-    } = existenceResult;
+    const { ExistingNodes, MissingNodes, ExistingEdges, MissingEdges, ExistingEdgesBetween, MissingEdgesBetween } =
+      existenceResult;
 
     this.existingNodes = ExistingNodes; // Array of existing node GUIDs
     this.missingNodes = MissingNodes; // Array of missing node GUIDs

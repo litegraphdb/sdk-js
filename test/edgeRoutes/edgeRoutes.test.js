@@ -1,4 +1,13 @@
-import { mockEdgeGuid, mockGraphGuid, edgeData, searchEdgeData, mockEdgeGuids, mockEmptyEdgeGuids, edgeMockApiResponse, edgeMockSearchApiResponse } from './mockData';
+import {
+  mockEdgeGuid,
+  mockGraphGuid,
+  edgeData,
+  searchEdgeData,
+  mockEdgeGuids,
+  mockEmptyEdgeGuids,
+  edgeMockApiResponse,
+  edgeMockSearchApiResponse,
+} from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -61,6 +70,7 @@ describe('EdgeRoute Tests', () => {
 
     test('should search edges', async () => {
       const searchRequest = {
+        GraphGUID: mockGraphGuid,
         Ordering: 'CreatedDescending',
         Expr: {
           Left: 'Hello',
@@ -68,7 +78,7 @@ describe('EdgeRoute Tests', () => {
           Right: 'World',
         },
       };
-      const response = await api.searchEdges(mockGraphGuid, searchRequest);
+      const response = await api.searchEdges(searchRequest);
       expect(JSON.stringify(response)).toEqual(JSON.stringify(new SearchResult(searchEdgeData[mockGraphGuid])));
     });
 
@@ -162,14 +172,14 @@ describe('EdgeRoute Tests', () => {
         {
           GUID: '02020202-0202-0202-0202-020202020202',
           GraphGUID: '02020202-0202-0202-0202-020202020202',
-          Name: "My test edge",
-          From: "2b1520be-d285-4f22-8c74-f296047162b9",
-          To: "784cfa37-fb06-4f81-b10d-f1167dfe2b22",
+          Name: 'My test edge',
+          From: '2b1520be-d285-4f22-8c74-f296047162b9',
+          To: '784cfa37-fb06-4f81-b10d-f1167dfe2b22',
           Cost: 10,
           Data: {
-            Hello: "World 1"
+            Hello: 'World 1',
           },
-          CreatedUtc: "2024-07-01 15:43:06.991834"
+          CreatedUtc: '2024-07-01 15:43:06.991834',
         },
       ];
 
@@ -219,8 +229,5 @@ describe('EdgeRoute Tests', () => {
         expect(err.toString()).toBe('Error: ArgumentNullException: Edges is null or empty');
       }
     });
-
-
-
   });
 });

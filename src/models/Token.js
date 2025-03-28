@@ -18,20 +18,10 @@ export default class Token {
    * @param {boolean} [token.Valid=true] - Indicates whether the token is valid.
    */
   constructor(token = {}) {
-    const {
-      TimestampUtc = new Date().toISOString(),
-      ExpirationUtc = new Date().toISOString(),
-      IsExpired = false,
-      TenantGUID = '00000000-0000-0000-0000-000000000000',
-      UserGUID = '00000000-0000-0000-0000-000000000000',
-      Token = null,
-      Valid = true,
-      User = {},
-      Tenant = {},
-    } = token;
+    const { TimestampUtc, ExpirationUtc, IsExpired, TenantGUID, UserGUID, Token, Valid, User, Tenant } = token;
 
-    this.TimestampUtc = new Date(TimestampUtc); // Token creation timestamp
-    this.ExpirationUtc = new Date(ExpirationUtc); // Token expiration timestamp
+    this.TimestampUtc = TimestampUtc; // Token creation timestamp
+    this.ExpirationUtc = ExpirationUtc; // Token expiration timestamp
     this.IsExpired = IsExpired; // Indicates if token is expired
     this.TenantGUID = TenantGUID; // Tenant identifier
     this.UserGUID = UserGUID; // User identifier

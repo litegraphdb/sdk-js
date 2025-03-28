@@ -25,13 +25,13 @@ export default class UserMetadata {
         CreatedUtc?: Date | string;
         LastUpdateUtc?: Date | string;
     });
-    GUID: any;
-    TenantGUID: any;
+    GUID: string;
+    TenantGUID: string;
     FirstName: string;
     LastName: string;
     Email: string;
     Password: string;
     Active: boolean;
-    CreatedUtc: Date;
-    LastUpdateUtc: Date;
+    CreatedUtc: string | Date;
+    LastUpdateUtc: string | Date;
 }
