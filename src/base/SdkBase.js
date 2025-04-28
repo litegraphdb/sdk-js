@@ -588,7 +588,6 @@ export default class SdkBase {
 
       let json;
       try {
-        // json = JSON.stringify(obj);
         json = Serializer.serializeJson(obj, true);
       } catch (err) {
         return reject(new Error('Supplied object is not serializable to JSON.'));
@@ -613,10 +612,10 @@ export default class SdkBase {
         .then((res) => {
           if (res.status >= 200 && res.status <= 299) {
             this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
-            resolve();
+            resolve(true);
           } else {
             this.log(SeverityEnum.Warn, `Non-success reported from ${url}: ${res.status}`);
-            resolve();
+            resolve(false);
           }
         })
         .catch((err) => {

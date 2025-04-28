@@ -223,7 +223,7 @@ sdk.searchNodes(searchRequest).then((response) => {
 | `readNode` | Retrieves a specific node by GUID. | `graphGuid` (string) - Graph GUID <br> `nodeGuid` (string) - Node GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<Node>` | `GET /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/{nodeGuid}` |
 | `updateNode` | Updates an existing node. | `node` (Object) - Node object with GUID, GraphGUID, name, data, CreatedUtc <br> `cancellationToken` (optional) - `AbortController` | `Promise<Node>` | `PUT /v1.0/tenants/{tenantGuid}/graphs/{node.GraphGUID}/nodes/{node.GUID}` |
 | `deleteNode` | Deletes a node by GUID. | `graphGuid` (string) - Graph GUID <br> `nodeGuid` (string) - Node GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/{nodeGuid}` |
-| `deleteNodes` | Deletes all nodes in a graph. | `graphGuid` (string) - Graph GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/all` |
+| `deleteAllNodes` | Deletes all nodes in a graph. | `graphGuid` (string) - Graph GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/all` |
 | `deleteMultipleNodes` | Deletes multiple nodes by GUIDs. | `graphGuid` (string) - Graph GUID <br> `nodeGuids` (Array<string>) - List of node GUIDs <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/multiple` |
 
 

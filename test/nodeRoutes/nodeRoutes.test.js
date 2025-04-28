@@ -180,13 +180,13 @@ describe('NodeRoute Tests', () => {
     });
 
     test('should delete all nodes within a graph', async () => {
-      const response = await api.deleteNodes(mockGraphGuid);
+      const response = await api.deleteAllNodes(mockGraphGuid);
       expect(response).toBeUndefined(); // Assuming delete operation returns nothing
     });
 
     test('should delete all nodes within a graph with abort', async () => {
       const cancellationToken = {};
-      await api.deleteNodes(mockGraphGuid, cancellationToken);
+      await api.deleteAllNodes(mockGraphGuid, cancellationToken);
       cancellationToken.abort();
     });
 

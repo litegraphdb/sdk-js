@@ -2,7 +2,7 @@ var { LiteGraphSdk } = require('litegraphdb');
 
 var api = new LiteGraphSdk(
   'http://ec2-18-217-169-161.us-east-2.compute.amazonaws.com:8701/',
-  '5317813d-99b2-4236-8c24-9827f79338c7',
+  '00000000-0000-0000-0000-000000000000',
   'litegraphadmin'
 );
 var guid = '00900db5-c9b7-4631-b250-c9e635a9036e'; // {String}
@@ -777,6 +777,192 @@ const deleteTag = async () => {
   }
 };
 
+const createMultipleTags = async () => {
+  try {
+    const data = await api.createTags([
+      {
+        GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
+        NodeGUID: null,
+        EdgeGUID: null,
+        Key: 'mykey test',
+        Value: 'myvalue test',
+      },
+      {
+        GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
+        NodeGUID: null,
+        EdgeGUID: null,
+        Key: 'mykey test 2',
+        Value: 'myvalue test 2',
+      },
+    ]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// createMultipleTags();
+
+const deleteMultipleTags = async () => {
+  try {
+    const data = await api.deleteTags([
+      '4cbfe0cd-13b9-426c-8a6b-84e77abe8f6d',
+      'dc0c1298-3f79-4c6e-ac25-7491eb8a5b25',
+      '5618fe18-47f1-43eb-abae-96ba6a88b341',
+      '445369d4-b6d8-465e-9a46-c7109b085d39',
+    ]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// deleteMultipleTags();
+
+const deleteMultipleVectors = async () => {
+  try {
+    const data = await api.deleteVectors(['ff9d5654-654c-41e7-a5c8-50a1963de72c']);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// deleteMultipleVectors();
+const createMultipleVectors = async () => {
+  try {
+    const data = await api.createVectors([
+      {
+        GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
+        NodeGUID: null,
+        EdgeGUID: null,
+        Model: 'all-MiniLM-L6-v2',
+        Dimensionality: 384,
+        Content: 'test',
+        Vectors: [0.1, 0.2, 0.3],
+      },
+    ]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// createMultipleVectors();
+
+const createMultipleLabels = async () => {
+  try {
+    const data = await api.createLabels([
+      {
+        GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
+        NodeGUID: null,
+        EdgeGUID: null,
+        Label: 'label multiple',
+      },
+      {
+        GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
+        NodeGUID: null,
+        EdgeGUID: null,
+        Label: 'label multiple 2',
+      },
+    ]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// createMultipleLabels();
+
+const deleteMultipleLabels = async () => {
+  try {
+    const data = await api.deleteLabels([
+      '33c8c905-b78b-4548-98ff-af0197d5fa97',
+      '96d4f123-a265-4c60-aef1-664a5ed0d7df',
+    ]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// deleteMultipleLabels();
+
+const createMultipleNodes = async () => {
+  try {
+    const data = await api.createNodes('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
+      {
+        Name: 'Active Directory',
+        Labels: ['test'],
+        Tags: {
+          Type: 'ActiveDirectory',
+        },
+        Data: {
+          Name: 'Active Directory',
+        },
+      },
+      {
+        Name: 'Website',
+        Labels: ['test'],
+        Tags: {
+          Type: 'Website',
+        },
+        Data: {
+          Name: 'Website',
+        },
+      },
+    ]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// createMultipleNodes();
+
+const deleteMultipleNodes2 = async () => {
+  try {
+    const data = await api.deleteNodes('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
+      'a204853e-5ba1-4795-9a2b-46349847f92f',
+      '76df872f-a138-4e28-9cd0-95941c6fd657',
+    ]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// deleteMultipleNodes2();
+
+const createMultipleEdges = async () => {
+  try {
+    const data = await api.createEdges('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
+      {
+        Name: 'DigitalOcean to Control Plane',
+        From: 'a76c18ed-78be-4666-858a-5154350240d8',
+        To: '768191c0-0d4d-4be0-a13e-a5c9cabdaa46',
+        Cost: 100,
+        Labels: ['test'],
+        Tags: {
+          type: 'edge',
+          test: 'true',
+        },
+        Data: {
+          hello: 'world',
+        },
+      },
+    ]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// createMultipleEdges();
+
+const deleteMultipleEdges = async () => {
+  try {
+    const data = await api.deleteEdges('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
+      'a76c18ed-78be-4666-858a-5154350240d8',
+    ]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+deleteMultipleEdges();
+
 const useSdk = async () => {
   //region Graph calls
   // await getGraphById();
@@ -794,7 +980,7 @@ const useSdk = async () => {
   // await updateNode();
   // await deleteNodeById();
   // await checkIfNodeExistsById();
-  await searchNodes();
+  // await searchNodes();
   //region Edge calls
   // await getEdgeById();
   // await getEdgeList();

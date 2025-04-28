@@ -212,14 +212,14 @@ export default class LiteGraphSdk extends SdkBase {
      * @param {string} graphGuid - The GUID of the graph.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      */
-    deleteNodes(graphGuid: string, cancellationToken?: AbortController): Promise<void>;
+    deleteAllNodes(graphGuid: string, cancellationToken?: AbortController): Promise<void>;
     /**
      * Delete multiple nodes within a graph.
      * @param {string} graphGuid - The GUID of the graph.
      * @param {Array<string>} nodeGuids - The list of node GUIDs to delete.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      */
-    deleteMultipleNodes(graphGuid: string, nodeGuids: Array<string>, cancellationToken?: AbortController): Promise<any[]>;
+    deleteNodes(graphGuid: string, nodeGuids: Array<string>, cancellationToken?: AbortController): Promise<void | any[]>;
     /**
      * Check if an edge exists by GUID.
      * @param {string} graphGuid - Graph GUID.
@@ -330,14 +330,14 @@ export default class LiteGraphSdk extends SdkBase {
      * @param {string} graphGuid - The GUID of the graph.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      */
-    deleteEdges(graphGuid: string, cancellationToken?: AbortController): Promise<void>;
+    deleteAllEdges(graphGuid: string, cancellationToken?: AbortController): Promise<void>;
     /**
      * Delete multiple edges within a graph.
      * @param {string} graphGuid - The GUID of the graph.
      * @param {Array<string>} edgeGuids - The list of edge GUIDs to delete.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      */
-    deleteMultipleEdges(graphGuid: string, edgeGuids: Array<string>, cancellationToken?: AbortController): Promise<any[]>;
+    deleteEdges(graphGuid: string, edgeGuids: Array<string>, cancellationToken?: AbortController): Promise<void>;
     /**
      * Get edges from a node.
      * @param {string} graphGuid - Graph GUID.
@@ -585,6 +585,13 @@ export default class LiteGraphSdk extends SdkBase {
      */
     createTag(tag: TagMetaData, cancellationToken?: AbortController): Promise<TagMetaData>;
     /**
+     * Create multiple tags
+     * @param {TagMetaData[]} tags - The tags to create.
+     * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+     * @returns {Promise<TagMetaData[]>}
+     */
+    createTags(tags: TagMetaData[], cancellationToken?: AbortController): Promise<TagMetaData[]>;
+    /**
      * Update a tag.
      * @param {TagMetaData} tag - The tag to update.
      * @param {string} guid - The GUID of the tag.
@@ -599,6 +606,13 @@ export default class LiteGraphSdk extends SdkBase {
      * @returns {Promise<void>}
      */
     deleteTag(guid: string, cancellationToken?: AbortController): Promise<void>;
+    /**
+     * Delete multiple tags
+     * @param {string[]} guids - The GUIDs of the tags to delete.
+     * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+     * @returns {Promise<void>}
+     */
+    deleteTags(guids: string[], cancellationToken?: AbortController): Promise<void>;
     /**
      * Read all labels.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
@@ -627,6 +641,13 @@ export default class LiteGraphSdk extends SdkBase {
      */
     createLabel(label: LabelMetadata, cancellationToken?: AbortController): Promise<LabelMetadata>;
     /**
+     * Create multiple labels
+     * @param {LabelMetadata[]} labels - The labels to create.
+     * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+     * @returns {Promise<LabelMetadata[]>}
+     */
+    createLabels(labels: LabelMetadata[], cancellationToken?: AbortController): Promise<LabelMetadata[]>;
+    /**
      * Update a label.
      * @param {LabelMetadata} label - The label to update.
      * @param {string} guid - The GUID of the label.
@@ -641,6 +662,13 @@ export default class LiteGraphSdk extends SdkBase {
      * @returns {Promise<void>}
      */
     deleteLabel(guid: string, cancellationToken?: AbortController): Promise<void>;
+    /**
+     * Delete multiple labels
+     * @param {string[]} guids - The GUIDs of the labels to delete.
+     * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+     * @returns {Promise<void>}
+     */
+    deleteLabels(guids: string[], cancellationToken?: AbortController): Promise<void>;
     /**
      * Read all vectors.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
@@ -669,6 +697,13 @@ export default class LiteGraphSdk extends SdkBase {
      */
     createVector(vector: VectorMetadata, cancellationToken?: AbortController): Promise<VectorMetadata>;
     /**
+     * Create multiple vectors
+     * @param {VectorMetadata[]} vectors - The vectors to create.
+     * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+     * @returns {Promise<VectorMetadata[]>}
+     */
+    createVectors(vectors: VectorMetadata[], cancellationToken?: AbortController): Promise<VectorMetadata[]>;
+    /**
      * Update a vector.
      * @param {VectorMetadata} vector - The vector to update.
      * @param {string} guid - The GUID of the vector.
@@ -683,6 +718,13 @@ export default class LiteGraphSdk extends SdkBase {
      * @returns {Promise<void>}
      */
     deleteVector(guid: string, cancellationToken?: AbortController): Promise<void>;
+    /**
+     * Delete multiple vectors
+     * @param {string[]} guids - The GUIDs of the vectors to delete.
+     * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+     * @returns {Promise<void>}
+     */
+    deleteVectors(guids: string[], cancellationToken?: AbortController): Promise<void>;
     /**
      * Search Vectors.
      * @param {Object} searchReq - Information about the search request.

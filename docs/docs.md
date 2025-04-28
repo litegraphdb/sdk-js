@@ -37,8 +37,8 @@ LiteGraph SDK class.Extends the SdkBase class.
         * [.readNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readNode) ⇒ <code>Promise.&lt;Node&gt;</code>
         * [.updateNode(node, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateNode) ⇒ <code>Promise.&lt;Node&gt;</code>
         * [.deleteNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteNode)
-        * [.deleteNodes(graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteNodes)
-        * [.deleteMultipleNodes(graphGuid, nodeGuids, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteMultipleNodes)
+        * [.deleteAllNodes(graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteAllNodes)
+        * [.deleteNodes(graphGuid, nodeGuids, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteNodes)
         * [.edgeExists(graphGuid, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+edgeExists) ⇒ <code>Promise.&lt;boolean&gt;</code>
         * [.createEdges(graphGuid, edges, [cancellationToken])](#module_LiteGraphSdk--module.exports+createEdges) ⇒ <code>Promise.&lt;Array.&lt;Object&gt;&gt;</code>
         * [.createEdge(edge, [cancellationToken])](#module_LiteGraphSdk--module.exports+createEdge) ⇒ <code>Promise.&lt;Edge&gt;</code>
@@ -47,8 +47,8 @@ LiteGraph SDK class.Extends the SdkBase class.
         * [.readEdge(graphGuid, edgeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readEdge) ⇒ <code>Promise.&lt;Edge&gt;</code>
         * [.updateEdge(edge, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateEdge) ⇒ <code>Promise.&lt;Edge&gt;</code>
         * [.deleteEdge(graphGuid, edgeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteEdge) ⇒ <code>Promise.&lt;void&gt;</code>
-        * [.deleteEdges(graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteEdges)
-        * [.deleteMultipleEdges(graphGuid, edgeGuids, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteMultipleEdges)
+        * [.deleteAllEdges(graphGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteAllEdges)
+        * [.deleteEdges(graphGuid, edgeGuids, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteEdges)
         * [.getEdgesFromNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getEdgesFromNode) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
         * [.getEdgesToNode(graphGuid, nodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getEdgesToNode) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
         * [.getEdgesBetween(graphGuid, fromNodeGuid, toNodeGuid, [cancellationToken])](#module_LiteGraphSdk--module.exports+getEdgesBetween) ⇒ <code>Promise.&lt;Array.&lt;Edge&gt;&gt;</code>
@@ -80,20 +80,26 @@ LiteGraph SDK class.Extends the SdkBase class.
         * [.readTag(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readTag) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
         * [.existsTag(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+existsTag) ⇒ <code>Promise.&lt;boolean&gt;</code>
         * [.createTag(tag, [cancellationToken])](#module_LiteGraphSdk--module.exports+createTag) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
+        * [.createTags(tags, [cancellationToken])](#module_LiteGraphSdk--module.exports+createTags) ⇒ <code>Promise.&lt;Array.&lt;TagMetaData&gt;&gt;</code>
         * [.updateTag(tag, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateTag) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
         * [.deleteTag(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteTag) ⇒ <code>Promise.&lt;void&gt;</code>
+        * [.deleteTags(guids, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteTags) ⇒ <code>Promise.&lt;void&gt;</code>
         * [.readAllLabels([cancellationToken])](#module_LiteGraphSdk--module.exports+readAllLabels) ⇒ <code>Promise.&lt;Array.&lt;LabelMetadata&gt;&gt;</code>
         * [.readLabel(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readLabel) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
         * [.existsLabel(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+existsLabel) ⇒ <code>Promise.&lt;boolean&gt;</code>
         * [.createLabel(label, [cancellationToken])](#module_LiteGraphSdk--module.exports+createLabel) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
+        * [.createLabels(labels, [cancellationToken])](#module_LiteGraphSdk--module.exports+createLabels) ⇒ <code>Promise.&lt;Array.&lt;LabelMetadata&gt;&gt;</code>
         * [.updateLabel(label, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateLabel) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
         * [.deleteLabel(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteLabel) ⇒ <code>Promise.&lt;void&gt;</code>
+        * [.deleteLabels(guids, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteLabels) ⇒ <code>Promise.&lt;void&gt;</code>
         * [.readAllVectors([cancellationToken])](#module_LiteGraphSdk--module.exports+readAllVectors) ⇒ <code>Promise.&lt;Array.&lt;VectorMetadata&gt;&gt;</code>
         * [.readVector(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+readVector) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
         * [.existsVector(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+existsVector) ⇒ <code>Promise.&lt;boolean&gt;</code>
         * [.createVector(vector, [cancellationToken])](#module_LiteGraphSdk--module.exports+createVector) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
+        * [.createVectors(vectors, [cancellationToken])](#module_LiteGraphSdk--module.exports+createVectors) ⇒ <code>Promise.&lt;Array.&lt;VectorMetadata&gt;&gt;</code>
         * [.updateVector(vector, guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+updateVector) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
         * [.deleteVector(guid, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteVector) ⇒ <code>Promise.&lt;void&gt;</code>
+        * [.deleteVectors(guids, [cancellationToken])](#module_LiteGraphSdk--module.exports+deleteVectors) ⇒ <code>Promise.&lt;void&gt;</code>
         * [.searchVectors(searchReq, [cancellationToken])](#module_LiteGraphSdk--module.exports+searchVectors) ⇒ <code>Promise.&lt;Array.&lt;VectorSearchResult&gt;&gt;</code>
         * [.generateToken(email, tenantId, password, [cancellationToken])](#module_LiteGraphSdk--module.exports+generateToken) ⇒ <code>Promise.&lt;Token&gt;</code>
         * [.getTokenDetails(token, [cancellationToken])](#module_LiteGraphSdk--module.exports+getTokenDetails) ⇒ <code>Promise.&lt;Token&gt;</code>
@@ -372,9 +378,9 @@ Delete a node.
 | nodeGuid | <code>string</code> | The GUID of the node. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="module_LiteGraphSdk--module.exports+deleteNodes"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteAllNodes"></a>
 
-#### module.exports.deleteNodes(graphGuid, [cancellationToken])
+#### module.exports.deleteAllNodes(graphGuid, [cancellationToken])
 Delete all nodes within a graph.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
@@ -384,9 +390,9 @@ Delete all nodes within a graph.
 | graphGuid | <code>string</code> | The GUID of the graph. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="module_LiteGraphSdk--module.exports+deleteMultipleNodes"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteNodes"></a>
 
-#### module.exports.deleteMultipleNodes(graphGuid, nodeGuids, [cancellationToken])
+#### module.exports.deleteNodes(graphGuid, nodeGuids, [cancellationToken])
 Delete multiple nodes within a graph.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
@@ -526,9 +532,9 @@ Delete an edge.
 | edgeGuid | <code>string</code> | Edge GUID. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="module_LiteGraphSdk--module.exports+deleteEdges"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteAllEdges"></a>
 
-#### module.exports.deleteEdges(graphGuid, [cancellationToken])
+#### module.exports.deleteAllEdges(graphGuid, [cancellationToken])
 Delete all edges within a graph.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
@@ -538,9 +544,9 @@ Delete all edges within a graph.
 | graphGuid | <code>string</code> | The GUID of the graph. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
-<a name="module_LiteGraphSdk--module.exports+deleteMultipleEdges"></a>
+<a name="module_LiteGraphSdk--module.exports+deleteEdges"></a>
 
-#### module.exports.deleteMultipleEdges(graphGuid, edgeGuids, [cancellationToken])
+#### module.exports.deleteEdges(graphGuid, edgeGuids, [cancellationToken])
 Delete multiple edges within a graph.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
@@ -972,6 +978,18 @@ Create a tag.
 | tag | <code>TagMetaData</code> | The tag to create. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
+<a name="module_LiteGraphSdk--module.exports+createTags"></a>
+
+#### module.exports.createTags(tags, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;TagMetaData&gt;&gt;</code>
+Create multiple tags
+
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| tags | <code>Array.&lt;TagMetaData&gt;</code> | The tags to create. |
+| [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
+
 <a name="module_LiteGraphSdk--module.exports+updateTag"></a>
 
 #### module.exports.updateTag(tag, guid, [cancellationToken]) ⇒ <code>Promise.&lt;TagMetaData&gt;</code>
@@ -995,6 +1013,18 @@ Delete a tag.
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the tag. |
+| [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
+
+<a name="module_LiteGraphSdk--module.exports+deleteTags"></a>
+
+#### module.exports.deleteTags(guids, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
+Delete multiple tags
+
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| guids | <code>Array.&lt;string&gt;</code> | The GUIDs of the tags to delete. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
 <a name="module_LiteGraphSdk--module.exports+readAllLabels"></a>
@@ -1044,6 +1074,18 @@ Create a label.
 | label | <code>LabelMetadata</code> | The label to create. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
+<a name="module_LiteGraphSdk--module.exports+createLabels"></a>
+
+#### module.exports.createLabels(labels, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;LabelMetadata&gt;&gt;</code>
+Create multiple labels
+
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| labels | <code>Array.&lt;LabelMetadata&gt;</code> | The labels to create. |
+| [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
+
 <a name="module_LiteGraphSdk--module.exports+updateLabel"></a>
 
 #### module.exports.updateLabel(label, guid, [cancellationToken]) ⇒ <code>Promise.&lt;LabelMetadata&gt;</code>
@@ -1067,6 +1109,18 @@ Delete a label.
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the label. |
+| [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
+
+<a name="module_LiteGraphSdk--module.exports+deleteLabels"></a>
+
+#### module.exports.deleteLabels(guids, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
+Delete multiple labels
+
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| guids | <code>Array.&lt;string&gt;</code> | The GUIDs of the labels to delete. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
 <a name="module_LiteGraphSdk--module.exports+readAllVectors"></a>
@@ -1116,6 +1170,18 @@ Create a vector.
 | vector | <code>VectorMetadata</code> | The vector to create. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
+<a name="module_LiteGraphSdk--module.exports+createVectors"></a>
+
+#### module.exports.createVectors(vectors, [cancellationToken]) ⇒ <code>Promise.&lt;Array.&lt;VectorMetadata&gt;&gt;</code>
+Create multiple vectors
+
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| vectors | <code>Array.&lt;VectorMetadata&gt;</code> | The vectors to create. |
+| [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
+
 <a name="module_LiteGraphSdk--module.exports+updateVector"></a>
 
 #### module.exports.updateVector(vector, guid, [cancellationToken]) ⇒ <code>Promise.&lt;VectorMetadata&gt;</code>
@@ -1139,6 +1205,18 @@ Delete a vector.
 | Param | Type | Description |
 | --- | --- | --- |
 | guid | <code>string</code> | The GUID of the vector. |
+| [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
+
+<a name="module_LiteGraphSdk--module.exports+deleteVectors"></a>
+
+#### module.exports.deleteVectors(guids, [cancellationToken]) ⇒ <code>Promise.&lt;void&gt;</code>
+Delete multiple vectors
+
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_LiteGraphSdk--module.exports)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| guids | <code>Array.&lt;string&gt;</code> | The GUIDs of the vectors to delete. |
 | [cancellationToken] | <code>AbortController</code> | Optional cancellation token for cancelling the request. |
 
 <a name="module_LiteGraphSdk--module.exports+searchVectors"></a>

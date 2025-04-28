@@ -203,7 +203,7 @@ export default class LiteGraphSdk extends SdkBase {
     }
     if (nodes.length < 1) return [];
 
-    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/multiple`;
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/bulk`;
     return await this.putCreate(url, nodes, Node, cancellationToken);
   }
 
@@ -304,7 +304,7 @@ export default class LiteGraphSdk extends SdkBase {
    * @param {string} graphGuid - The GUID of the graph.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    */
-  async deleteNodes(graphGuid, cancellationToken) {
+  async deleteAllNodes(graphGuid, cancellationToken) {
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/all`;
     await this.delete(url, cancellationToken);
   }
@@ -315,13 +315,13 @@ export default class LiteGraphSdk extends SdkBase {
    * @param {Array<string>} nodeGuids - The list of node GUIDs to delete.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    */
-  async deleteMultipleNodes(graphGuid, nodeGuids, cancellationToken) {
+  async deleteNodes(graphGuid, nodeGuids, cancellationToken) {
     if (!nodeGuids) {
       GenericExceptionHandlers.ArgumentNullException('nodeGuids');
     }
     if (nodeGuids.length < 1) return [];
-    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/multiple`;
-    await this.deleteMany(url, nodeGuids, cancellationToken);
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/bulk`;
+    return await this.deleteMany(url, nodeGuids, cancellationToken);
   }
 
   // endregion
@@ -353,7 +353,7 @@ export default class LiteGraphSdk extends SdkBase {
     }
     if (edges.length < 1) return [];
 
-    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/multiple`;
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/bulk`;
     return await this.putCreate(url, edges, Edge, cancellationToken);
   }
 
@@ -461,7 +461,7 @@ export default class LiteGraphSdk extends SdkBase {
    * @param {string} graphGuid - The GUID of the graph.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    */
-  async deleteEdges(graphGuid, cancellationToken) {
+  async deleteAllEdges(graphGuid, cancellationToken) {
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/all`;
     await this.delete(url, cancellationToken);
   }
@@ -472,13 +472,12 @@ export default class LiteGraphSdk extends SdkBase {
    * @param {Array<string>} edgeGuids - The list of edge GUIDs to delete.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    */
-  async deleteMultipleEdges(graphGuid, edgeGuids, cancellationToken) {
+  async deleteEdges(graphGuid, edgeGuids, cancellationToken) {
     if (!edgeGuids) {
       GenericExceptionHandlers.ArgumentNullException('edgeGuids');
     }
-    if (edgeGuids.length < 1) return [];
-    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/multiple`;
-    await this.deleteMany(url, edgeGuids, cancellationToken);
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/bulk`;
+    return await this.deleteMany(url, edgeGuids, cancellationToken);
   }
 
   //end region
@@ -931,6 +930,17 @@ export default class LiteGraphSdk extends SdkBase {
   }
 
   /**
+   * Create multiple tags
+   * @param {TagMetaData[]} tags - The tags to create.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<TagMetaData[]>}
+   */
+  async createTags(tags, cancellationToken) {
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/tags/bulk`;
+    return await this.putCreate(url, tags, TagMetaData, cancellationToken);
+  }
+
+  /**
    * Update a tag.
    * @param {TagMetaData} tag - The tag to update.
    * @param {string} guid - The GUID of the tag.
@@ -960,6 +970,17 @@ export default class LiteGraphSdk extends SdkBase {
     }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/tags/${guid}`;
     return await this.delete(url, cancellationToken);
+  }
+
+  /**
+   * Delete multiple tags
+   * @param {string[]} guids - The GUIDs of the tags to delete.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<void>}
+   */
+  async deleteTags(guids, cancellationToken) {
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/tags/bulk`;
+    return await this.deleteMany(url, guids, cancellationToken);
   }
 
   //end region
@@ -1019,6 +1040,17 @@ export default class LiteGraphSdk extends SdkBase {
   }
 
   /**
+   * Create multiple labels
+   * @param {LabelMetadata[]} labels - The labels to create.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<LabelMetadata[]>}
+   */
+  async createLabels(labels, cancellationToken) {
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/labels/bulk`;
+    return await this.putCreate(url, labels, LabelMetadata, cancellationToken);
+  }
+
+  /**
    * Update a label.
    * @param {LabelMetadata} label - The label to update.
    * @param {string} guid - The GUID of the label.
@@ -1048,6 +1080,17 @@ export default class LiteGraphSdk extends SdkBase {
     }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/labels/${guid}`;
     return await this.delete(url, cancellationToken);
+  }
+
+  /**
+   * Delete multiple labels
+   * @param {string[]} guids - The GUIDs of the labels to delete.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<void>}
+   */
+  async deleteLabels(guids, cancellationToken) {
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/labels/bulk`;
+    return await this.deleteMany(url, guids, cancellationToken);
   }
 
   //end region
@@ -1104,6 +1147,17 @@ export default class LiteGraphSdk extends SdkBase {
   }
 
   /**
+   * Create multiple vectors
+   * @param {VectorMetadata[]} vectors - The vectors to create.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorMetadata[]>}
+   */
+  async createVectors(vectors, cancellationToken) {
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/vectors/bulk`;
+    return await this.putCreate(url, vectors, VectorMetadata, cancellationToken);
+  }
+
+  /**
    * Update a vector.
    * @param {VectorMetadata} vector - The vector to update.
    * @param {string} guid - The GUID of the vector.
@@ -1133,6 +1187,17 @@ export default class LiteGraphSdk extends SdkBase {
     }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/vectors/${guid}`;
     return await this.delete(url, cancellationToken);
+  }
+
+  /**
+   * Delete multiple vectors
+   * @param {string[]} guids - The GUIDs of the vectors to delete.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<void>}
+   */
+  async deleteVectors(guids, cancellationToken) {
+    const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/vectors/bulk`;
+    return await this.deleteMany(url, guids, cancellationToken);
   }
 
   /**
