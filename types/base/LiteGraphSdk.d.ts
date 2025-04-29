@@ -219,7 +219,7 @@ export default class LiteGraphSdk extends SdkBase {
      * @param {Array<string>} nodeGuids - The list of node GUIDs to delete.
      * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
      */
-    deleteNodes(graphGuid: string, nodeGuids: Array<string>, cancellationToken?: AbortController): Promise<void | any[]>;
+    deleteNodes(graphGuid: string, nodeGuids: Array<string>, cancellationToken?: AbortController): Promise<void>;
     /**
      * Check if an edge exists by GUID.
      * @param {string} graphGuid - Graph GUID.
