@@ -201,7 +201,9 @@ export default class LiteGraphSdk extends SdkBase {
     if (!nodes) {
       GenericExceptionHandlers.ArgumentNullException('Nodes');
     }
-    if (nodes.length < 1) return [];
+    if (nodes.length < 1) {
+      GenericExceptionHandlers.GenericException('Nodes array is empty');
+    }
 
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/bulk`;
     return await this.putCreate(url, nodes, Node, cancellationToken);
@@ -319,7 +321,9 @@ export default class LiteGraphSdk extends SdkBase {
     if (!nodeGuids) {
       GenericExceptionHandlers.ArgumentNullException('nodeGuids');
     }
-    if (nodeGuids.length < 1) return [];
+    if (nodeGuids.length < 1) {
+      GenericExceptionHandlers.GenericException('Nodes array is empty');
+    }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/bulk`;
     return await this.deleteMany(url, nodeGuids, cancellationToken);
   }
@@ -351,7 +355,9 @@ export default class LiteGraphSdk extends SdkBase {
     if (!edges) {
       GenericExceptionHandlers.ArgumentNullException('Edges');
     }
-    if (edges.length < 1) return [];
+    if (edges.length < 1) {
+      GenericExceptionHandlers.GenericException('Edges array is empty');
+    }
 
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/bulk`;
     return await this.putCreate(url, edges, Edge, cancellationToken);
@@ -475,6 +481,9 @@ export default class LiteGraphSdk extends SdkBase {
   async deleteEdges(graphGuid, edgeGuids, cancellationToken) {
     if (!edgeGuids) {
       GenericExceptionHandlers.ArgumentNullException('edgeGuids');
+    }
+    if (edgeGuids.length < 1) {
+      GenericExceptionHandlers.GenericException('Edges array is empty');
     }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/bulk`;
     return await this.deleteMany(url, edgeGuids, cancellationToken);
@@ -936,6 +945,12 @@ export default class LiteGraphSdk extends SdkBase {
    * @returns {Promise<TagMetaData[]>}
    */
   async createTags(tags, cancellationToken) {
+    if (!tags) {
+      GenericExceptionHandlers.ArgumentNullException('tags');
+    }
+    if (tags.length < 1) {
+      GenericExceptionHandlers.GenericException('Tags array is empty');
+    }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/tags/bulk`;
     return await this.putCreate(url, tags, TagMetaData, cancellationToken);
   }
@@ -979,6 +994,12 @@ export default class LiteGraphSdk extends SdkBase {
    * @returns {Promise<void>}
    */
   async deleteTags(guids, cancellationToken) {
+    if (!guids) {
+      GenericExceptionHandlers.ArgumentNullException('guids');
+    }
+    if (guids.length < 1) {
+      GenericExceptionHandlers.GenericException('Tags array is empty');
+    }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/tags/bulk`;
     return await this.deleteMany(url, guids, cancellationToken);
   }
@@ -1046,6 +1067,12 @@ export default class LiteGraphSdk extends SdkBase {
    * @returns {Promise<LabelMetadata[]>}
    */
   async createLabels(labels, cancellationToken) {
+    if (!labels) {
+      GenericExceptionHandlers.ArgumentNullException('labels');
+    }
+    if (labels.length < 1) {
+      GenericExceptionHandlers.GenericException('Labels array is empty');
+    }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/labels/bulk`;
     return await this.putCreate(url, labels, LabelMetadata, cancellationToken);
   }
@@ -1089,6 +1116,12 @@ export default class LiteGraphSdk extends SdkBase {
    * @returns {Promise<void>}
    */
   async deleteLabels(guids, cancellationToken) {
+    if (!guids) {
+      GenericExceptionHandlers.ArgumentNullException('guids');
+    }
+    if (guids.length < 1) {
+      GenericExceptionHandlers.GenericException('Labels array is empty');
+    }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/labels/bulk`;
     return await this.deleteMany(url, guids, cancellationToken);
   }
@@ -1153,6 +1186,12 @@ export default class LiteGraphSdk extends SdkBase {
    * @returns {Promise<VectorMetadata[]>}
    */
   async createVectors(vectors, cancellationToken) {
+    if (!vectors) {
+      GenericExceptionHandlers.ArgumentNullException('vectors');
+    }
+    if (vectors.length < 1) {
+      GenericExceptionHandlers.GenericException('Vectors array is empty');
+    }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/vectors/bulk`;
     return await this.putCreate(url, vectors, VectorMetadata, cancellationToken);
   }
@@ -1196,6 +1235,12 @@ export default class LiteGraphSdk extends SdkBase {
    * @returns {Promise<void>}
    */
   async deleteVectors(guids, cancellationToken) {
+    if (!guids) {
+      GenericExceptionHandlers.ArgumentNullException('guids');
+    }
+    if (guids.length < 1) {
+      GenericExceptionHandlers.GenericException('Vectors array is empty');
+    }
     const url = `${this._endpoint}v1.0/tenants/${this.tenantGuid}/vectors/bulk`;
     return await this.deleteMany(url, guids, cancellationToken);
   }

@@ -27,20 +27,56 @@ describe('vectorRoute Tests', () => {
 
     test('should create a vector', async () => {
       const newVector = {
-        "GUID": mockVectorGuid,
-        "TenantGUID": "987e6543-a21b-45c3-b678-789012345678",
-        "GraphGUID": "321e6543-a21b-45c3-b678-789012345679",
-        "NodeGUID": "123e4567-e89b-12d3-a456-426614174001",
-        "EdgeGUID": "123e4567-e89b-12d3-a456-426614174002",
-        "Model": "SampleModel",
-        "Dimensionality": 128,
-        "Content": "Sample vector content",
-        "Vectors": [0.1, 0.2, 0.3, 0.4, 0.5],
-        "CreatedUtc": "2025-01-10T10:00:00.000Z",
-        "LastUpdateUtc": "2025-01-10T12:00:00.000Z"
+        GUID: mockVectorGuid,
+        TenantGUID: '987e6543-a21b-45c3-b678-789012345678',
+        GraphGUID: '321e6543-a21b-45c3-b678-789012345679',
+        NodeGUID: '123e4567-e89b-12d3-a456-426614174001',
+        EdgeGUID: '123e4567-e89b-12d3-a456-426614174002',
+        Model: 'SampleModel',
+        Dimensionality: 128,
+        Content: 'Sample vector content',
+        Vectors: [0.1, 0.2, 0.3, 0.4, 0.5],
+        CreatedUtc: '2025-01-10T10:00:00.000Z',
+        LastUpdateUtc: '2025-01-10T12:00:00.000Z',
       };
-      const response = await api.createVector(newVector);
-      expect(true).toBe(response instanceof VectorMetadata);
+      const response = await api.createVectors([
+        {
+          GUID: mockVectorGuid,
+          TenantGUID: '987e6543-a21b-45c3-b678-789012345678',
+          GraphGUID: '321e6543-a21b-45c3-b678-789012345679',
+          NodeGUID: '123e4567-e89b-12d3-a456-426614174001',
+          EdgeGUID: '123e4567-e89b-12d3-a456-426614174002',
+          Model: 'SampleModel',
+          Dimensionality: 128,
+          Content: 'Sample vector content',
+          Vectors: [0.1, 0.2, 0.3, 0.4, 0.5],
+          CreatedUtc: '2025-01-10T10:00:00.000Z',
+          LastUpdateUtc: '2025-01-10T12:00:00.000Z',
+        },
+      ]);
+      response.forEach((vector) => {
+        expect(vector instanceof VectorMetadata).toBe(true);
+      });
+    });
+
+    test('should throw error when creating multiple vectors with empty array', async () => {
+      try {
+        await api.createVectors();
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: vectors is null or empty');
+      }
+      try {
+        await api.createVectors([]);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: Vectors array is empty');
+      }
+    });
+
+    test('should create a vector', async () => {
+      const response = await api.createVector(vectorData);
+      expect(response instanceof VectorMetadata).toBe(true);
     });
 
     it('throws error when creating a vector', async () => {
@@ -67,16 +103,16 @@ describe('vectorRoute Tests', () => {
 
     test('should update a vector', async () => {
       const updateVector = {
-        "TenantGUID": "987e6543-a21b-45c3-b678-789012345678",
-        "GraphGUID": "321e6543-a21b-45c3-b678-789012345679",
-        "NodeGUID": "123e4567-e89b-12d3-a456-426614174001",
-        "EdgeGUID": "123e4567-e89b-12d3-a456-426614174002",
-        "Model": "SampleModel",
-        "Dimensionality": 128,
-        "Content": "Sample vector content",
-        "Vectors": [0.1, 0.2, 0.3, 0.4, 0.5],
-        "CreatedUtc": "2025-01-10T10:00:00.000Z",
-        "LastUpdateUtc": "2025-01-10T12:00:00.000Z"
+        TenantGUID: '987e6543-a21b-45c3-b678-789012345678',
+        GraphGUID: '321e6543-a21b-45c3-b678-789012345679',
+        NodeGUID: '123e4567-e89b-12d3-a456-426614174001',
+        EdgeGUID: '123e4567-e89b-12d3-a456-426614174002',
+        Model: 'SampleModel',
+        Dimensionality: 128,
+        Content: 'Sample vector content',
+        Vectors: [0.1, 0.2, 0.3, 0.4, 0.5],
+        CreatedUtc: '2025-01-10T10:00:00.000Z',
+        LastUpdateUtc: '2025-01-10T12:00:00.000Z',
       };
       const response = await api.updateVector(updateVector, mockVectorGuid);
       expect(response instanceof VectorMetadata).toBe(true);
@@ -95,16 +131,16 @@ describe('vectorRoute Tests', () => {
     it('throws error when if missed vector guid while updating a vector', async () => {
       try {
         const updateVector = {
-          "TenantGUID": "987e6543-a21b-45c3-b678-789012345678",
-          "GraphGUID": "321e6543-a21b-45c3-b678-789012345679",
-          "NodeGUID": "123e4567-e89b-12d3-a456-426614174001",
-          "EdgeGUID": "123e4567-e89b-12d3-a456-426614174002",
-          "Model": "SampleModel",
-          "Dimensionality": 128,
-          "Content": "Sample vector content",
-          "Vectors": [0.1, 0.2, 0.3, 0.4, 0.5],
-          "CreatedUtc": "2025-01-10T10:00:00.000Z",
-          "LastUpdateUtc": "2025-01-10T12:00:00.000Z"
+          TenantGUID: '987e6543-a21b-45c3-b678-789012345678',
+          GraphGUID: '321e6543-a21b-45c3-b678-789012345679',
+          NodeGUID: '123e4567-e89b-12d3-a456-426614174001',
+          EdgeGUID: '123e4567-e89b-12d3-a456-426614174002',
+          Model: 'SampleModel',
+          Dimensionality: 128,
+          Content: 'Sample vector content',
+          Vectors: [0.1, 0.2, 0.3, 0.4, 0.5],
+          CreatedUtc: '2025-01-10T10:00:00.000Z',
+          LastUpdateUtc: '2025-01-10T12:00:00.000Z',
         };
         await api.updateVector(updateVector, null);
       } catch (err) {
@@ -122,6 +158,26 @@ describe('vectorRoute Tests', () => {
       const cancellationToken = {};
       await api.deleteVector(mockVectorGuid, cancellationToken);
       cancellationToken.abort();
+    });
+
+    test('should delete multiple vectors', async () => {
+      const response = await api.deleteVectors([mockVectorGuid]);
+      expect(response).toBe(true); // Assuming delete operation returns nothing
+    });
+
+    test('should throw error when deleting multiple vectors with empty array', async () => {
+      try {
+        await api.deleteVectors();
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: guids is null or empty');
+      }
+      try {
+        await api.deleteVectors([]);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: Vectors array is empty');
+      }
     });
   });
 });

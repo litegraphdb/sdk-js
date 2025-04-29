@@ -191,26 +191,21 @@ describe('NodeRoute Tests', () => {
     });
 
     test('should delete multiple nodes within a graph', async () => {
-      const response = await api.deleteMultipleNodes(mockGraphGuid, mockNodeGuids);
-      expect(response).toBeUndefined(); // Assuming delete operation returns nothing
+      const response = await api.deleteNodes(mockGraphGuid, mockNodeGuids);
+      expect(response).toEqual(true);
     });
 
     test('should throw an error when nodeGuids is null', async () => {
       try {
-        await api.deleteMultipleNodes(mockGraphGuid, null);
+        await api.deleteNodes(mockGraphGuid, null);
       } catch (err) {
         expect(err.toString()).toBe('Error: ArgumentNullException: nodeGuids is null or empty');
       }
     });
 
-    test('should return an empty array if nodeGuids is an empty array', async () => {
-      const response = await api.deleteMultipleNodes(mockGraphGuid, mockEmptyNodeGuids);
-      expect(response).toEqual([]);
-    });
-
     test('should delete multiple nodes within a graph with abort', async () => {
       const cancellationToken = {};
-      await api.deleteMultipleNodes(mockGraphGuid, mockNodeGuids, cancellationToken);
+      await api.deleteNodes(mockGraphGuid, mockNodeGuids, cancellationToken);
       cancellationToken.abort();
     });
 
@@ -269,9 +264,16 @@ describe('NodeRoute Tests', () => {
     test('should return an empty array when creating an empty list of nodes', async () => {
       const graphGuid = '01010101-0101-0101-0101-010101010101';
       const nodes = [];
-
-      const response = await api.createNodes(graphGuid, nodes);
-      expect(response).toEqual([]);
+      try {
+        await api.createNodes(graphGuid);
+      } catch (err) {
+        expect(err.toString()).toBe('Error: ArgumentNullException: Nodes is null or empty');
+      }
+      try {
+        await api.createNodes(graphGuid, nodes);
+      } catch (err) {
+        expect(err.toString()).toBe('Error: Nodes array is empty');
+      }
     });
 
     test('throws error when nodes parameter is missing', async () => {
