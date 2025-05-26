@@ -20,7 +20,7 @@ describe('userRoute Tests', () => {
 
   describe('User Route', () => {
     test('should check if user exists by GUID', async () => {
-      const response = await api.existsUser(mockUserId);
+      const response = await api.User.exists(mockUserId);
       expect(response).toBe(true); // Assuming the mock returns true
     });
 
@@ -33,13 +33,13 @@ describe('userRoute Tests', () => {
         Password: 'password',
         Active: true,
       };
-      const response = await api.createUser(newUser);
+      const response = await api.User.create(newUser);
       expect(response).toEqual(userData);
     });
 
     it('throws error when creating a user', async () => {
       try {
-        await api.createUser(null as any);
+        await api.User.create(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: user is null or empty');
@@ -47,14 +47,14 @@ describe('userRoute Tests', () => {
     });
 
     test('should read all users', async () => {
-      const response = await api.readAllUsers();
+      const response = await api.User.readAll();
       response.forEach((user) => {
         expect(user).toEqual(userData);
       });
     });
 
     test('should read a specific user by GUID', async () => {
-      const response = await api.readUser(mockUserId);
+      const response = await api.User.read(mockUserId);
       expect(response).toEqual(userData);
     });
 
@@ -67,13 +67,13 @@ describe('userRoute Tests', () => {
         Password: 'password',
         Active: true,
       };
-      const response = await api.updateUser(updateUser);
+      const response = await api.User.update(updateUser);
       expect(response).toEqual(userData);
     });
 
     it('throws error when if missed user data while updating a User', async () => {
       try {
-        await api.updateUser(null as any);
+        await api.User.update(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: user is null or empty');
@@ -89,7 +89,7 @@ describe('userRoute Tests', () => {
           Password: 'password',
           Active: true,
         };
-        await api.updateUser(updateUser, null as any);
+        await api.User.update(updateUser, null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: user.GUID is null or empty');
@@ -97,13 +97,13 @@ describe('userRoute Tests', () => {
     });
 
     test('should delete a user', async () => {
-      const response = await api.deleteUser(mockUserId);
+      const response = await api.User.delete(mockUserId);
       expect(response).toBe(true); // Assuming delete operation returns nothing
     });
 
     test('should delete a user with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.deleteUser(mockUserId, cancellationToken);
+      await api.User.delete(mockUserId, cancellationToken);
       cancellationToken.abort();
     });
   });

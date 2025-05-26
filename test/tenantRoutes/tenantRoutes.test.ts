@@ -20,7 +20,7 @@ describe('TenantRoute Tests', () => {
 
   describe('Tenant Route', () => {
     test('should check if tenant exists by GUID', async () => {
-      const response = await api.tenantExists(mockTenantId);
+      const response = await api.Tenant.exists(mockTenantId);
       expect(response).toBe(true); // Assuming the mock returns true
     });
 
@@ -30,13 +30,13 @@ describe('TenantRoute Tests', () => {
         Name: 'Another tenant',
         Active: true,
       };
-      const response = await api.createTenant(newTenant);
+      const response = await api.Tenant.create(newTenant);
       expect(response).toEqual(tenantData);
     });
 
     it('throws error when creating a tenant', async () => {
       try {
-        await api.createTenant(null as any);
+        await api.Tenant.create(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: tenant is null or empty');
@@ -44,14 +44,14 @@ describe('TenantRoute Tests', () => {
     });
 
     test('should read all tenants', async () => {
-      const response = await api.readTenants();
+      const response = await api.Tenant.readAll();
       response.forEach((tenant) => {
         expect(tenant).toEqual(tenantData);
       });
     });
 
     test('should read a specific tenant by GUID', async () => {
-      const response = await api.readTenant(mockTenantId);
+      const response = await api.Tenant.read(mockTenantId);
       expect(response).toEqual(tenantData);
     });
 
@@ -61,14 +61,14 @@ describe('TenantRoute Tests', () => {
         Name: 'Updated tenant',
         Active: true,
       };
-      const response = await api.updateTenant(updateTenant);
+      const response = await api.Tenant.update(updateTenant);
       expect(response).toEqual(tenantData);
       expect(response.GUID).toBe(mockTenantId);
     });
 
     it('throws error when if missed tenant data while updating a Tenant', async () => {
       try {
-        await api.updateTenant(null as any);
+        await api.Tenant.update(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: tenant is null or empty');
@@ -81,7 +81,7 @@ describe('TenantRoute Tests', () => {
           Name: 'Updated tenant',
           Active: true,
         };
-        await api.updateTenant(updateTenant, null as any);
+        await api.Tenant.update(updateTenant, null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: tenant.GUID is null or empty');
@@ -89,13 +89,13 @@ describe('TenantRoute Tests', () => {
     });
 
     test('should delete a tenant', async () => {
-      const response = await api.deleteTenant(mockTenantId);
+      const response = await api.Tenant.delete(mockTenantId);
       expect(response).toBe(true); // Assuming delete operation returns nothing
     });
 
     test('should delete a tenant with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.deleteTenant(mockTenantId, cancellationToken);
+      await api.Tenant.delete(mockTenantId, undefined, cancellationToken);
       cancellationToken.abort();
     });
   });

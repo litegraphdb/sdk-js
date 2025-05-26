@@ -16,12 +16,12 @@ describe('GraphRoute Tests', () => {
 
   describe('GraphRoute', () => {
     test('should check if graph exists by GUID', async () => {
-      const response = await api.graphExists(mockGraphGuid);
+      const response = await api.Graph.exists(mockGraphGuid);
       expect(response).toBe(true); // Assuming the mock returns true
     });
 
     test('should create a graph', async () => {
-      const response = await api.createGraph({
+      const response = await api.Graph.create({
         Name: 'Sample Node',
       });
       expect(response.GUID).toEqual(mockGraphGuid);
@@ -30,7 +30,7 @@ describe('GraphRoute Tests', () => {
 
     it('throws error when creating a Graph', async () => {
       try {
-        await api.createGraph(null as any);
+        await api.Graph.create(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: Graph is null or empty');
@@ -38,7 +38,7 @@ describe('GraphRoute Tests', () => {
     });
 
     test('should read all graphs', async () => {
-      const response = await api.readGraphs();
+      const response = await api.Graph.readAll();
       response.map((graph) => {
         expect(graph).toEqual(graphData[graph.GUID]);
       });
@@ -53,12 +53,12 @@ describe('GraphRoute Tests', () => {
           Right: 'World',
         },
       };
-      const response = await api.searchGraphs(searchRequest);
+      const response = await api.Graph.search(searchRequest);
       expect(response).toEqual(searchGraphData[mockGraphGuid]);
     });
 
     test('should read a specific graph by GUID', async () => {
-      const response = await api.readGraph(mockGraphGuid);
+      const response = await api.Graph.read(mockGraphGuid);
       expect(response.GUID).toEqual(mockGraphGuid);
     });
 
@@ -72,13 +72,13 @@ describe('GraphRoute Tests', () => {
         },
         CreatedUtc: '2024-10-19T14:35:20.351Z',
       };
-      const response = await api.updateGraph(updatedGraphData as any);
+      const response = await api.Graph.update(updatedGraphData as any);
       expect(response).toEqual(graphData[mockGraphGuid]);
     });
 
     it('throws error when if missed graph data while updating a Graph', async () => {
       try {
-        await api.updateGraph(null as any);
+        await api.Graph.update(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: Graph is null or empty');
@@ -86,18 +86,19 @@ describe('GraphRoute Tests', () => {
     });
 
     test('should delete a graph', async () => {
-      const response = await api.deleteGraph(mockGraphGuid);
+      const response = await api.Graph.delete(mockGraphGuid);
       expect(response).toBe(true); // Assuming delete operation returns nothing
     });
 
     test('should export a graph to GEXF format', async () => {
-      const response = await api.exportGraphToGexf(mockGraphGuid);
+      const response = await api.Graph.exportGexf(mockGraphGuid);
       expect(response).toContain('<?xml'); // Checking for GEXF format
     });
 
     test('should export a graph to GEXF format with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.exportGraphToGexf(mockGraphGuid, cancellationToken);
+      await api.Graph.exportGexf(mockGraphGuid, cancellationToken);
+      api.Graph.accessToken;
       cancellationToken.abort();
     });
   });

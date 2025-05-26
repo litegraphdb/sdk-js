@@ -20,7 +20,7 @@ describe('labelRoute Tests', () => {
 
   describe('Label Route', () => {
     test('should check if label exists by GUID', async () => {
-      const response = await api.existsLabel(mockLabelGuid);
+      const response = await api.Label.exists(mockLabelGuid);
       expect(response).toBe(true); // Assuming the mock returns true
     });
 
@@ -34,12 +34,12 @@ describe('labelRoute Tests', () => {
         CreatedUtc: '2025-01-16T07:23:26.752372Z',
         LastUpdateUtc: '2025-01-16T07:23:26.752417Z',
       };
-      const response = await api.createLabel(newLabel);
+      const response = await api.Label.create(newLabel);
       expect(response).toEqual(labelData);
     });
 
     test('should create multiple labels', async () => {
-      const response = await api.createLabels([
+      const response = await api.Label.createBulk([
         {
           EdgeGUID: '00000000-0000-0000-0000-000000000000',
           GraphGUID: '00000000-0000-0000-0000-000000000000',
@@ -54,13 +54,13 @@ describe('labelRoute Tests', () => {
 
     test('should throw error when creating multiple labels with empty array', async () => {
       try {
-        await api.createLabels(null as any);
+        await api.Label.createBulk(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: labels is null or empty');
       }
       try {
-        await api.createLabels([]);
+        await api.Label.createBulk([]);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: Labels array is empty');
@@ -69,7 +69,7 @@ describe('labelRoute Tests', () => {
 
     it('throws error when creating a label', async () => {
       try {
-        await api.createLabel(null as any);
+        await api.Label.create(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: label is null or empty');
@@ -77,14 +77,14 @@ describe('labelRoute Tests', () => {
     });
 
     test('should read all labels', async () => {
-      const response = await api.readAllLabels();
+      const response = await api.Label.readAll();
       response.forEach((label) => {
         expect(label).toEqual(labelData);
       });
     });
 
     test('should read a specific label by GUID', async () => {
-      const response = await api.readLabel(mockLabelGuid);
+      const response = await api.Label.read(mockLabelGuid);
       expect(response).toEqual(labelData);
     });
 
@@ -96,13 +96,13 @@ describe('labelRoute Tests', () => {
         CreatedUtc: '2024-12-27T18:12:38.653402Z',
         LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
       };
-      const response = await api.updateLabel(updateLabel);
+      const response = await api.Label.update(updateLabel);
       expect(response).toEqual(labelData);
     });
 
     it('throws error when if missed label guid while updating a label', async () => {
       try {
-        await api.updateLabel(null as any);
+        await api.Label.update(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: label is null or empty');
@@ -117,7 +117,7 @@ describe('labelRoute Tests', () => {
           CreatedUtc: '2024-12-27T18:12:38.653402Z',
           LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
         };
-        await api.updateLabel(updateLabel, null as any);
+        await api.Label.update(updateLabel, null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: label.GUID is null or empty');
@@ -125,24 +125,24 @@ describe('labelRoute Tests', () => {
     });
 
     test('should delete a label', async () => {
-      const response = await api.deleteLabel(mockLabelGuid);
+      const response = await api.Label.delete(mockLabelGuid);
       expect(response).toBe(true); // Assuming delete operation returns nothing
     });
 
     test('should delete multiple labels', async () => {
-      const response = await api.deleteLabels([mockLabelGuid]);
+      const response = await api.Label.deleteBulk([mockLabelGuid]);
       expect(response).toBe(true); // Assuming delete operation returns nothing
     });
 
     test('should throw error when deleting multiple labels with empty array', async () => {
       try {
-        await api.deleteLabels(null as any);
+        await api.Label.deleteBulk(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: guids is null or empty');
       }
       try {
-        await api.deleteLabels([]);
+        await api.Label.deleteBulk([]);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: Labels array is empty');
@@ -151,7 +151,7 @@ describe('labelRoute Tests', () => {
 
     test('should delete a label with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.deleteLabel(mockLabelGuid, cancellationToken);
+      await api.Label.delete(mockLabelGuid, cancellationToken);
       cancellationToken.abort();
     });
   });

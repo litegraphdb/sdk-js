@@ -187,9 +187,9 @@ export type LabelMetadataCreateRequest = {
   /** Globally unique identifier for the graph */
   GraphGUID: string;
   /** Globally unique identifier for the node */
-  NodeGUID: string;
+  NodeGUID: string | null;
   /** Globally unique identifier for the edge */
-  EdgeGUID: string;
+  EdgeGUID: string | null;
 };
 
 /**
@@ -302,9 +302,9 @@ export type TagMetaDataCreateRequest = {
   /** Globally unique identifier for the graph */
   GraphGUID: string;
   /** Globally unique identifier for the node */
-  NodeGUID: string;
+  NodeGUID: string | null;
   /** Globally unique identifier for the edge */
-  EdgeGUID: string;
+  EdgeGUID: string | null;
   /** Key of the tag */
   Key: string;
   /** Value of the tag */
@@ -430,9 +430,9 @@ export type VectorCreateRequest = {
   /** Globally unique identifier for the graph */
   GraphGUID: string;
   /** Globally unique identifier for the node */
-  NodeGUID: string;
+  NodeGUID: string | null;
   /** Globally unique identifier for the edge */
-  EdgeGUID: string;
+  EdgeGUID: string | null;
   /** Content of the vector */
   Content: string;
   /** Model associated with the vector */

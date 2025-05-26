@@ -20,7 +20,7 @@ describe('vectorRoute Tests', () => {
 
   describe('Vector Route', () => {
     test('should check if vector exists by GUID', async () => {
-      const response = await api.existsVector(mockVectorGuid);
+      const response = await api.Vector.exists(mockVectorGuid);
       expect(response).toBe(true); // Assuming the mock returns true
     });
 
@@ -38,7 +38,7 @@ describe('vectorRoute Tests', () => {
         CreatedUtc: '2025-01-10T10:00:00.000Z',
         LastUpdateUtc: '2025-01-10T12:00:00.000Z',
       };
-      const response = await api.createVectors([
+      const response = await api.Vector.createBulk([
         {
           GraphGUID: '321e6543-a21b-45c3-b678-789012345679',
           NodeGUID: '123e4567-e89b-12d3-a456-426614174001',
@@ -56,13 +56,13 @@ describe('vectorRoute Tests', () => {
 
     test('should throw error when creating multiple vectors with empty array', async () => {
       try {
-        await api.createVectors(null as any);
+        await api.Vector.createBulk(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: vectors is null or empty');
       }
       try {
-        await api.createVectors([]);
+        await api.Vector.createBulk([]);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: Vectors array is empty');
@@ -70,13 +70,13 @@ describe('vectorRoute Tests', () => {
     });
 
     test('should create a vector', async () => {
-      const response = await api.createVector(vectorData);
+      const response = await api.Vector.create(vectorData);
       expect(response).toEqual(vectorData);
     });
 
     it('throws error when creating a vector', async () => {
       try {
-        await api.createVector(null as any);
+        await api.Vector.create(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: vector is null or empty');
@@ -84,14 +84,14 @@ describe('vectorRoute Tests', () => {
     });
 
     test('should read all vectors', async () => {
-      const response = await api.readAllVectors();
+      const response = await api.Vector.readAll();
       response.forEach((vector) => {
         expect(vector).toEqual(vectorData);
       });
     });
 
     test('should read a specific vector by GUID', async () => {
-      const response = await api.readVector(mockVectorGuid);
+      const response = await api.Vector.read(mockVectorGuid);
       expect(typeof response.CreatedUtc).toEqual(typeof vectorData.CreatedUtc);
     });
 
@@ -108,13 +108,13 @@ describe('vectorRoute Tests', () => {
         CreatedUtc: '2025-01-10T10:00:00.000Z',
         LastUpdateUtc: '2025-01-10T12:00:00.000Z',
       };
-      const response = await api.updateVector(updateVector, mockVectorGuid);
+      const response = await api.Vector.update(updateVector, mockVectorGuid);
       expect(response).toEqual(vectorData);
     });
 
     it('throws error when if missed vector guid while updating a vector', async () => {
       try {
-        await api.updateVector(null as any, mockVectorGuid);
+        await api.Vector.update(null as any, mockVectorGuid);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: vector is null or empty');
@@ -135,7 +135,7 @@ describe('vectorRoute Tests', () => {
           CreatedUtc: '2025-01-10T10:00:00.000Z',
           LastUpdateUtc: '2025-01-10T12:00:00.000Z',
         };
-        await api.updateVector(updateVector, null as any);
+        await api.Vector.update(updateVector, null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: guid is null or empty');
@@ -143,30 +143,30 @@ describe('vectorRoute Tests', () => {
     });
 
     test('should delete a vector', async () => {
-      const response = await api.deleteVector(mockVectorGuid);
+      const response = await api.Vector.delete(mockVectorGuid);
       expect(response).toBe(true); // Assuming delete operation returns nothing
     });
 
     test('should delete a vector with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.deleteVector(mockVectorGuid, cancellationToken);
+      await api.Vector.delete(mockVectorGuid, cancellationToken);
       cancellationToken.abort();
     });
 
     test('should delete multiple vectors', async () => {
-      const response = await api.deleteVectors([mockVectorGuid]);
+      const response = await api.Vector.deleteBulk([mockVectorGuid]);
       expect(response).toBe(true); // Assuming delete operation returns nothing
     });
 
     test('should throw error when deleting multiple vectors with empty array', async () => {
       try {
-        await api.deleteVectors(null as any);
+        await api.Vector.deleteBulk(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: guids is null or empty');
       }
       try {
-        await api.deleteVectors([]);
+        await api.Vector.deleteBulk([]);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: Vectors array is empty');

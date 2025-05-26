@@ -1,8 +1,9 @@
-var { LiteGraphSdk } = require('litegraphdb');
+import { LiteGraphSdk } from 'litegraphdb';
+import { Graph, NodeEdgeSearchRequest } from 'litegraphdb/dist/types/types';
 
 var api = new LiteGraphSdk(
   'http://ec2-18-217-169-161.us-east-2.compute.amazonaws.com:8701/',
-  '00000000-0000-0000-0000-000000000000',
+  '5317813d-99b2-4236-8c24-9827f79338c7',
   'litegraphadmin'
 );
 var guid = '00900db5-c9b7-4631-b250-c9e635a9036e'; // {String}
@@ -13,7 +14,7 @@ var edgeGuid = 'cbabe93f-c4d5-40a9-b0ff-1ee596a4293f';
 // region Graph
 const getGraphById = async () => {
   try {
-    const data = await api.readGraph(guid);
+    const data = await api.Graph.read(guid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -22,7 +23,7 @@ const getGraphById = async () => {
 
 const getGraphList = async () => {
   try {
-    const data = await api.readGraphs();
+    const data = await api.Graph.readAll();
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -32,9 +33,7 @@ const getGraphList = async () => {
 const createGraph = async () => {
   // Graph object to create
   try {
-    const createdGraph = await api.createGraph('02020202-0202-0202-0202-020202020202', 'Custom GUID', {
-      key1: 'value1',
-    });
+    const createdGraph = await api.Graph.create({ Name: 'New Graph' });
     console.log(createdGraph, 'Graph created successfully');
   } catch (err) {
     console.log('err: ', err);
@@ -44,18 +43,22 @@ const createGraph = async () => {
 
 const updateGraph = async () => {
   // Graph object to update
-  const graph = {
+  const graph: Graph = {
     GUID: '01010101-0101-0101-0101-010101010101',
-    GraphGUID: '01010101-0101-0101-0101-010101010101',
     Name: 'Sample Node',
+    CreatedUtc: '2024-10-19T14:35:20.351Z',
     Data: {
       key1: 'value2',
     },
-    CreatedUtc: '2024-10-19T14:35:20.351Z',
+    Labels: ['test'],
+    Tags: {
+      Type: 'ActiveDirectory',
+    },
+    Vectors: [],
   };
 
   try {
-    const createdGraph = await api.updateGraph(graph);
+    const createdGraph = await api.Graph.update(graph);
     console.log(createdGraph, 'Graph created successfully');
   } catch (err) {
     console.log('Error creating graph:', JSON.stringify(err));
@@ -64,7 +67,7 @@ const updateGraph = async () => {
 
 const deleteGraphById = async () => {
   try {
-    const data = await api.deleteGraph(guid);
+    const data = await api.Graph.delete(guid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -73,7 +76,7 @@ const deleteGraphById = async () => {
 
 const checkIfGraphExistsById = async () => {
   try {
-    const data = await api.graphExists(guid);
+    const data = await api.Graph.exists(guid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -94,7 +97,7 @@ const searchGraph = async () => {
   };
 
   try {
-    const response = await api.searchGraphs(searchRequest);
+    const response = await api.Graph.search(searchRequest);
     console.log(response, 'Graph searched successfully');
   } catch (err) {
     console.log('Error searching graph:', JSON.stringify(err), err);
@@ -103,7 +106,7 @@ const searchGraph = async () => {
 
 const exportGraphToGexf = async () => {
   try {
-    const data = await api.exportGraphToGexf('7f371867-cfd1-4f76-904d-682660dc91ec');
+    const data = await api.Graph.exportGexf('7f371867-cfd1-4f76-904d-682660dc91ec');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -113,7 +116,7 @@ const exportGraphToGexf = async () => {
 // region Node
 const getNodeById = async () => {
   try {
-    const data = await api.readNode(guid, nodeGuid);
+    const data = await api.Node.read(guid, nodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -122,7 +125,7 @@ const getNodeById = async () => {
 
 const getNodeList = async () => {
   try {
-    const data = await api.readNodes(guid);
+    const data = await api.Node.readAll(guid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -141,7 +144,7 @@ const createNode = async () => {
     CreatedUtc: '2024-10-19T14:35:20.351Z',
   };
   try {
-    const createdNode = await api.createNode(node);
+    const createdNode = await api.Node.create(node);
     console.log(createdNode, 'Node created successfully');
   } catch (err) {
     console.log('err: ', err);
@@ -174,7 +177,7 @@ const multipleNodes = async () => {
   ];
 
   try {
-    const createdNode = await api.createNodes(guid, newMultipleNodes);
+    const createdNode = await api.Node.createBulk(guid, newMultipleNodes);
     console.log(createdNode, 'Node created successfully');
   } catch (err) {
     console.log('err: ', err);
@@ -194,7 +197,7 @@ const updateNode = async () => {
   };
 
   try {
-    const createdNode = await api.updateNode(node);
+    const createdNode = await api.Node.update(node);
     console.log(createdNode, 'Node created successfully');
   } catch (err) {
     console.log('Error creating node:', JSON.stringify(err));
@@ -203,7 +206,7 @@ const updateNode = async () => {
 
 const deleteNodeById = async () => {
   try {
-    const data = await api.deleteNode(guid, nodeGuid);
+    const data = await api.Node.delete(guid, nodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -212,7 +215,7 @@ const deleteNodeById = async () => {
 
 const checkIfNodeExistsById = async () => {
   try {
-    const data = await api.graphExists(guid, nodeGuid);
+    const data = await api.Node.exists(guid, nodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -221,7 +224,8 @@ const checkIfNodeExistsById = async () => {
 const searchNodes = async () => {
   // Graph object to update
 
-  const searchRequest = {
+  const searchRequest: NodeEdgeSearchRequest = {
+    GraphGUID: '00000000-0000-0000-0000-000000000000',
     Ordering: 'CreatedDescending',
     Expr: {
       Left: 'Hello',
@@ -231,7 +235,7 @@ const searchNodes = async () => {
   };
 
   try {
-    const response = await api.searchNodes('00900db5-c9b7-4631-b250-c9e635a9036e', searchRequest);
+    const response = await api.Node.search(searchRequest);
     console.log(response, 'Graph searched successfully');
   } catch (err) {
     console.log('Error searching graph:', JSON.stringify(err), err);
@@ -241,7 +245,7 @@ const searchNodes = async () => {
 // region Edge
 const getEdgeById = async () => {
   try {
-    const data = await api.readEdge(guid, edgeGuid);
+    const data = await api.Edge.read(guid, edgeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -250,7 +254,7 @@ const getEdgeById = async () => {
 
 const getEdgeList = async () => {
   try {
-    const data = await api.readEdges(guid);
+    const data = await api.Edge.readAll(guid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -260,6 +264,7 @@ const getEdgeList = async () => {
 const createEdge = async () => {
   // Edge object to create
   const edge = {
+    GraphGUID: '00000000-0000-0000-0000-000000000000',
     Name: 'My test edge',
     From: '2b1520be-d285-4f22-8c74-f296047162b9',
     To: '784cfa37-fb06-4f81-b10d-f1167dfe2b22',
@@ -267,10 +272,9 @@ const createEdge = async () => {
     Data: {
       Hello: 'World',
     },
-    CreatedUtc: '2024-07-01 15:43:06.991834',
   };
   try {
-    const createdEdge = await api.createEdge(edge);
+    const createdEdge = await api.Edge.create(edge);
     console.log(createdEdge, 'Edge created successfully');
   } catch (err) {
     console.log('err: ', err);
@@ -294,7 +298,7 @@ const updateEdge = async () => {
   };
 
   try {
-    const createdEdge = await api.updateEdge(edge);
+    const createdEdge = await api.Edge.update(edge);
     console.log(createdEdge, 'Edge created successfully');
   } catch (err) {
     console.log('Error creating edge:', JSON.stringify(err));
@@ -303,7 +307,7 @@ const updateEdge = async () => {
 
 const deleteEdgeById = async () => {
   try {
-    const data = await api.deleteEdge(guid, edgeGuid);
+    const data = await api.Edge.delete(guid, edgeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -312,7 +316,7 @@ const deleteEdgeById = async () => {
 
 const checkIfEdgeExistsById = async () => {
   try {
-    const data = await api.graphExists(guid, edgeGuid);
+    const data = await api.Edge.exists(guid, edgeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -332,7 +336,7 @@ const searchEdges = async () => {
   };
 
   try {
-    const response = await api.searchEdges('01010101-0101-0101-0101-010101010101', searchRequest);
+    const response = await api.Edge.search(searchRequest);
     console.log(response, 'Graph searched successfully');
   } catch (err) {
     console.log('Error searching graph:', JSON.stringify(err), err);
@@ -342,7 +346,7 @@ const searchEdges = async () => {
 //region Routes & Traversal
 const getEdgesFromNode = async () => {
   try {
-    const data = await api.getEdgesFromNode(guid, nodeGuid);
+    const data = await api.Route.getEdgesFromNode(guid, nodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -351,7 +355,7 @@ const getEdgesFromNode = async () => {
 
 const getEdgesToNode = async () => {
   try {
-    const data = await api.getEdgesToNode(guid, nodeGuid);
+    const data = await api.Route.getEdgesToNode(guid, nodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -359,7 +363,7 @@ const getEdgesToNode = async () => {
 };
 const getEdgesBetween = async () => {
   try {
-    const data = await api.getEdgesBetween(guid, fromNodeGuid, toNodeGuid);
+    const data = await api.Route.getEdgesBetween(guid, fromNodeGuid, toNodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -367,7 +371,7 @@ const getEdgesBetween = async () => {
 };
 const getAllNodeEdges = async () => {
   try {
-    const data = await api.getAllNodeEdges(guid, nodeGuid);
+    const data = await api.Route.getAllNodeEdges(guid, nodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -375,7 +379,7 @@ const getAllNodeEdges = async () => {
 };
 const getChildrenFromNode = async () => {
   try {
-    const data = await api.getChildrenFromNode(guid, nodeGuid);
+    const data = await api.Route.getChildrenFromNode(guid, nodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -383,7 +387,7 @@ const getChildrenFromNode = async () => {
 };
 const getParentsFromNode = async () => {
   try {
-    const data = await api.getParentsFromNode(guid, nodeGuid);
+    const data = await api.Route.getParentsFromNode(guid, nodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -391,7 +395,7 @@ const getParentsFromNode = async () => {
 };
 const getNodeNeighbors = async () => {
   try {
-    const data = await api.getNodeNeighbors(guid, nodeGuid);
+    const data = await api.Route.getNodeNeighbors(guid, nodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -399,7 +403,7 @@ const getNodeNeighbors = async () => {
 };
 const getRoutes = async () => {
   try {
-    const data = await api.getRoutes(guid, fromNodeGuid, toNodeGuid);
+    const data = await api.Route.getRoutes(guid, fromNodeGuid, toNodeGuid);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -408,7 +412,7 @@ const getRoutes = async () => {
 
 const deleteMultipleNodes = async () => {
   try {
-    const data = await api.deleteMultipleNodes(guid, ['a8s7d87asd', '7a6sd8767ad']);
+    const data = await api.Node.deleteBulk(guid, ['a8s7d87asd', '7a6sd8767ad']);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -420,7 +424,7 @@ const deleteMultipleNodes = async () => {
 //region User
 const readAllUsers = async () => {
   try {
-    const data = await api.readAllUsers();
+    const data = await api.User.readAll();
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -429,7 +433,7 @@ const readAllUsers = async () => {
 
 const readUser = async () => {
   try {
-    const data = await api.readUser('00000000-0000-0000-0000-000000000000');
+    const data = await api.User.read('00000000-0000-0000-0000-000000000000');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -438,7 +442,7 @@ const readUser = async () => {
 
 const createUser = async () => {
   try {
-    const data = await api.createUser({
+    const data = await api.User.create({
       FirstName: 'Another',
       LastName: 'User',
       Email: 'another@user.com',
@@ -453,7 +457,7 @@ const createUser = async () => {
 
 const existsUser = async () => {
   try {
-    const data = await api.existsUser('00000000-0000-0000-0000-000000000000');
+    const data = await api.User.exists('00000000-0000-0000-0000-000000000000');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -462,16 +466,14 @@ const existsUser = async () => {
 
 const updateUser = async () => {
   try {
-    const data = await api.updateUser(
-      {
-        FirstName: 'Again Updated',
-        LastName: 'User',
-        Email: 'anotherbbb@user.com',
-        Password: 'password',
-        Active: true,
-      },
-      'eda4872a-fe66-475c-9c33-4b50ec14de0d'
-    );
+    const data = await api.User.update({
+      GUID: 'eda4872a-fe66-475c-9c33-4b50ec14de0d',
+      FirstName: 'Again Updated',
+      LastName: 'User',
+      Email: 'anotherbbb@user.com',
+      Password: 'password',
+      Active: true,
+    });
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -480,7 +482,7 @@ const updateUser = async () => {
 
 const deleteUser = async () => {
   try {
-    const data = await api.deleteUser('eda4872a-fe66-475c-9c33-4b50ec14de0d');
+    const data = await api.User.delete('eda4872a-fe66-475c-9c33-4b50ec14de0d');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -492,7 +494,7 @@ const deleteUser = async () => {
 //region Tenant
 const readTenants = async () => {
   try {
-    const data = await api.readTenants();
+    const data = await api.Tenant.readAll();
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -501,7 +503,7 @@ const readTenants = async () => {
 
 const readTenant = async () => {
   try {
-    const data = await api.readTenant('00000000-0000-0000-0000-000000000000');
+    const data = await api.Tenant.read('00000000-0000-0000-0000-000000000000');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -510,7 +512,7 @@ const readTenant = async () => {
 
 const createTenant = async () => {
   try {
-    const data = await api.createTenant({
+    const data = await api.Tenant.create({
       Name: 'Another tenant',
       Active: true,
     });
@@ -522,7 +524,7 @@ const createTenant = async () => {
 
 const tenantExists = async () => {
   try {
-    const data = await api.tenantExists('00000000-0000-0000-0000-000000000000');
+    const data = await api.Tenant.exists('00000000-0000-0000-0000-000000000000');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -531,13 +533,11 @@ const tenantExists = async () => {
 
 const updateTenant = async () => {
   try {
-    const data = await api.updateTenant(
-      {
-        Name: 'Updated tenant',
-        Active: true,
-      },
-      '62147b5c-19f0-4eb1-9640-b28784ca2645'
-    );
+    const data = await api.Tenant.update({
+      GUID: '00000000-0000-0000-0000-000000000000',
+      Name: 'Updated tenant',
+      Active: true,
+    });
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -546,7 +546,7 @@ const updateTenant = async () => {
 
 const deleteTenant = async () => {
   try {
-    const data = await api.deleteTenant('0a28221b-fa65-430d-8b29-158546639347');
+    const data = await api.Tenant.delete('0a28221b-fa65-430d-8b29-158546639347');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -555,7 +555,7 @@ const deleteTenant = async () => {
 
 const deleteForceTenant = async () => {
   try {
-    const data = await api.tenantDeleteForce('db548e9f-32bf-4fe0-9be1-a629b26fed0b');
+    const data = await api.Tenant.delete('db548e9f-32bf-4fe0-9be1-a629b26fed0b', true);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -567,7 +567,7 @@ const deleteForceTenant = async () => {
 //region Credentials
 const readAllCredentials = async () => {
   try {
-    const data = await api.readAllCredentials();
+    const data = await api.Credential.readAll();
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -576,7 +576,7 @@ const readAllCredentials = async () => {
 
 const readCredential = async () => {
   try {
-    const data = await api.readCredential('bcce2a7c-d102-42e2-97d4-a449f470f57c');
+    const data = await api.Credential.read('bcce2a7c-d102-42e2-97d4-a449f470f57c');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -593,7 +593,7 @@ const createCredential = async () => {
   };
 
   try {
-    const data = await api.createCredential(credential);
+    const data = await api.Credential.create(credential);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -602,7 +602,7 @@ const createCredential = async () => {
 
 const existsCredential = async () => {
   try {
-    const data = await api.existsCredential('bcce2a7c-d102-42e2-97d4-a449f470f57c');
+    const data = await api.Credential.exists('bcce2a7c-d102-42e2-97d4-a449f470f57c');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -611,7 +611,7 @@ const existsCredential = async () => {
 
 const updateCredential = async () => {
   try {
-    const data = await api.updateCredential(
+    const data = await api.Credential.update(
       {
         UserGUID: '00000000-0000-0000-0000-000000000000',
         Name: 'Updated credential',
@@ -628,7 +628,7 @@ const updateCredential = async () => {
 
 const deleteCredential = async () => {
   try {
-    const data = await api.deleteCredential('1f4ac56e-69da-49b3-8bd5-e29a639d6392');
+    const data = await api.Credential.delete('1f4ac56e-69da-49b3-8bd5-e29a639d6392');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -640,7 +640,7 @@ const deleteCredential = async () => {
 //region Labels
 const readAllLabels = async () => {
   try {
-    const data = await api.readAllLabels();
+    const data = await api.Label.readAll();
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -649,7 +649,7 @@ const readAllLabels = async () => {
 
 const readLabel = async () => {
   try {
-    const data = await api.readLabel('a051c94d-90f9-4471-8e03-5234c4f4f061');
+    const data = await api.Label.read('a051c94d-90f9-4471-8e03-5234c4f4f061');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -658,12 +658,11 @@ const readLabel = async () => {
 
 const createLabel = async () => {
   try {
-    const data = await api.createLabel({
+    const data = await api.Label.create({
       GraphGUID: '00000000-0000-0000-0000-000000000000',
       NodeGUID: '00000000-0000-0000-0000-000000000000',
       Label: 'test',
-      CreatedUtc: '2025-01-16T07:23:26.752372Z',
-      LastUpdateUtc: '2025-01-16T07:23:26.752417Z',
+      EdgeGUID: null,
     });
     console.log(data, 'chk data');
   } catch (err) {
@@ -673,7 +672,7 @@ const createLabel = async () => {
 
 const existsLabel = async () => {
   try {
-    const data = await api.existsLabel('a051c94d-90f9-4471-8e03-5234c4f4f061');
+    const data = await api.Label.exists('a051c94d-90f9-4471-8e03-5234c4f4f061');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -682,15 +681,15 @@ const existsLabel = async () => {
 
 const updateLabel = async () => {
   try {
-    const data = await api.updateLabel(
-      {
-        Key: 'updatedkey',
-        Value: 'myvalue',
-        CreatedUtc: '2024-12-27T18:12:38.653402Z',
-        LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
-      },
-      '2717241e-ca54-45d9-8857-2303305c4554'
-    );
+    const data = await api.Label.update({
+      GUID: 'a051c94d-90f9-4471-8e03-5234c4f4f061',
+      GraphGUID: '00000000-0000-0000-0000-000000000000',
+      NodeGUID: '00000000-0000-0000-0000-000000000000',
+      Label: 'updatedkey',
+      EdgeGUID: '00000000-0000-0000-0000-000000000000',
+      CreatedUtc: '2024-12-27T18:12:38.653402Z',
+      LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
+    });
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -699,7 +698,7 @@ const updateLabel = async () => {
 
 const deleteLabel = async () => {
   try {
-    const data = await api.deleteLabel('a169ec1d-bbc9-4538-90f5-2c1fbf281282');
+    const data = await api.Label.delete('a169ec1d-bbc9-4538-90f5-2c1fbf281282');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -711,7 +710,7 @@ const deleteLabel = async () => {
 //region Tag
 const readAllTags = async () => {
   try {
-    const data = await api.readAllTags();
+    const data = await api.Tag.readAll();
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -720,7 +719,7 @@ const readAllTags = async () => {
 
 const readTag = async () => {
   try {
-    const data = await api.readTag('461c0b76-b7ae-4a6f-8b25-50c78239ecce');
+    const data = await api.Tag.read('461c0b76-b7ae-4a6f-8b25-50c78239ecce');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -729,7 +728,7 @@ const readTag = async () => {
 
 const createTag = async () => {
   try {
-    const data = await api.createTag({
+    const data = await api.Tag.create({
       GraphGUID: '00000000-0000-0000-0000-000000000000',
       NodeGUID: '158c634b-53d2-4a60-be87-61c39c990451',
       EdgeGUID: 'cdf28e4f-9a28-4a70-b246-e3ae9ccb35d6',
@@ -744,7 +743,7 @@ const createTag = async () => {
 
 const existsTag = async () => {
   try {
-    const data = await api.existsTag('461c0b76-b7ae-4a6f-8b25-50c78239ecce');
+    const data = await api.Tag.exists('461c0b76-b7ae-4a6f-8b25-50c78239ecce');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -753,7 +752,7 @@ const existsTag = async () => {
 
 const updateTag = async () => {
   try {
-    const data = await api.updateTag(
+    const data = await api.Tag.update(
       {
         Key: 'updatedkey',
         Value: 'myvalue',
@@ -770,7 +769,7 @@ const updateTag = async () => {
 
 const deleteTag = async () => {
   try {
-    const data = await api.deleteTag('3e49bc06-8fb6-41f1-8bb4-1a4af6319264');
+    const data = await api.Tag.delete('3e49bc06-8fb6-41f1-8bb4-1a4af6319264');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -779,7 +778,7 @@ const deleteTag = async () => {
 
 const createMultipleTags = async () => {
   try {
-    const data = await api.createTags([
+    const data = await api.Tag.createBulk([
       {
         GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
         NodeGUID: null,
@@ -804,7 +803,7 @@ const createMultipleTags = async () => {
 
 const deleteMultipleTags = async () => {
   try {
-    const data = await api.deleteTags([
+    const data = await api.Tag.deleteBulk([
       '4cbfe0cd-13b9-426c-8a6b-84e77abe8f6d',
       'dc0c1298-3f79-4c6e-ac25-7491eb8a5b25',
       '5618fe18-47f1-43eb-abae-96ba6a88b341',
@@ -819,7 +818,7 @@ const deleteMultipleTags = async () => {
 
 const deleteMultipleVectors = async () => {
   try {
-    const data = await api.deleteVectors(['ff9d5654-654c-41e7-a5c8-50a1963de72c']);
+    const data = await api.Vector.deleteBulk(['ff9d5654-654c-41e7-a5c8-50a1963de72c']);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -828,7 +827,7 @@ const deleteMultipleVectors = async () => {
 // deleteMultipleVectors();
 const createMultipleVectors = async () => {
   try {
-    const data = await api.createVectors([
+    const data = await api.Vector.createBulk([
       {
         GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
         NodeGUID: null,
@@ -848,7 +847,7 @@ const createMultipleVectors = async () => {
 
 const createMultipleLabels = async () => {
   try {
-    const data = await api.createLabels([
+    const data = await api.Label.createBulk([
       {
         GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
         NodeGUID: null,
@@ -871,7 +870,7 @@ const createMultipleLabels = async () => {
 
 const deleteMultipleLabels = async () => {
   try {
-    const data = await api.deleteLabels([
+    const data = await api.Label.deleteBulk([
       '33c8c905-b78b-4548-98ff-af0197d5fa97',
       '96d4f123-a265-4c60-aef1-664a5ed0d7df',
     ]);
@@ -884,7 +883,7 @@ const deleteMultipleLabels = async () => {
 
 const createMultipleNodes = async () => {
   try {
-    const data = await api.createNodes('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
+    const data = await api.Node.createBulk('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
       {
         Name: 'Active Directory',
         Labels: ['test'],
@@ -915,7 +914,7 @@ const createMultipleNodes = async () => {
 
 const deleteMultipleNodes2 = async () => {
   try {
-    const data = await api.deleteNodes('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
+    const data = await api.Node.deleteBulk('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
       'a204853e-5ba1-4795-9a2b-46349847f92f',
       '76df872f-a138-4e28-9cd0-95941c6fd657',
     ]);
@@ -928,7 +927,7 @@ const deleteMultipleNodes2 = async () => {
 
 const createMultipleEdges = async () => {
   try {
-    const data = await api.createEdges('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
+    const data = await api.Edge.createBulk('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
       {
         Name: 'DigitalOcean to Control Plane',
         From: 'a76c18ed-78be-4666-858a-5154350240d8',
@@ -953,7 +952,7 @@ const createMultipleEdges = async () => {
 
 const deleteMultipleEdges = async () => {
   try {
-    const data = await api.deleteEdges('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
+    const data = await api.Edge.deleteBulk('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
       'a76c18ed-78be-4666-858a-5154350240d8',
     ]);
     console.log(data, 'chk data');
@@ -965,7 +964,7 @@ deleteMultipleEdges();
 
 const useSdk = async () => {
   //region Graph calls
-  // await getGraphById();
+  await getGraphById();
   // await getGraphList();
   // await createGraph();
   // await updateGraph();

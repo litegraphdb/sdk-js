@@ -460,7 +460,7 @@ export default class SdkBase {
    * @return {Promise<boolean>} Resolves if the object is successfully deleted.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
-  delete(url: string, cancellationToken?: AbortController): Promise<boolean> {
+  del(url: string, cancellationToken?: AbortController): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (!url) return reject(new Error('URL cannot be null or empty.'));
 

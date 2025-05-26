@@ -20,7 +20,7 @@ describe('EdgeRoute Tests', () => {
 
   describe('EdgeRoute', () => {
     test('should check if edge exists by GUID', async () => {
-      const response = await api.edgeExists(mockGraphGuid, mockEdgeGuid);
+      const response = await api.Edge.exists(mockGraphGuid, mockEdgeGuid);
       expect(response).toBe(true); // Assuming the mock returns true
     });
 
@@ -37,13 +37,13 @@ describe('EdgeRoute Tests', () => {
         },
         CreatedUtc: '2024-07-01 15:43:06.991834',
       };
-      const response = await api.createEdge(newEdge);
+      const response = await api.Edge.create(newEdge);
       expect(response).toEqual(edgeData[mockEdgeGuid]);
     });
 
     it('throws error when creating a Edge', async () => {
       try {
-        await api.createEdge(null as any);
+        await api.Edge.create(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: edge is null or empty');
@@ -51,7 +51,7 @@ describe('EdgeRoute Tests', () => {
     });
 
     test('should read all edges of a graph', async () => {
-      const response = await api.readEdges(mockGraphGuid);
+      const response = await api.Edge.readAll(mockGraphGuid);
       response.map((edge) => {
         expect(edge).toEqual(edgeData[edge.GUID as string]);
       });
@@ -67,12 +67,12 @@ describe('EdgeRoute Tests', () => {
           Right: 'World',
         },
       };
-      const response = await api.searchEdges(searchRequest);
+      const response = await api.Edge.search(searchRequest);
       expect(response).toEqual(searchEdgeData[mockGraphGuid]);
     });
 
     test('should read a specific edge by GUID', async () => {
-      const response = await api.readEdge(mockGraphGuid, mockEdgeGuid);
+      const response = await api.Edge.read(mockGraphGuid, mockEdgeGuid);
       expect(response.GUID).toEqual(mockEdgeGuid);
     });
 
@@ -89,13 +89,13 @@ describe('EdgeRoute Tests', () => {
         },
         CreatedUtc: '2024-07-01 15:43:06.991834',
       };
-      const response = await api.updateEdge(updatedEdgeData);
+      const response = await api.Edge.update(updatedEdgeData);
       expect(response).toEqual(edgeData[mockEdgeGuid]);
     });
 
     it('throws error when if missed edge data while updating a Edge', async () => {
       try {
-        await api.updateEdge(null as any);
+        await api.Edge.update(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: Edge is null or empty');
@@ -103,29 +103,29 @@ describe('EdgeRoute Tests', () => {
     });
 
     test('should delete a edge', async () => {
-      const response = await api.deleteEdge(mockEdgeGuid, mockEdgeGuid);
+      const response = await api.Edge.delete(mockEdgeGuid, mockEdgeGuid);
       expect(response).toBe(true); // Assuming delete operation returns nothing
     });
 
     test('should delete all edges within a graph', async () => {
-      const response = await api.deleteAllEdges(mockGraphGuid);
+      const response = await api.Edge.deleteAll(mockGraphGuid);
       expect(response).toBe(true); // Assuming delete operation returns nothing
     });
 
     test('should delete all edges within a graph with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.deleteAllEdges(mockGraphGuid, cancellationToken);
+      await api.Edge.deleteAll(mockGraphGuid, cancellationToken);
       cancellationToken.abort();
     });
 
     test('should delete multiple edges within a graph', async () => {
-      const response = await api.deleteEdges(mockGraphGuid, mockEdgeGuids);
+      const response = await api.Edge.deleteBulk(mockGraphGuid, mockEdgeGuids);
       expect(response).toEqual(true);
     });
 
     test('should throw an error when edgeGuids is null', async () => {
       try {
-        await api.deleteEdges(mockGraphGuid, null as any);
+        await api.Edge.deleteBulk(mockGraphGuid, null as any);
       } catch (err) {
         expect(err.toString()).toBe('Error: ArgumentNullException: edgeGuids is null or empty');
       }
@@ -133,7 +133,7 @@ describe('EdgeRoute Tests', () => {
 
     test('should return true if edgeGuids is an empty array', async () => {
       try {
-        await api.deleteEdges(mockGraphGuid, mockEmptyEdgeGuids);
+        await api.Edge.deleteBulk(mockGraphGuid, mockEmptyEdgeGuids);
       } catch (err) {
         expect(err.toString()).toBe('Error: Edges array is empty');
       }
@@ -141,7 +141,7 @@ describe('EdgeRoute Tests', () => {
 
     test('should delete multiple edges within a graph with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.deleteEdges(mockGraphGuid, mockEdgeGuids, cancellationToken);
+      await api.Edge.deleteBulk(mockGraphGuid, mockEdgeGuids, cancellationToken);
       cancellationToken.abort();
     });
 
@@ -174,7 +174,7 @@ describe('EdgeRoute Tests', () => {
         },
       ];
 
-      const response = await api.createEdges(graphGuid, edges);
+      const response = await api.Edge.createBulk(graphGuid, edges);
       // expect(response).toEqual(expect.arrayContaining(edges));
       expect(response).toEqual(edgeData[mockEdgeGuid]);
     });
@@ -199,7 +199,7 @@ describe('EdgeRoute Tests', () => {
       ];
 
       const cancellationToken = new AbortController();
-      await api.createEdges(graphGuid, edges, cancellationToken);
+      await api.Edge.createBulk(graphGuid, edges, cancellationToken);
       cancellationToken.abort();
     });
 
@@ -208,7 +208,7 @@ describe('EdgeRoute Tests', () => {
         const graphGuid = '01010101-0101-0101-0101-010101010101';
         const edges = [];
 
-        await api.createEdges(graphGuid, edges);
+        await api.Edge.createBulk(graphGuid, edges);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: Edges array is empty');
@@ -218,7 +218,7 @@ describe('EdgeRoute Tests', () => {
     test('throws error when edges parameter is missing', async () => {
       const graphGuid = '01010101-0101-0101-0101-010101010101';
       try {
-        await api.createEdges(graphGuid, null as any);
+        await api.Edge.createBulk(null as any, null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: Edges is null or empty');

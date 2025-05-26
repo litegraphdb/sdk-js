@@ -20,12 +20,12 @@ describe('NodeRoute Tests', () => {
 
   describe('NodeRoute', () => {
     test('should check if node exists by GUID', async () => {
-      const response = await api.nodeExists(mockGraphGuid, mockNodeGuid);
+      const response = await api.Node.exists(mockGraphGuid, mockNodeGuid);
       expect(response).toBe(true); // Assuming the mock returns true
     });
     test('should check if node exists by GUID with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.nodeExists(mockGraphGuid, mockNodeGuid, cancellationToken);
+      await api.Node.exists(mockGraphGuid, mockNodeGuid, cancellationToken);
       cancellationToken.abort();
     });
 
@@ -39,7 +39,7 @@ describe('NodeRoute Tests', () => {
         },
         CreatedUtc: '2024-10-19T14:35:20.351Z',
       };
-      const response = await api.createNode(newNode);
+      const response = await api.Node.create(newNode);
       expect(response).toEqual(nodeData[mockNodeGuid]);
     });
     test('should create a node with abort', async () => {
@@ -53,13 +53,13 @@ describe('NodeRoute Tests', () => {
         CreatedUtc: '2024-10-19T14:35:20.351Z',
       };
       const cancellationToken = new AbortController();
-      await api.createNode(newNode, cancellationToken);
+      await api.Node.create(newNode, cancellationToken);
       cancellationToken.abort();
     });
 
     it('throws error when creating a Node', async () => {
       try {
-        await api.createNode(null as any);
+        await api.Node.create(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: Node is null or empty');
@@ -67,14 +67,14 @@ describe('NodeRoute Tests', () => {
     });
 
     test('should read all nodes of a graph', async () => {
-      const response = await api.readNodes(mockGraphGuid);
+      const response = await api.Node.readAll(mockGraphGuid);
       response.map((node) => {
         expect(node).toEqual(nodeData[node.GUID as string]);
       });
     });
     test('should read all nodes of a graph with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.readNodes(mockGraphGuid, cancellationToken);
+      await api.Node.readAll(mockGraphGuid, cancellationToken);
       cancellationToken.abort();
     });
 
@@ -88,7 +88,7 @@ describe('NodeRoute Tests', () => {
           Right: 'World',
         },
       };
-      const response = await api.searchNodes(searchRequest);
+      const response = await api.Node.search(searchRequest);
       expect(response).toEqual(searchNodeData[mockNodeGuid]);
     });
 
@@ -103,18 +103,18 @@ describe('NodeRoute Tests', () => {
           Right: 'World',
         },
       };
-      await api.searchNodes(searchRequest, cancellationToken);
+      await api.Node.search(searchRequest, cancellationToken);
       cancellationToken.abort();
     });
 
     test('should read a specific node by GUID', async () => {
-      const response = await api.readNode(mockGraphGuid, mockNodeGuid);
+      const response = await api.Node.read(mockGraphGuid, mockNodeGuid);
       expect(response.GUID).toEqual(mockNodeGuid);
     });
 
     test('should read a specific node by GUID with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.readNode(mockGraphGuid, mockNodeGuid, cancellationToken);
+      await api.Node.read(mockGraphGuid, mockNodeGuid, cancellationToken);
       cancellationToken.abort();
     });
 
@@ -128,7 +128,7 @@ describe('NodeRoute Tests', () => {
         },
         CreatedUtc: '2024-10-19T14:35:20.351Z',
       };
-      const response = await api.updateNode(updatedNodeData);
+      const response = await api.Node.update(updatedNodeData);
       expect(response).toEqual(nodeData[mockNodeGuid]);
     });
 
@@ -143,13 +143,13 @@ describe('NodeRoute Tests', () => {
         },
         CreatedUtc: '2024-10-19T14:35:20.351Z',
       };
-      await api.updateNode(updatedNodeData, cancellationToken);
+      await api.Node.update(updatedNodeData, cancellationToken);
       cancellationToken.abort();
     });
 
     it('throws error when if missed node data while updating a Node', async () => {
       try {
-        await api.updateNode(null as any);
+        await api.Node.update(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: Node is null or empty');
@@ -157,35 +157,35 @@ describe('NodeRoute Tests', () => {
     });
 
     test('should delete a node', async () => {
-      const response = await api.deleteNode(mockNodeGuid, mockNodeGuid);
+      const response = await api.Node.delete(mockNodeGuid, mockNodeGuid);
       expect(response).toBeUndefined(); // Assuming delete operation returns nothing
     });
 
     test('should delete a node with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.deleteNode(mockNodeGuid, mockNodeGuid, cancellationToken);
+      await api.Node.delete(mockNodeGuid, mockNodeGuid, cancellationToken);
       cancellationToken.abort();
     });
 
     test('should delete all nodes within a graph', async () => {
-      const response = await api.deleteAllNodes(mockGraphGuid);
+      const response = await api.Node.deleteAll(mockGraphGuid);
       expect(response).toBeUndefined(); // Assuming delete operation returns nothing
     });
 
     test('should delete all nodes within a graph with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.deleteAllNodes(mockGraphGuid, cancellationToken);
+      await api.Node.deleteAll(mockGraphGuid, cancellationToken);
       cancellationToken.abort();
     });
 
     test('should delete multiple nodes within a graph', async () => {
-      const response = await api.deleteNodes(mockGraphGuid, mockNodeGuids);
+      const response = await api.Node.deleteBulk(mockGraphGuid, mockNodeGuids);
       expect(response).toEqual(true);
     });
 
     test('should throw an error when nodeGuids is null', async () => {
       try {
-        await api.deleteNodes(mockGraphGuid, null as any);
+        await api.Node.deleteBulk(mockGraphGuid, null as any);
       } catch (err) {
         expect(err.toString()).toBe('Error: ArgumentNullException: nodeGuids is null or empty');
       }
@@ -193,7 +193,7 @@ describe('NodeRoute Tests', () => {
 
     test('should delete multiple nodes within a graph with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.deleteNodes(mockGraphGuid, mockNodeGuids, cancellationToken);
+      await api.Node.deleteBulk(mockGraphGuid, mockNodeGuids, cancellationToken);
       cancellationToken.abort();
     });
 
@@ -220,7 +220,7 @@ describe('NodeRoute Tests', () => {
         },
       ];
 
-      const response = await api.createNodes(graphGuid, nodes);
+      const response = await api.Node.createBulk(graphGuid, nodes);
       // expect(response).toEqual(expect.arrayContaining(nodes));
       expect(response).toEqual(nodeData[mockNodeGuid]);
     });
@@ -245,7 +245,7 @@ describe('NodeRoute Tests', () => {
       ];
 
       const cancellationToken = new AbortController();
-      await api.createNodes(graphGuid, nodes, cancellationToken);
+      await api.Node.createBulk(graphGuid, nodes, cancellationToken);
       cancellationToken.abort();
     });
 
@@ -253,12 +253,12 @@ describe('NodeRoute Tests', () => {
       const graphGuid = '01010101-0101-0101-0101-010101010101';
       const nodes = [];
       try {
-        await api.createNodes(graphGuid, null as any);
+        await api.Node.createBulk(graphGuid, null as any);
       } catch (err) {
         expect(err.toString()).toBe('Error: ArgumentNullException: Nodes is null or empty');
       }
       try {
-        await api.createNodes(graphGuid, nodes);
+        await api.Node.createBulk(graphGuid, nodes);
       } catch (err) {
         expect(err.toString()).toBe('Error: Nodes array is empty');
       }
@@ -267,7 +267,7 @@ describe('NodeRoute Tests', () => {
     test('throws error when nodes parameter is missing', async () => {
       const graphGuid = '01010101-0101-0101-0101-010101010101';
       try {
-        await api.createNodes(graphGuid, null as any);
+        await api.Node.createBulk(graphGuid, null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: Nodes is null or empty');
