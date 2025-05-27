@@ -1,16 +1,15 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { TagMetaData, TagMetaDataCreateRequest } from '../types';
 import SdkBase from './SdkBase';
+import { SdkConfiguration } from './SdkConfiguration';
 
 export class TagSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration.
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
   /**
    * Read all tags.
@@ -18,7 +17,7 @@ export class TagSdk extends SdkBase {
    * @returns {Promise<TagMetaData[]>}
    */
   async readAll(cancellationToken?: AbortController): Promise<TagMetaData[]> {
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/tags`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags`;
     return await this.getMany<TagMetaData>(url, cancellationToken);
   }
 
@@ -33,7 +32,7 @@ export class TagSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/tags/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags/${guid}`;
     return await this.get<TagMetaData>(url, cancellationToken);
   }
 
@@ -48,7 +47,7 @@ export class TagSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/tags/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags/${guid}`;
     return await this.head(url, cancellationToken);
   }
 
@@ -63,7 +62,7 @@ export class TagSdk extends SdkBase {
     if (!tag) {
       GenericExceptionHandlers.ArgumentNullException('tag');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/tags`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags`;
     return await this.putCreate<TagMetaData>(url, tag, cancellationToken);
   }
 
@@ -80,7 +79,7 @@ export class TagSdk extends SdkBase {
     if (tags.length < 1) {
       GenericExceptionHandlers.GenericException('Tags array is empty');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/tags/bulk`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags/bulk`;
     return await this.putCreate<TagMetaData[]>(url, tags, cancellationToken);
   }
 
@@ -98,7 +97,7 @@ export class TagSdk extends SdkBase {
     if (!tag) {
       GenericExceptionHandlers.ArgumentNullException('tag');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/tags/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags/${guid}`;
     return await this.putUpdate<TagMetaData>(url, tag, cancellationToken);
   }
 
@@ -113,7 +112,7 @@ export class TagSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/tags/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags/${guid}`;
     return await this.del(url, cancellationToken);
   }
 
@@ -131,7 +130,7 @@ export class TagSdk extends SdkBase {
     if (guids.length < 1) {
       GenericExceptionHandlers.GenericException('Tags array is empty');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/tags/bulk`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags/bulk`;
     return await this.deleteMany(url, guids, cancellationToken);
   }
 }

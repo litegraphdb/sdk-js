@@ -1,16 +1,15 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { LabelMetadata, LabelMetadataCreateRequest } from '../types';
 import SdkBase from './SdkBase';
+import { SdkConfiguration } from './SdkConfiguration';
 
 export class LabelSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration.
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
   /**
    * Read all labels.
@@ -18,7 +17,7 @@ export class LabelSdk extends SdkBase {
    * @returns {Promise<LabelMetadata[]>}
    */
   async readAll(cancellationToken?: AbortController): Promise<LabelMetadata[]> {
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/labels`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/labels`;
     return await this.getMany<LabelMetadata>(url, cancellationToken);
   }
 
@@ -33,7 +32,7 @@ export class LabelSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/labels/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/labels/${guid}`;
     return await this.get<LabelMetadata>(url, cancellationToken);
   }
 
@@ -48,7 +47,7 @@ export class LabelSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/labels/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/labels/${guid}`;
     return await this.head(url, cancellationToken);
   }
 
@@ -62,7 +61,7 @@ export class LabelSdk extends SdkBase {
     if (!label) {
       GenericExceptionHandlers.ArgumentNullException('label');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/labels`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/labels`;
     return await this.putCreate<LabelMetadata>(url, label, cancellationToken);
   }
 
@@ -83,7 +82,7 @@ export class LabelSdk extends SdkBase {
     if (labels.length < 1) {
       GenericExceptionHandlers.GenericException('Labels array is empty');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/labels/bulk`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/labels/bulk`;
     return await this.putCreate<LabelMetadata[]>(url, labels, cancellationToken);
   }
 
@@ -102,7 +101,7 @@ export class LabelSdk extends SdkBase {
     if (!label.GUID) {
       GenericExceptionHandlers.ArgumentNullException('label.GUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/labels/${label.GUID}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/labels/${label.GUID}`;
     return await this.putUpdate<LabelMetadata>(url, label, cancellationToken);
   }
 
@@ -117,7 +116,7 @@ export class LabelSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/labels/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/labels/${guid}`;
     return await this.del(url, cancellationToken);
   }
 
@@ -135,7 +134,7 @@ export class LabelSdk extends SdkBase {
     if (guids.length < 1) {
       GenericExceptionHandlers.GenericException('Labels array is empty');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/labels/bulk`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/labels/bulk`;
     return await this.deleteMany(url, guids, cancellationToken);
   }
 }

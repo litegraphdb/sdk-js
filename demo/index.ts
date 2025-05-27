@@ -7,10 +7,10 @@ var api = new LiteGraphSdk(
   'litegraphadmin'
 );
 var guid = '00900db5-c9b7-4631-b250-c9e635a9036e'; // {String}
-var nodeGuid = '0fa34090-46d5-4d6a-99dd-65a53f74f3c4'; // {String}
+var nodeGuid = 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8'; // {String}
 var toNodeGuid = '01010101-0101-0101-0101-010101010101';
 var fromNodeGuid = '01010101-0101-0101-0101-010101010101';
-var edgeGuid = 'cbabe93f-c4d5-40a9-b0ff-1ee596a4293f';
+var edgeGuid = 'e9702f09-cd73-413b-8e00-5f871472a02d';
 // region Graph
 const getGraphById = async () => {
   try {
@@ -44,7 +44,7 @@ const createGraph = async () => {
 const updateGraph = async () => {
   // Graph object to update
   const graph: Graph = {
-    GUID: '01010101-0101-0101-0101-010101010101',
+    GUID: '08944937-e506-416a-b96e-d7b40344c618',
     Name: 'Sample Node',
     CreatedUtc: '2024-10-19T14:35:20.351Z',
     Data: {
@@ -58,8 +58,8 @@ const updateGraph = async () => {
   };
 
   try {
-    const createdGraph = await api.Graph.update(graph);
-    console.log(createdGraph, 'Graph created successfully');
+    const updatedGraph = await api.Graph.update(graph);
+    console.log(updatedGraph, 'Graph updated successfully');
   } catch (err) {
     console.log('Error creating graph:', JSON.stringify(err));
   }
@@ -87,7 +87,7 @@ const searchGraph = async () => {
   // Graph object to search
 
   const searchRequest = {
-    GraphGUID: '01010101-0101-0101-0101-010101010101',
+    GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
     Ordering: 'CreatedDescending',
     Expr: {
       Left: 'Hello',
@@ -106,7 +106,7 @@ const searchGraph = async () => {
 
 const exportGraphToGexf = async () => {
   try {
-    const data = await api.Graph.exportGexf('7f371867-cfd1-4f76-904d-682660dc91ec');
+    const data = await api.Graph.exportGexf('00900db5-c9b7-4631-b250-c9e635a9036e');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -135,8 +135,8 @@ const getNodeList = async () => {
 const createNode = async () => {
   // Node object to create
   const node = {
-    GUID: '01010101-0101-0101-0101-010101010101',
-    GraphGUID: '01010101-0101-0101-0101-010101010101',
+    GUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
+    GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
     Name: 'Sample Node',
     Data: {
       key1: 'value2',
@@ -163,6 +163,7 @@ const multipleNodes = async () => {
       Data: {
         Name: 'Active Directory',
       },
+      GUID: '',
     },
     {
       Name: 'Website',
@@ -173,6 +174,7 @@ const multipleNodes = async () => {
       Data: {
         Name: 'Website',
       },
+      GUID: '',
     },
   ];
 
@@ -187,8 +189,8 @@ const multipleNodes = async () => {
 const updateNode = async () => {
   // Node object to update
   const node = {
-    GUID: '01010101-0101-0101-0101-010101010101',
-    GraphGUID: '01010101-0101-0101-0101-010101010101',
+    GUID: 'ab31cc6e-000f-4e31-8068-372d1b038d3d',
+    GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
     Name: 'Sample Node',
     Data: {
       key1: 'value2',
@@ -197,8 +199,8 @@ const updateNode = async () => {
   };
 
   try {
-    const createdNode = await api.Node.update(node);
-    console.log(createdNode, 'Node created successfully');
+    const updatedNode = await api.Node.update(node);
+    console.log(updatedNode, 'Node updated successfully');
   } catch (err) {
     console.log('Error creating node:', JSON.stringify(err));
   }
@@ -225,7 +227,7 @@ const searchNodes = async () => {
   // Graph object to update
 
   const searchRequest: NodeEdgeSearchRequest = {
-    GraphGUID: '00000000-0000-0000-0000-000000000000',
+    GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
     Ordering: 'CreatedDescending',
     Expr: {
       Left: 'Hello',
@@ -264,7 +266,7 @@ const getEdgeList = async () => {
 const createEdge = async () => {
   // Edge object to create
   const edge = {
-    GraphGUID: '00000000-0000-0000-0000-000000000000',
+    GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
     Name: 'My test edge',
     From: '2b1520be-d285-4f22-8c74-f296047162b9',
     To: '784cfa37-fb06-4f81-b10d-f1167dfe2b22',
@@ -412,7 +414,10 @@ const getRoutes = async () => {
 
 const deleteMultipleNodes = async () => {
   try {
-    const data = await api.Node.deleteBulk(guid, ['a8s7d87asd', '7a6sd8767ad']);
+    const data = await api.Node.deleteBulk(guid, [
+      '2221ee97-41ea-45f2-a3f4-48f63e490c16',
+      'e8fad9e1-ccfb-41a3-a871-df07f382ad98',
+    ]);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err), err);
@@ -433,7 +438,7 @@ const readAllUsers = async () => {
 
 const readUser = async () => {
   try {
-    const data = await api.User.read('00000000-0000-0000-0000-000000000000');
+    const data = await api.User.read('199eb859-5857-4313-b487-5b0a5fb2abf8');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -457,7 +462,7 @@ const createUser = async () => {
 
 const existsUser = async () => {
   try {
-    const data = await api.User.exists('00000000-0000-0000-0000-000000000000');
+    const data = await api.User.exists('8ac86e7e-5612-4193-95d6-2f217dbaeedf');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -467,7 +472,7 @@ const existsUser = async () => {
 const updateUser = async () => {
   try {
     const data = await api.User.update({
-      GUID: 'eda4872a-fe66-475c-9c33-4b50ec14de0d',
+      GUID: '8ac86e7e-5612-4193-95d6-2f217dbaeedf',
       FirstName: 'Again Updated',
       LastName: 'User',
       Email: 'anotherbbb@user.com',
@@ -482,7 +487,7 @@ const updateUser = async () => {
 
 const deleteUser = async () => {
   try {
-    const data = await api.User.delete('eda4872a-fe66-475c-9c33-4b50ec14de0d');
+    const data = await api.User.delete('8ac86e7e-5612-4193-95d6-2f217dbaeedf');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -524,7 +529,7 @@ const createTenant = async () => {
 
 const tenantExists = async () => {
   try {
-    const data = await api.Tenant.exists('00000000-0000-0000-0000-000000000000');
+    const data = await api.Tenant.exists('029b9092-3a4c-4f5e-8527-b1b947494e32');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -534,7 +539,7 @@ const tenantExists = async () => {
 const updateTenant = async () => {
   try {
     const data = await api.Tenant.update({
-      GUID: '00000000-0000-0000-0000-000000000000',
+      GUID: '029b9092-3a4c-4f5e-8527-b1b947494e32',
       Name: 'Updated tenant',
       Active: true,
     });
@@ -546,7 +551,7 @@ const updateTenant = async () => {
 
 const deleteTenant = async () => {
   try {
-    const data = await api.Tenant.delete('0a28221b-fa65-430d-8b29-158546639347');
+    const data = await api.Tenant.delete('029b9092-3a4c-4f5e-8527-b1b947494e32');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -576,7 +581,7 @@ const readAllCredentials = async () => {
 
 const readCredential = async () => {
   try {
-    const data = await api.Credential.read('bcce2a7c-d102-42e2-97d4-a449f470f57c');
+    const data = await api.Credential.read('8882bae3-abb1-4d4a-8671-fa7b80e18515');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -586,7 +591,7 @@ const readCredential = async () => {
 const createCredential = async () => {
   /** @type {CredentialMetadata} */
   const credential = {
-    UserGUID: '00000000-0000-0000-0000-000000000000',
+    UserGUID: 'a2b230c7-c57f-4194-b042-1333102226b1',
     Name: 'New credential',
     BearerToken: 'foobar',
     Active: true,
@@ -602,7 +607,7 @@ const createCredential = async () => {
 
 const existsCredential = async () => {
   try {
-    const data = await api.Credential.exists('bcce2a7c-d102-42e2-97d4-a449f470f57c');
+    const data = await api.Credential.exists('fba86eda-21ea-4095-852c-5f5c542f0ffc');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -613,12 +618,12 @@ const updateCredential = async () => {
   try {
     const data = await api.Credential.update(
       {
-        UserGUID: '00000000-0000-0000-0000-000000000000',
+        UserGUID: 'a2b230c7-c57f-4194-b042-1333102226b1',
         Name: 'Updated credential',
         BearerToken: 'default',
         Active: true,
       },
-      'bcce2a7c-d102-42e2-97d4-a449f470f57c'
+      'fba86eda-21ea-4095-852c-5f5c542f0ffc'
     );
     console.log(data, 'chk data');
   } catch (err) {
@@ -628,7 +633,7 @@ const updateCredential = async () => {
 
 const deleteCredential = async () => {
   try {
-    const data = await api.Credential.delete('1f4ac56e-69da-49b3-8bd5-e29a639d6392');
+    const data = await api.Credential.delete('fba86eda-21ea-4095-852c-5f5c542f0ffc');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -649,7 +654,7 @@ const readAllLabels = async () => {
 
 const readLabel = async () => {
   try {
-    const data = await api.Label.read('a051c94d-90f9-4471-8e03-5234c4f4f061');
+    const data = await api.Label.read('bc850d2f-3433-4003-83fc-920d6be29ea0');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -659,8 +664,8 @@ const readLabel = async () => {
 const createLabel = async () => {
   try {
     const data = await api.Label.create({
-      GraphGUID: '00000000-0000-0000-0000-000000000000',
-      NodeGUID: '00000000-0000-0000-0000-000000000000',
+      GraphGUID: '5de4ba59-cd38-4ed5-a4cc-09b2532e65b2',
+      NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
       Label: 'test',
       EdgeGUID: null,
     });
@@ -672,7 +677,7 @@ const createLabel = async () => {
 
 const existsLabel = async () => {
   try {
-    const data = await api.Label.exists('a051c94d-90f9-4471-8e03-5234c4f4f061');
+    const data = await api.Label.exists('48cee235-5be0-4197-b67f-a9183c7f52b2');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -682,13 +687,14 @@ const existsLabel = async () => {
 const updateLabel = async () => {
   try {
     const data = await api.Label.update({
-      GUID: 'a051c94d-90f9-4471-8e03-5234c4f4f061',
-      GraphGUID: '00000000-0000-0000-0000-000000000000',
-      NodeGUID: '00000000-0000-0000-0000-000000000000',
+      GUID: '48cee235-5be0-4197-b67f-a9183c7f52b2',
+      GraphGUID: '5de4ba59-cd38-4ed5-a4cc-09b2532e65b2',
+      NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
       Label: 'updatedkey',
-      EdgeGUID: '00000000-0000-0000-0000-000000000000',
+      EdgeGUID: 'e9702f09-cd73-413b-8e00-5f871472a02d',
       CreatedUtc: '2024-12-27T18:12:38.653402Z',
       LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
+      TenantGUID: '',
     });
     console.log(data, 'chk data');
   } catch (err) {
@@ -698,7 +704,7 @@ const updateLabel = async () => {
 
 const deleteLabel = async () => {
   try {
-    const data = await api.Label.delete('a169ec1d-bbc9-4538-90f5-2c1fbf281282');
+    const data = await api.Label.delete('48cee235-5be0-4197-b67f-a9183c7f52b2');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -719,7 +725,7 @@ const readAllTags = async () => {
 
 const readTag = async () => {
   try {
-    const data = await api.Tag.read('461c0b76-b7ae-4a6f-8b25-50c78239ecce');
+    const data = await api.Tag.read('c1328564-c700-4e43-b17a-056cf36fd62b');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -729,9 +735,9 @@ const readTag = async () => {
 const createTag = async () => {
   try {
     const data = await api.Tag.create({
-      GraphGUID: '00000000-0000-0000-0000-000000000000',
-      NodeGUID: '158c634b-53d2-4a60-be87-61c39c990451',
-      EdgeGUID: 'cdf28e4f-9a28-4a70-b246-e3ae9ccb35d6',
+      GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
+      NodeGUID: 'b8837eb9-b180-479f-b09e-d3ad8adab9ee',
+      EdgeGUID: 'e9702f09-cd73-413b-8e00-5f871472a02d',
       Key: 'mykey',
       Value: 'myvalue',
     });
@@ -743,7 +749,7 @@ const createTag = async () => {
 
 const existsTag = async () => {
   try {
-    const data = await api.Tag.exists('461c0b76-b7ae-4a6f-8b25-50c78239ecce');
+    const data = await api.Tag.exists('51e84292-8be4-468e-b9af-5e44c10dc551');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -758,8 +764,13 @@ const updateTag = async () => {
         Value: 'myvalue',
         CreatedUtc: '2024-12-27T18:12:38.653402Z',
         LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
+        GUID: '',
+        TenantGUID: '',
+        GraphGUID: '',
+        NodeGUID: '',
+        EdgeGUID: '',
       },
-      'fa3d7a1b-7bad-4d7b-b0dc-93bb42872651'
+      '51e84292-8be4-468e-b9af-5e44c10dc551'
     );
     console.log(data, 'chk data');
   } catch (err) {
@@ -769,7 +780,7 @@ const updateTag = async () => {
 
 const deleteTag = async () => {
   try {
-    const data = await api.Tag.delete('3e49bc06-8fb6-41f1-8bb4-1a4af6319264');
+    const data = await api.Tag.delete('51e84292-8be4-468e-b9af-5e44c10dc551');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -780,16 +791,16 @@ const createMultipleTags = async () => {
   try {
     const data = await api.Tag.createBulk([
       {
-        GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
-        NodeGUID: null,
-        EdgeGUID: null,
+        GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
+        NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+        EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
         Key: 'mykey test',
         Value: 'myvalue test',
       },
       {
-        GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
-        NodeGUID: null,
-        EdgeGUID: null,
+        GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
+        NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+        EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
         Key: 'mykey test 2',
         Value: 'myvalue test 2',
       },
@@ -804,10 +815,8 @@ const createMultipleTags = async () => {
 const deleteMultipleTags = async () => {
   try {
     const data = await api.Tag.deleteBulk([
-      '4cbfe0cd-13b9-426c-8a6b-84e77abe8f6d',
-      'dc0c1298-3f79-4c6e-ac25-7491eb8a5b25',
-      '5618fe18-47f1-43eb-abae-96ba6a88b341',
-      '445369d4-b6d8-465e-9a46-c7109b085d39',
+      '5ab74644-888b-4215-90ba-23a01b1fdbe3',
+      'd842fa4b-163f-4edd-85b1-df38facb9bed',
     ]);
     console.log(data, 'chk data');
   } catch (err) {
@@ -816,26 +825,120 @@ const deleteMultipleTags = async () => {
 };
 // deleteMultipleTags();
 
+//endregion
+
+//region Vectors
+
+const readAllVectors = async () => {
+  try {
+    const data = await api.Vector.readAll();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+const readVector = async () => {
+  try {
+    const data = await api.Vector.read('8efc5ca4-52a4-4344-a856-db2fb198c617');
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+const createVector = async () => {
+  try {
+    const data = await api.Vector.create({
+      GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
+      NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+      EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
+      Model: 'all-MiniLM-L6-v2',
+      Dimensionality: 384,
+      Content: 'test',
+      Vectors: [0.1, 0.2, 0.3],
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+const existsVector = async () => {
+  try {
+    const data = await api.Vector.exists('70cd93dd-0f38-435d-b57d-f5d1bc1b4481');
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+const updateVector = async () => {
+  try {
+    const data = await api.Vector.update(
+      {
+        GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
+        NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+        EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
+        Model: 'all-MiniLM-L6-v2',
+        Dimensionality: 388,
+        Content: 'test Ashish',
+        Vectors: [0.5, 0.7, 0.9],
+        GUID: '',
+        TenantGUID: '',
+        CreatedUtc: '',
+        LastUpdateUtc: '',
+      },
+      '70cd93dd-0f38-435d-b57d-f5d1bc1b4481'
+    );
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+const deleteVector = async () => {
+  try {
+    const data = await api.Vector.delete('70cd93dd-0f38-435d-b57d-f5d1bc1b4481');
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
 const deleteMultipleVectors = async () => {
   try {
-    const data = await api.Vector.deleteBulk(['ff9d5654-654c-41e7-a5c8-50a1963de72c']);
+    const data = await api.Vector.deleteBulk([
+      '64ee007a-14f5-43b0-99a0-9a22fb4a24b9',
+      '9823faa0-a8ae-4479-a87d-56cf18d27696',
+    ]);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
   }
 };
 // deleteMultipleVectors();
+
 const createMultipleVectors = async () => {
   try {
     const data = await api.Vector.createBulk([
       {
-        GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
-        NodeGUID: null,
-        EdgeGUID: null,
+        GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
+        NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+        EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
         Model: 'all-MiniLM-L6-v2',
         Dimensionality: 384,
-        Content: 'test',
+        Content: 'test Ash',
         Vectors: [0.1, 0.2, 0.3],
+      },
+      {
+        GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
+        NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+        EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
+        Model: 'all-MiniLM-L6-v2',
+        Dimensionality: 390,
+        Content: 'test Ashish',
+        Vectors: [0.5, 0.7, 0.9],
       },
     ]);
     console.log(data, 'chk data');
@@ -845,19 +948,21 @@ const createMultipleVectors = async () => {
 };
 // createMultipleVectors();
 
+//endregion
+
 const createMultipleLabels = async () => {
   try {
     const data = await api.Label.createBulk([
       {
         GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
-        NodeGUID: null,
-        EdgeGUID: null,
+        NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+        EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
         Label: 'label multiple',
       },
       {
         GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
-        NodeGUID: null,
-        EdgeGUID: null,
+        NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+        EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
         Label: 'label multiple 2',
       },
     ]);
@@ -871,8 +976,8 @@ const createMultipleLabels = async () => {
 const deleteMultipleLabels = async () => {
   try {
     const data = await api.Label.deleteBulk([
-      '33c8c905-b78b-4548-98ff-af0197d5fa97',
-      '96d4f123-a265-4c60-aef1-664a5ed0d7df',
+      '23513268-7fe7-4867-ab3e-c7a5dc4b2e57',
+      '9f8d49e0-031a-4de0-b643-ce48dc3774fe',
     ]);
     console.log(data, 'chk data');
   } catch (err) {
@@ -893,6 +998,7 @@ const createMultipleNodes = async () => {
         Data: {
           Name: 'Active Directory',
         },
+        GUID: '',
       },
       {
         Name: 'Website',
@@ -903,6 +1009,7 @@ const createMultipleNodes = async () => {
         Data: {
           Name: 'Website',
         },
+        GUID: '',
       },
     ]);
     console.log(data, 'chk data');
@@ -927,11 +1034,11 @@ const deleteMultipleNodes2 = async () => {
 
 const createMultipleEdges = async () => {
   try {
-    const data = await api.Edge.createBulk('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
+    const data = await api.Edge.createBulk('00900db5-c9b7-4631-b250-c9e635a9036e', [
       {
         Name: 'DigitalOcean to Control Plane',
-        From: 'a76c18ed-78be-4666-858a-5154350240d8',
-        To: '768191c0-0d4d-4be0-a13e-a5c9cabdaa46',
+        From: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+        To: '38eff321-7eaa-457e-b5e0-5f7fa7041e63',
         Cost: 100,
         Labels: ['test'],
         Tags: {
@@ -941,6 +1048,7 @@ const createMultipleEdges = async () => {
         Data: {
           hello: 'world',
         },
+        GUID: '',
       },
     ]);
     console.log(data, 'chk data');
@@ -952,15 +1060,25 @@ const createMultipleEdges = async () => {
 
 const deleteMultipleEdges = async () => {
   try {
-    const data = await api.Edge.deleteBulk('8e72e2b7-86fe-4f94-8483-547c23c8a833', [
-      'a76c18ed-78be-4666-858a-5154350240d8',
+    const data = await api.Edge.deleteBulk('00900db5-c9b7-4631-b250-c9e635a9036e', [
+      '934c11b3-61df-4fc5-972c-6e9d0ee3aa19',
     ]);
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
   }
 };
-deleteMultipleEdges();
+// deleteMultipleEdges();
+
+const ValidateConnectivity = async () => {
+  try {
+    const data = await api.validateConnectivity();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+ValidateConnectivity();
 
 const useSdk = async () => {
   //region Graph calls
@@ -971,11 +1089,12 @@ const useSdk = async () => {
   // await deleteGraphById();
   // await checkIfGraphExistsById();
   // await searchGraph();
-  //await exportGraphToGexf();
+  // await exportGraphToGexf();
   //region Node calls
   // await getNodeById();
   // await getNodeList();
   // await createNode();
+  // await multipleNodes();
   // await updateNode();
   // await deleteNodeById();
   // await checkIfNodeExistsById();
@@ -1005,7 +1124,7 @@ const useSdk = async () => {
   // tenantExists();
   // updateTenant();
   // deleteTenant();
-  //await deleteForceTenant();
+  // await deleteForceTenant();
   //region User calls
   // await readAllUsers();
   // await readUser();
@@ -1028,7 +1147,7 @@ const useSdk = async () => {
   // await updateLabel();
   // await deleteLabel();
   //region Tag calls
-  //await readAllTags();
+  // await readAllTags();
   // await readTag();
   // await createTag();
   // await existsTag();
@@ -1041,6 +1160,6 @@ const useSdk = async () => {
   // await existsVector();
   // await updateVector();
   // await deleteVector();
-  //await multipleNodes();
+  // await multipleNodes();
 };
 useSdk();

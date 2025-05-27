@@ -1,16 +1,14 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { Edge, Node, RouteResult } from '../types';
 import SdkBase from './SdkBase';
-
+import { SdkConfiguration } from './SdkConfiguration';
 export class RouteSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration.
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
 
   /**
@@ -27,7 +25,7 @@ export class RouteSdk extends SdkBase {
     if (!nodeGuid) {
       GenericExceptionHandlers.ArgumentNullException('NodeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/edges/from`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/edges/from`;
     return await this.getMany<Edge>(url, cancellationToken);
   }
 
@@ -46,7 +44,7 @@ export class RouteSdk extends SdkBase {
     if (!nodeGuid) {
       GenericExceptionHandlers.ArgumentNullException('NodeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/edges/to`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/edges/to`;
     return await this.getMany<Edge>(url, cancellationToken);
   }
 
@@ -71,7 +69,7 @@ export class RouteSdk extends SdkBase {
     if (!fromNodeGuid) {
       GenericExceptionHandlers.ArgumentNullException('FromNodeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/between?from=${fromNodeGuid}&to=${toNodeGuid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/between?from=${fromNodeGuid}&to=${toNodeGuid}`;
     return await this.getMany<Edge>(url, cancellationToken);
   }
 
@@ -90,7 +88,7 @@ export class RouteSdk extends SdkBase {
     if (!nodeGuid) {
       GenericExceptionHandlers.ArgumentNullException('NodeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/edges`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/edges`;
     return await this.getMany<Edge>(url, cancellationToken);
   }
 
@@ -109,7 +107,7 @@ export class RouteSdk extends SdkBase {
     if (!nodeGuid) {
       GenericExceptionHandlers.ArgumentNullException('NodeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/children`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/children`;
     return await this.getMany<Node>(url, cancellationToken);
   }
 
@@ -127,7 +125,7 @@ export class RouteSdk extends SdkBase {
     if (!nodeGuid) {
       GenericExceptionHandlers.ArgumentNullException('NodeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/parents`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/parents`;
     return await this.getMany<Node>(url, cancellationToken);
   }
 
@@ -145,7 +143,7 @@ export class RouteSdk extends SdkBase {
     if (!nodeGuid) {
       GenericExceptionHandlers.ArgumentNullException('NodeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/neighbors`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/neighbors`;
     return await this.get<Node[]>(url, cancellationToken);
   }
 
@@ -169,7 +167,7 @@ export class RouteSdk extends SdkBase {
     if (!fromNodeGuid) {
       GenericExceptionHandlers.ArgumentNullException('FromNodeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/routes`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/routes`;
 
     const req = {
       Graph: graphGuid,

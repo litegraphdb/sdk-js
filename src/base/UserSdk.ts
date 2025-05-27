@@ -1,16 +1,15 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { UserMetadata, UserMetadataCreateRequest } from '../types';
 import SdkBase from './SdkBase';
+import { SdkConfiguration } from './SdkConfiguration';
 
 export class UserSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration.
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
 
   /**
@@ -20,7 +19,7 @@ export class UserSdk extends SdkBase {
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
   async readAll(cancellationToken?: AbortController): Promise<UserMetadata[]> {
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/users`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/users`;
     return await this.getMany<UserMetadata>(url, cancellationToken);
   }
 
@@ -35,7 +34,7 @@ export class UserSdk extends SdkBase {
     if (!userGuid) {
       GenericExceptionHandlers.ArgumentNullException('userGuid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/users/${userGuid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/users/${userGuid}`;
     return await this.get<UserMetadata>(url, cancellationToken);
   }
 
@@ -54,7 +53,7 @@ export class UserSdk extends SdkBase {
     if (!user) {
       GenericExceptionHandlers.ArgumentNullException('user');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/users`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/users`;
     return await this.putCreate<UserMetadata>(url, user, cancellationToken);
   }
 
@@ -69,7 +68,7 @@ export class UserSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/users/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/users/${guid}`;
     return await this.head(url, cancellationToken);
   }
 
@@ -86,7 +85,7 @@ export class UserSdk extends SdkBase {
     if (!user.GUID) {
       GenericExceptionHandlers.ArgumentNullException('user.GUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/users/${user.GUID}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/users/${user.GUID}`;
     return await this.putUpdate<UserMetadata>(url, user, cancellationToken);
   }
 
@@ -101,7 +100,7 @@ export class UserSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/users/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/users/${guid}`;
     return await this.del(url, cancellationToken);
   }
 }

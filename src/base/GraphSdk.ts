@@ -1,16 +1,15 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { Graph, GraphCreateRequest, GraphSearchRequest, SearchResult } from '../types';
 import SdkBase from './SdkBase';
+import { SdkConfiguration } from './SdkConfiguration';
 
 export class GraphSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration.
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
 
   /**
@@ -20,7 +19,7 @@ export class GraphSdk extends SdkBase {
    * @returns {Promise<boolean>} - True if the graph exists.
    */
   async exists(guid: string, cancellationToken?: AbortController): Promise<boolean> {
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}`;
     return await this.head(url, cancellationToken);
   }
 
@@ -34,7 +33,7 @@ export class GraphSdk extends SdkBase {
     if (!graph) {
       GenericExceptionHandlers.ArgumentNullException('Graph');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs`;
     return await this.putCreate(url, graph, cancellationToken);
   }
 
@@ -44,7 +43,7 @@ export class GraphSdk extends SdkBase {
    * @returns {Promise<Graph[]>} - An array of graphs.
    */
   async readAll(cancellationToken?: AbortController): Promise<Graph[]> {
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs`;
     return await this.getMany<Graph>(url, cancellationToken);
   }
 
@@ -58,7 +57,7 @@ export class GraphSdk extends SdkBase {
     if (!searchReq) {
       GenericExceptionHandlers.ArgumentNullException('Search Request');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/search`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/search`;
 
     return await this.post<SearchResult>(url, searchReq, cancellationToken);
   }
@@ -71,7 +70,7 @@ export class GraphSdk extends SdkBase {
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
   async read(guid: string, cancellationToken?: AbortController): Promise<Graph> {
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}`;
     return await this.get<Graph>(url, cancellationToken);
   }
 
@@ -85,7 +84,7 @@ export class GraphSdk extends SdkBase {
     if (!graph) {
       GenericExceptionHandlers.ArgumentNullException('Graph');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graph.GUID}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graph.GUID}`;
     return await this.putUpdate(url, graph, cancellationToken);
   }
 
@@ -98,7 +97,7 @@ export class GraphSdk extends SdkBase {
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
   async delete(guid: string, force: boolean = false, cancellationToken?: AbortController): Promise<boolean> {
-    let url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${guid}`;
+    let url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}`;
     if (force) url += '?force=true';
     return await this.del(url, cancellationToken);
   }
@@ -110,7 +109,7 @@ export class GraphSdk extends SdkBase {
    * @returns {Promise<string>} - The GEXF XML data.
    */
   async exportGexf(guid: string, cancellationToken?: AbortController): Promise<string> {
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${guid}/export/gexf`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}/export/gexf`;
     return await this.get<string>(url, cancellationToken);
   }
 }

@@ -1,16 +1,15 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { Node, NodeEdgeSearchRequest, SearchResult } from '../types';
 import SdkBase from './SdkBase';
+import { SdkConfiguration } from './SdkConfiguration';
 
 export class NodeSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration.
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
 
   /**
@@ -21,7 +20,7 @@ export class NodeSdk extends SdkBase {
    * @returns {Promise<boolean>} - True if the node exists.
    */
   async exists(graphGuid: string, guid: string, cancellationToken?: AbortController): Promise<boolean> {
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${guid}`;
     return await this.head(url, cancellationToken);
   }
 
@@ -40,7 +39,7 @@ export class NodeSdk extends SdkBase {
       GenericExceptionHandlers.GenericException('Nodes array is empty');
     }
 
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/bulk`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/bulk`;
     return await this.putCreate<Node[]>(url, nodes, cancellationToken);
   }
 
@@ -57,7 +56,7 @@ export class NodeSdk extends SdkBase {
     if (!node.GraphGUID) {
       GenericExceptionHandlers.ArgumentNullException('node.GraphGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${node.GraphGUID}/nodes`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${node.GraphGUID}/nodes`;
     return await this.putCreate<Node>(url, node, cancellationToken);
   }
 
@@ -71,7 +70,7 @@ export class NodeSdk extends SdkBase {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes`;
     return await this.get<Node[]>(url, cancellationToken);
   }
 
@@ -89,7 +88,7 @@ export class NodeSdk extends SdkBase {
       GenericExceptionHandlers.ArgumentNullException('searchReq.GraphGUID');
     }
 
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${searchReq.GraphGUID}/nodes/search`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${searchReq.GraphGUID}/nodes/search`;
     return await this.post<SearchResult>(url, searchReq, cancellationToken);
   }
 
@@ -107,7 +106,7 @@ export class NodeSdk extends SdkBase {
     if (!nodeGuid) {
       GenericExceptionHandlers.ArgumentNullException('NodeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}`;
     return await this.get<Node>(url, cancellationToken);
   }
 
@@ -124,7 +123,7 @@ export class NodeSdk extends SdkBase {
     if (!node.GraphGUID) {
       GenericExceptionHandlers.ArgumentNullException('node.GraphGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${node.GraphGUID}/nodes/${node.GUID}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${node.GraphGUID}/nodes/${node.GUID}`;
     return await this.putUpdate(url, node, cancellationToken);
   }
 
@@ -141,7 +140,7 @@ export class NodeSdk extends SdkBase {
     if (!nodeGuid) {
       GenericExceptionHandlers.ArgumentNullException('NodeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}`;
     await this.del(url, cancellationToken);
   }
 
@@ -154,7 +153,7 @@ export class NodeSdk extends SdkBase {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/all`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/all`;
     await this.del(url, cancellationToken);
   }
 
@@ -173,7 +172,7 @@ export class NodeSdk extends SdkBase {
     if (nodeGuids.length < 1) {
       GenericExceptionHandlers.GenericException('Nodes array is empty');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/nodes/bulk`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/bulk`;
     return await this.deleteMany(url, nodeGuids, cancellationToken);
   }
 }

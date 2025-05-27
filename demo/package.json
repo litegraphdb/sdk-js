@@ -8,6 +8,6 @@
   "main": "index.js",
   "scripts": {
     "setup": "cd .. && npm link && cd demo && npm link litegraphdb",
-    "start": "rimraf index.js && tsc index.ts && mv index.js index.cjs && node index.cjs && rimraf index.js"
+    "start": "rimraf index.cjs && tsc index.ts && mv index.js index.cjs && node index.cjs && rimraf index.cjs"
   }
 }

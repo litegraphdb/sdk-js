@@ -1,16 +1,15 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { CredentialMetadata, CredentialMetadataCreateRequest } from '../types';
 import SdkBase from './SdkBase';
+import { SdkConfiguration } from './SdkConfiguration';
 
 export class CredentialSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration   .
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
   /**
    * Read all credentials.
@@ -19,7 +18,7 @@ export class CredentialSdk extends SdkBase {
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
   async readAll(cancellationToken?: AbortController): Promise<CredentialMetadata[]> {
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/credentials`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials`;
     return await this.getMany<CredentialMetadata>(url, cancellationToken);
   }
 
@@ -34,7 +33,7 @@ export class CredentialSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/credentials/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials/${guid}`;
     return await this.get<CredentialMetadata>(url, cancellationToken);
   }
 
@@ -52,7 +51,7 @@ export class CredentialSdk extends SdkBase {
     if (!credential) {
       GenericExceptionHandlers.ArgumentNullException('credential');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/credentials`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials`;
     return await this.putCreate<CredentialMetadata>(url, credential, cancellationToken);
   }
 
@@ -73,7 +72,7 @@ export class CredentialSdk extends SdkBase {
     if (!credential) {
       GenericExceptionHandlers.ArgumentNullException('credential');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/credentials/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials/${guid}`;
     return await this.putUpdate<CredentialMetadata>(url, credential, cancellationToken);
   }
 
@@ -88,7 +87,7 @@ export class CredentialSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/credentials/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials/${guid}`;
     return await this.del(url, cancellationToken);
   }
 
@@ -103,7 +102,7 @@ export class CredentialSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/credentials/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials/${guid}`;
     return await this.head(url, cancellationToken);
   }
 }

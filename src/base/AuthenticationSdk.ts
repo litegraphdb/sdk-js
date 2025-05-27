@@ -2,16 +2,14 @@ import { Token } from '../types';
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { TenantMetaData } from '../types';
 import SdkBase from './SdkBase';
-
+import { SdkConfiguration } from './SdkConfiguration';
 export class AuthenticationSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration.
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
 
   /**
@@ -38,7 +36,7 @@ export class AuthenticationSdk extends SdkBase {
       GenericExceptionHandlers.ArgumentNullException('tenantId');
     }
 
-    const url = `${this.endpoint}v1.0/token`;
+    const url = `${this.config.endpoint}v1.0/token`;
     const headers = {
       'x-email': email,
       'x-password': password,
@@ -59,7 +57,7 @@ export class AuthenticationSdk extends SdkBase {
       GenericExceptionHandlers.ArgumentNullException('token');
     }
 
-    const url = `${this.endpoint}v1.0/token/details`;
+    const url = `${this.config.endpoint}v1.0/token/details`;
     const headers = {
       'x-token': token,
     };
@@ -79,7 +77,7 @@ export class AuthenticationSdk extends SdkBase {
       GenericExceptionHandlers.ArgumentNullException('email');
     }
 
-    const url = `${this.endpoint}v1.0/token/tenants`;
+    const url = `${this.config.endpoint}v1.0/token/tenants`;
     return await this.getMany<TenantMetaData>(url, cancellationToken, {
       'x-email': email,
     });

@@ -1,16 +1,15 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { TenantMetaData, TenantMetaDataCreateRequest } from '../types';
 import SdkBase from './SdkBase';
+import { SdkConfiguration } from './SdkConfiguration';
 
 export class TenantSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration.
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
 
   /**
@@ -20,7 +19,7 @@ export class TenantSdk extends SdkBase {
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
   async readAll(cancellationToken?: AbortController): Promise<TenantMetaData[]> {
-    const url = `${this.endpoint}v1.0/tenants`;
+    const url = `${this.config.endpoint}v1.0/tenants`;
     return await this.get<TenantMetaData[]>(url, cancellationToken);
   }
 
@@ -35,7 +34,7 @@ export class TenantSdk extends SdkBase {
     if (!tenantGuid) {
       GenericExceptionHandlers.ArgumentNullException('tenantGuid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${tenantGuid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${tenantGuid}`;
     return await this.get<TenantMetaData>(url, cancellationToken);
   }
 
@@ -50,7 +49,7 @@ export class TenantSdk extends SdkBase {
     if (!tenant) {
       GenericExceptionHandlers.ArgumentNullException('tenant');
     }
-    const url = `${this.endpoint}v1.0/tenants`;
+    const url = `${this.config.endpoint}v1.0/tenants`;
     return await this.putCreate<TenantMetaData>(url, tenant, cancellationToken);
   }
 
@@ -68,7 +67,7 @@ export class TenantSdk extends SdkBase {
     if (!tenant.GUID) {
       GenericExceptionHandlers.ArgumentNullException('tenant.GUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${tenant.GUID}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${tenant.GUID}`;
     return await this.putUpdate<TenantMetaData>(url, tenant, cancellationToken);
   }
 
@@ -83,7 +82,7 @@ export class TenantSdk extends SdkBase {
     if (!tenantGuid) {
       GenericExceptionHandlers.ArgumentNullException('tenantGuid');
     }
-    let url = `${this.endpoint}v1.0/tenants/${tenantGuid}`;
+    let url = `${this.config.endpoint}v1.0/tenants/${tenantGuid}`;
     if (force) {
       url += '?force';
     }
@@ -101,7 +100,7 @@ export class TenantSdk extends SdkBase {
     if (!tenantGuid) {
       GenericExceptionHandlers.ArgumentNullException('tenantGuid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${tenantGuid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${tenantGuid}`;
     return await this.head(url, cancellationToken);
   }
 }

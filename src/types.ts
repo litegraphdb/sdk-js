@@ -1,3 +1,5 @@
+import { EnumerationOrderEnum } from './enums/EnumerationOrderEnum';
+
 /**
  * ApiErrorResponse.
  */
@@ -45,7 +47,7 @@ export type CredentialMetadataCreateRequest = {
  */
 export type Edge = {
   /** Unique identifier for the edge */
-  GUID?: string;
+  GUID: string;
   /** Unique identifier for the graph */
   GraphGUID?: string;
   /** Name of the edge */
@@ -161,15 +163,15 @@ export type GraphCreateRequest = {
  */
 export type LabelMetadata = {
   /** Unique identifier for the label */
-  GUID?: string;
+  GUID: string;
   /** Unique identifier for the tenant */
-  TenantGUID?: string;
+  TenantGUID: string;
   /** Unique identifier for the graph */
-  GraphGUID?: string;
+  GraphGUID: string;
   /** Unique identifier for the node */
-  NodeGUID?: string;
+  NodeGUID: string;
   /** Unique identifier for the edge */
-  EdgeGUID?: string;
+  EdgeGUID: string;
   /** Label of the metadata */
   Label?: any;
   /** Creation timestamp */
@@ -197,7 +199,7 @@ export type LabelMetadataCreateRequest = {
  */
 export type Node = {
   /** Unique identifier for the node */
-  GUID?: string;
+  GUID: string;
   /** Unique identifier for the graph this node belongs to */
   GraphGUID?: string;
   /** Name of the node */
@@ -257,7 +259,7 @@ export type SearchRequest = {
   /** Unique identifier for the graph */
   GraphGUID?: string;
   /** Ordering of the search results */
-  Ordering?: any;
+  Ordering?: EnumerationOrderEnum;
   /** Expression for the search request */
   Expr?: any;
 };
@@ -279,15 +281,15 @@ export type SearchResult = {
  */
 export type TagMetaData = {
   /** Unique identifier for the tag */
-  GUID?: string;
+  GUID: string;
   /** Unique identifier for the tenant */
-  TenantGUID?: string;
+  TenantGUID: string;
   /** Unique identifier for the graph */
-  GraphGUID?: string;
+  GraphGUID: string;
   /** Unique identifier for the node */
-  NodeGUID?: string;
+  NodeGUID: string;
   /** Unique identifier for the edge */
-  EdgeGUID?: string;
+  EdgeGUID: string;
   /** Key of the tag */
   Key?: any;
   /** Value of the tag */
@@ -316,7 +318,7 @@ export type TagMetaDataCreateRequest = {
  */
 export type TenantMetaData = {
   /** Unique identifier for the tenant */
-  GUID?: string;
+  GUID: string;
   /** Name of the tenant */
   Name?: any;
   /** Indicates if the tenant is active */
@@ -400,27 +402,27 @@ export type UserMetadataCreateRequest = {
  */
 export type VectorMetadata = {
   /** Unique identifier for the vector */
-  GUID?: string;
+  GUID: string;
   /** Unique identifier for the tenant */
-  TenantGUID?: string;
+  TenantGUID: string;
   /** Unique identifier for the graph */
-  GraphGUID?: string;
+  GraphGUID: string;
   /** Unique identifier for the node */
-  NodeGUID?: string;
+  NodeGUID: string;
   /** Unique identifier for the edge */
-  EdgeGUID?: string;
+  EdgeGUID: string;
   /** Model associated with the vector */
-  Model?: any;
+  Model: any;
   /** Dimensionality of the vector */
-  Dimensionality?: any;
+  Dimensionality: any;
   /** Content of the vector */
-  Content?: any;
+  Content: any;
   /** List of float values representing the vector */
-  Vectors?: any[];
+  Vectors: any[];
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 /**

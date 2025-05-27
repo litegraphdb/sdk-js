@@ -1,16 +1,15 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { Edge, EdgeCreateRequest, NodeEdgeSearchRequest, SearchResult } from '../types';
 import SdkBase from './SdkBase';
+import { SdkConfiguration } from './SdkConfiguration';
 
 export class EdgeSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration.
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
 
   /**
@@ -28,7 +27,7 @@ export class EdgeSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('GUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/${guid}`;
     return await this.head(url, cancellationToken);
   }
 
@@ -48,7 +47,7 @@ export class EdgeSdk extends SdkBase {
       GenericExceptionHandlers.GenericException('Edges array is empty');
     }
 
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/bulk`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/bulk`;
     return await this.putCreate<Edge[]>(url, edges, cancellationToken);
   }
 
@@ -66,7 +65,7 @@ export class EdgeSdk extends SdkBase {
     if (!edge.GraphGUID) {
       GenericExceptionHandlers.ArgumentNullException('edge.GraphGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${edge.GraphGUID}/edges`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${edge.GraphGUID}/edges`;
     return await this.putCreate<Edge>(url, edge, cancellationToken);
   }
 
@@ -81,7 +80,7 @@ export class EdgeSdk extends SdkBase {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges`;
     return await this.get<Edge[]>(url, cancellationToken);
   }
 
@@ -99,7 +98,7 @@ export class EdgeSdk extends SdkBase {
     if (!searchReq.GraphGUID) {
       GenericExceptionHandlers.ArgumentNullException('searchReq.GraphGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${searchReq.GraphGUID}/edges/search`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${searchReq.GraphGUID}/edges/search`;
     return await this.post<SearchResult>(url, searchReq, cancellationToken);
   }
 
@@ -118,7 +117,7 @@ export class EdgeSdk extends SdkBase {
     if (!edgeGuid) {
       GenericExceptionHandlers.ArgumentNullException('EdgeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/${edgeGuid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/${edgeGuid}`;
     return await this.get<Edge>(url, cancellationToken);
   }
 
@@ -136,7 +135,7 @@ export class EdgeSdk extends SdkBase {
     if (!edge.GraphGUID) {
       GenericExceptionHandlers.ArgumentNullException('edge.GraphGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${edge.GraphGUID}/edges/${edge.GUID}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${edge.GraphGUID}/edges/${edge.GUID}`;
     return await this.putUpdate(url, edge, cancellationToken);
   }
 
@@ -155,7 +154,7 @@ export class EdgeSdk extends SdkBase {
     if (!edgeGuid) {
       GenericExceptionHandlers.ArgumentNullException('EdgeGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/${edgeGuid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/${edgeGuid}`;
     return await this.del(url, cancellationToken);
   }
 
@@ -170,7 +169,7 @@ export class EdgeSdk extends SdkBase {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/all`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/all`;
     return await this.del(url, cancellationToken);
   }
 
@@ -189,7 +188,7 @@ export class EdgeSdk extends SdkBase {
     if (edgeGuids.length < 1) {
       GenericExceptionHandlers.GenericException('Edges array is empty');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/graphs/${graphGuid}/edges/bulk`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/bulk`;
     return await this.deleteMany(url, edgeGuids, cancellationToken);
   }
 }

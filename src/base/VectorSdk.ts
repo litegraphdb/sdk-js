@@ -2,16 +2,15 @@ import { VectorCreateRequest, VectorMetadata, VectorSearchRequest } from '../typ
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { VectorSearchResult } from '../types';
 import SdkBase from './SdkBase';
+import { SdkConfiguration } from './SdkConfiguration';
 
 export class VectorSdk extends SdkBase {
   /**
    * Instantiate the SDK.
-   * @param {string} endpoint - The endpoint URL.
-   * @param {string} [tenantGuid] - The tenant GUID.
-   * @param {string} [accessKey] - The access key.
+   * @param {SdkConfiguration} config - The SDK configuration.
    */
-  constructor(endpoint: string = 'http://localhost:8000/', tenantGuid: string, accessKey: string) {
-    super(endpoint, tenantGuid, accessKey);
+  constructor(config: SdkConfiguration) {
+    super(config);
   }
   /**
    * Read all vectors.
@@ -19,7 +18,7 @@ export class VectorSdk extends SdkBase {
    * @returns {Promise<VectorMetadata[]>}
    */
   async readAll(cancellationToken?: AbortController): Promise<VectorMetadata[]> {
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/vectors`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors`;
     return await this.getMany<VectorMetadata>(url, cancellationToken);
   }
 
@@ -34,7 +33,7 @@ export class VectorSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/vectors/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors/${guid}`;
     return await this.get<VectorMetadata>(url, cancellationToken);
   }
 
@@ -49,7 +48,7 @@ export class VectorSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/vectors/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors/${guid}`;
     return await this.head(url, cancellationToken);
   }
 
@@ -63,7 +62,7 @@ export class VectorSdk extends SdkBase {
     if (!vector) {
       GenericExceptionHandlers.ArgumentNullException('vector');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/vectors`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors`;
     return await this.putCreate<VectorMetadata>(url, vector, cancellationToken);
   }
 
@@ -81,7 +80,7 @@ export class VectorSdk extends SdkBase {
     if (vectors.length < 1) {
       GenericExceptionHandlers.GenericException('Vectors array is empty');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/vectors/bulk`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors/bulk`;
     return await this.putCreate<VectorMetadata[]>(url, vectors, cancellationToken);
   }
 
@@ -99,7 +98,7 @@ export class VectorSdk extends SdkBase {
     if (!vector) {
       GenericExceptionHandlers.ArgumentNullException('vector');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/vectors/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors/${guid}`;
     return await this.putUpdate<VectorMetadata>(url, vector, cancellationToken);
   }
 
@@ -113,7 +112,7 @@ export class VectorSdk extends SdkBase {
     if (!guid) {
       GenericExceptionHandlers.ArgumentNullException('guid');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/vectors/${guid}`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors/${guid}`;
     return await this.del(url, cancellationToken);
   }
 
@@ -131,7 +130,7 @@ export class VectorSdk extends SdkBase {
     if (guids.length < 1) {
       GenericExceptionHandlers.GenericException('Vectors array is empty');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/vectors/bulk`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors/bulk`;
     return await this.deleteMany(url, guids, cancellationToken);
   }
 
@@ -146,7 +145,7 @@ export class VectorSdk extends SdkBase {
     if (!searchReq) {
       GenericExceptionHandlers.ArgumentNullException('Search Request');
     }
-    const url = `${this.endpoint}v1.0/tenants/${this.tenantGuid}/vectors`;
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors`;
     const json = JSON.stringify(searchReq);
     return await this.post<VectorSearchResult[]>(url, json, cancellationToken);
   }

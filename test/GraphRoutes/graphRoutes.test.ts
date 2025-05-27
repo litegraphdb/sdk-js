@@ -98,7 +98,6 @@ describe('GraphRoute Tests', () => {
     test('should export a graph to GEXF format with abort', async () => {
       const cancellationToken = new AbortController();
       await api.Graph.exportGexf(mockGraphGuid, cancellationToken);
-      api.Graph.accessToken;
       cancellationToken.abort();
     });
   });

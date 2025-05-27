@@ -19,16 +19,15 @@ describe('LiteGraph SDK', () => {
   describe('test Base SDK methods', () => {
     it('intialze sdk with default endpoint and tty updating headers', async () => {
       const api2 = new sdk.LiteGraphSdk(mockEndpoint, mockTenantId, mockAccessToken);
-      expect(api2.header).toBe('[LiteGraphSdk] ');
-      api2.header = '[test] ';
-      expect(api2.header).toBe('[test] ');
-      expect(api2.timeoutMs).toBe(300000);
+      expect(api2.config.defaultHeaders).toEqual({ Authorization: 'Bearer default' });
+      expect(api2.config.header).toBe('[LiteGraphSdk] ');
+      expect(api2.config.timeoutMs).toBe(300000);
     });
 
     it('should set endpoint and throw error for invalid endpoint', async () => {
       try {
-        api.endpoint = mockEndpoint;
-        api.endpoint = '';
+        api.config.endpoint = mockEndpoint;
+        api.config.endpoint = '';
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: Endpoint is null or empty');
@@ -37,8 +36,8 @@ describe('LiteGraph SDK', () => {
 
     it('should set timeout and throw error for invalid timeout', async () => {
       try {
-        api.timeoutMs = 30000;
-        api.timeoutMs = 0;
+        api.config.timeoutMs = 30000;
+        api.config.timeoutMs = 0;
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: TimeoutMs must be greater than 0.');
