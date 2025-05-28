@@ -14,7 +14,7 @@ export type ApiErrorResponse = {
  */
 export type CredentialMetadata = {
   /** Unique identifier for the credential */
-  GUID?: string;
+  GUID: string;
   /** Unique identifier for the tenant */
   TenantGUID?: string;
   /** Unique identifier for the user */
@@ -365,7 +365,7 @@ export type Token = {
  */
 export type UserMetadata = {
   /** Unique identifier for the user */
-  GUID?: string;
+  GUID: string;
   /** Unique identifier for the tenant */
   TenantGUID?: string;
   /** First name of the user */

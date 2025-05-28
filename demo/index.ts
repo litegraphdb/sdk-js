@@ -1,16 +1,12 @@
 import { LiteGraphSdk } from 'litegraphdb';
 import { Graph, NodeEdgeSearchRequest } from 'litegraphdb/dist/types/types';
 
-var api = new LiteGraphSdk(
-  'http://ec2-18-217-169-161.us-east-2.compute.amazonaws.com:8701/',
-  '5317813d-99b2-4236-8c24-9827f79338c7',
-  'litegraphadmin'
-);
-var guid = '00900db5-c9b7-4631-b250-c9e635a9036e'; // {String}
-var nodeGuid = 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8'; // {String}
-var toNodeGuid = '01010101-0101-0101-0101-010101010101';
-var fromNodeGuid = '01010101-0101-0101-0101-010101010101';
-var edgeGuid = 'e9702f09-cd73-413b-8e00-5f871472a02d';
+var api = new LiteGraphSdk('http://localhost:8701/', '<tenant-guid>', '<access-key>');
+var guid = '<graph-guid>'; // {String}
+var nodeGuid = '<node-guid>'; // {String}
+var toNodeGuid = '<to-node-guid>';
+var fromNodeGuid = '<from-node-guid>';
+var edgeGuid = '<edge-guid>';
 // region Graph
 const getGraphById = async () => {
   try {
