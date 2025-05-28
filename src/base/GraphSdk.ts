@@ -1,0 +1,115 @@
+import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
+import { Graph, GraphCreateRequest, GraphSearchRequest, SearchResult } from '../types';
+import SdkBase from './SdkBase';
+import { SdkConfiguration } from './SdkConfiguration';
+
+export class GraphSdk extends SdkBase {
+  /**
+   * Instantiate the SDK.
+   * @param {SdkConfiguration} config - The SDK configuration.
+   */
+  constructor(config: SdkConfiguration) {
+    super(config);
+  }
+
+  /**
+   * Check if a graph exists by GUID.
+   * @param {string} guid - The GUID of the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<boolean>} - True if the graph exists.
+   */
+  async exists(guid: string, cancellationToken?: AbortController): Promise<boolean> {
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}`;
+    return await this.head(url, cancellationToken);
+  }
+
+  /**
+   * Create a graph.
+   * @param {GraphCreateRequest} graph - Information about the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Graph>} - The created graph.
+   */
+  async create(graph: GraphCreateRequest, cancellationToken?: AbortController): Promise<Graph> {
+    if (!graph) {
+      GenericExceptionHandlers.ArgumentNullException('Graph');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs`;
+    return await this.putCreate(url, graph, cancellationToken);
+  }
+
+  /**
+   * Read all graphs.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Graph[]>} - An array of graphs.
+   */
+  async readAll(cancellationToken?: AbortController): Promise<Graph[]> {
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs`;
+    return await this.getMany<Graph>(url, cancellationToken);
+  }
+
+  /**
+   * Search graphs.
+   * @param {GraphSearchRequest} searchReq - Information about the search request.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<SearchResult>} - The search result.
+   */
+  async search(searchReq: GraphSearchRequest, cancellationToken?: AbortController): Promise<SearchResult> {
+    if (!searchReq) {
+      GenericExceptionHandlers.ArgumentNullException('Search Request');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/search`;
+
+    return await this.post<SearchResult>(url, searchReq, cancellationToken);
+  }
+
+  /**
+   * Read a specific graph.
+   * @param {string} guid - The GUID of the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Graph>} - The requested graph.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async read(guid: string, cancellationToken?: AbortController): Promise<Graph> {
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}`;
+    return await this.get<Graph>(url, cancellationToken);
+  }
+
+  /**
+   * Update a graph.
+   * @param {Graph} graph - Information about the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Graph>} - The updated graph.
+   */
+  async update(graph: Graph, cancellationToken?: AbortController): Promise<Graph> {
+    if (!graph) {
+      GenericExceptionHandlers.ArgumentNullException('Graph');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graph.GUID}`;
+    return await this.putUpdate(url, graph, cancellationToken);
+  }
+
+  /**
+   * Delete a graph.
+   * @param {string} guid - The GUID of the graph.
+   * @param {boolean} force - Force recursive deletion of edges and nodes.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<boolean>} - The deleted graph.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async delete(guid: string, force: boolean = false, cancellationToken?: AbortController): Promise<boolean> {
+    let url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}`;
+    if (force) url += '?force=true';
+    return await this.del(url, cancellationToken);
+  }
+
+  /**
+   * Export a graph to GEXF format.
+   * @param {string} guid - The GUID of the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<string>} - The GEXF XML data.
+   */
+  async exportGexf(guid: string, cancellationToken?: AbortController): Promise<string> {
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}/export/gexf`;
+    return await this.get<string>(url, cancellationToken);
+  }
+}

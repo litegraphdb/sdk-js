@@ -26,3 +26,11 @@ v1.0.2
 v1.0.3
 
 - Added bulk create and delete for nodes, edges, vectors, labels and tags
+
+v1.0.4
+
+- migration to typescript
+- structural changes like sdk.createGraph() -> sdk.Graph.create({name: 'myGraph'})
+- improved process to demo and test sdk while in development
+- updated README.md
+- updated CHANGELOG.md
