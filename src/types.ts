@@ -337,6 +337,25 @@ export type TenantMetaDataCreateRequest = {
 };
 
 /**
+ * BackupMetaData.
+ */
+export type BackupMetaData = {
+  /** Unique identifier for the backup */
+  GUID: string;
+  /** Name of the backup */
+  Filename: string;
+  /** Creation timestamp */
+  CreatedUtc: string;
+  /** Last update timestamp */
+  LastUpdateUtc: string;
+};
+
+export type BackupMetaDataCreateRequest = {
+  /** Name of the backup */
+  Filename: string;
+};
+
+/**
  * Token.
  */
 export type Token = {
