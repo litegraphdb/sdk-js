@@ -26,9 +26,9 @@ export type CredentialMetadata = {
   /** Indicates if the credential is active */
   Active?: boolean;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 export type CredentialMetadataCreateRequest = {
@@ -49,27 +49,27 @@ export type Edge = {
   /** Unique identifier for the edge */
   GUID: string;
   /** Unique identifier for the graph */
-  GraphGUID?: string;
+  GraphGUID: string;
   /** Name of the edge */
-  Name?: any;
+  Name: string;
   /** From node identifier */
-  From?: any;
+  From: string;
   /** To node identifier */
-  To?: any;
+  To: string;
   /** Cost associated with the edge */
-  Cost?: number;
+  Cost: number;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Additional data associated with the edge */
-  Data?: object | null;
+  Data: object;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
   /** Array of labels */
-  Labels?: string[];
+  Labels: string[];
   /** Key-value pairs of tags */
-  Tags?: { [key: string]: any };
+  Tags: { [key: string]: any };
   /** Array of vector embeddings */
-  Vectors?: any[];
+  Vectors: any[];
 };
 
 /**
@@ -85,7 +85,7 @@ export type EdgeCreateRequest = {
   /** Cost associated with the edge */
   Cost?: number;
   /** Object data */
-  Data?: object | null;
+  Data?: object;
   /** Array of labels */
   Labels?: string[];
   /** Key-value pairs of tags */
@@ -99,9 +99,9 @@ export type EdgeCreateRequest = {
  */
 export type EdgeBetween = {
   /** Starting node GUID */
-  From?: any;
+  From?: string;
   /** Ending node GUID */
-  To?: any;
+  To?: string;
 };
 
 /**
@@ -173,11 +173,11 @@ export type LabelMetadata = {
   /** Unique identifier for the edge */
   EdgeGUID: string;
   /** Label of the metadata */
-  Label?: any;
+  Label: string;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 /**
@@ -201,21 +201,21 @@ export type Node = {
   /** Unique identifier for the node */
   GUID: string;
   /** Unique identifier for the graph this node belongs to */
-  GraphGUID?: string;
+  GraphGUID: string;
   /** Name of the node */
-  Name?: any;
+  Name: string;
   /** Object data */
-  Data?: object | null;
+  Data: object;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
   /** Array of labels */
-  Labels?: string[];
+  Labels: string[];
   /** Key-value pairs of tags */
-  Tags?: { [key: string]: any };
+  Tags: { [key: string]: any };
   /** Array of vector embeddings */
-  Vectors?: any[];
+  Vectors: any[];
 };
 
 /**
@@ -257,7 +257,7 @@ export type RouteResult = {
  */
 export type SearchRequest = {
   /** Unique identifier for the graph */
-  GraphGUID?: string;
+  GraphGUID: string;
   /** Ordering of the search results */
   Ordering?: EnumerationOrderEnum;
   /** Expression for the search request */
@@ -291,13 +291,13 @@ export type TagMetaData = {
   /** Unique identifier for the edge */
   EdgeGUID: string;
   /** Key of the tag */
-  Key?: any;
+  Key: string;
   /** Value of the tag */
-  Value?: any;
+  Value: string;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 export type TagMetaDataCreateRequest = {
@@ -320,13 +320,13 @@ export type TenantMetaData = {
   /** Unique identifier for the tenant */
   GUID: string;
   /** Name of the tenant */
-  Name?: any;
+  Name: string;
   /** Indicates if the tenant is active */
-  Active?: boolean;
+  Active: boolean;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 export type TenantMetaDataCreateRequest = {
@@ -398,9 +398,9 @@ export type UserMetadata = {
   /** Indicates if the user is active */
   Active?: boolean;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 export type UserMetadataCreateRequest = {
