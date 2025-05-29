@@ -1,5 +1,5 @@
 import { LiteGraphSdk } from 'litegraphdb';
-import { Graph, NodeEdgeSearchRequest } from 'litegraphdb/dist/types/types';
+import { Edge, Graph, Node, NodeCreateRequest, NodeEdgeSearchRequest } from 'litegraphdb/dist/types/types';
 
 var api = new LiteGraphSdk('http://localhost:8701/', '<tenant-guid>', '<access-key>');
 var guid = '<graph-guid>'; // {String}
@@ -149,7 +149,7 @@ const createNode = async () => {
 };
 
 const multipleNodes = async () => {
-  const newMultipleNodes = [
+  const newMultipleNodes: NodeCreateRequest[] = [
     {
       Name: 'Active Directory',
       Labels: ['test'],
@@ -159,7 +159,7 @@ const multipleNodes = async () => {
       Data: {
         Name: 'Active Directory',
       },
-      GUID: '',
+      GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
     },
     {
       Name: 'Website',
@@ -170,7 +170,7 @@ const multipleNodes = async () => {
       Data: {
         Name: 'Website',
       },
-      GUID: '',
+      GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
     },
   ];
 
@@ -184,7 +184,7 @@ const multipleNodes = async () => {
 };
 const updateNode = async () => {
   // Node object to update
-  const node = {
+  const node: Node = {
     GUID: 'ab31cc6e-000f-4e31-8068-372d1b038d3d',
     GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
     Name: 'Sample Node',
@@ -192,6 +192,12 @@ const updateNode = async () => {
       key1: 'value2',
     },
     CreatedUtc: '2024-10-19T14:35:20.351Z',
+    Labels: ['test'],
+    Tags: {
+      Type: 'ActiveDirectory',
+    },
+    Vectors: [],
+    LastUpdateUtc: '2024-10-19T14:35:20.351Z',
   };
 
   try {
@@ -282,7 +288,7 @@ const createEdge = async () => {
 
 const updateEdge = async () => {
   // Edge object to update
-  const edge = {
+  const edge: Edge = {
     GUID: '01010101-0101-0101-0101-010101010101',
     GraphGUID: '01010101-0101-0101-0101-010101010101',
     Name: 'My test edge',
@@ -293,6 +299,12 @@ const updateEdge = async () => {
       Hello: 'World',
     },
     CreatedUtc: '2024-07-01 15:43:06.991834',
+    Labels: ['test'],
+    Tags: {
+      Type: 'ActiveDirectory',
+    },
+    Vectors: [],
+    LastUpdateUtc: '2024-07-01 15:43:06.991834',
   };
 
   try {
@@ -474,6 +486,8 @@ const updateUser = async () => {
       Email: 'anotherbbb@user.com',
       Password: 'password',
       Active: true,
+      CreatedUtc: '2024-12-27T18:12:38.653402Z',
+      LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
     });
     console.log(data, 'chk data');
   } catch (err) {
@@ -538,6 +552,8 @@ const updateTenant = async () => {
       GUID: '029b9092-3a4c-4f5e-8527-b1b947494e32',
       Name: 'Updated tenant',
       Active: true,
+      CreatedUtc: '2024-12-27T18:12:38.653402Z',
+      LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
     });
     console.log(data, 'chk data');
   } catch (err) {
@@ -618,6 +634,10 @@ const updateCredential = async () => {
         Name: 'Updated credential',
         BearerToken: 'default',
         Active: true,
+        LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
+        CreatedUtc: '2024-12-27T18:12:38.653402Z',
+        GUID: 'fba86eda-21ea-4095-852c-5f5c542f0ffc',
+        TenantGUID: '',
       },
       'fba86eda-21ea-4095-852c-5f5c542f0ffc'
     );
@@ -994,7 +1014,7 @@ const createMultipleNodes = async () => {
         Data: {
           Name: 'Active Directory',
         },
-        GUID: '',
+        GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
       },
       {
         Name: 'Website',
@@ -1005,7 +1025,7 @@ const createMultipleNodes = async () => {
         Data: {
           Name: 'Website',
         },
-        GUID: '',
+        GraphGUID: '8e72e2b7-86fe-4f94-8483-547c23c8a833',
       },
     ]);
     console.log(data, 'chk data');
@@ -1044,7 +1064,7 @@ const createMultipleEdges = async () => {
         Data: {
           hello: 'world',
         },
-        GUID: '',
+        GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
       },
     ]);
     console.log(data, 'chk data');
@@ -1066,6 +1086,62 @@ const deleteMultipleEdges = async () => {
 };
 // deleteMultipleEdges();
 
+// region Backup
+
+const createBackup = async () => {
+  try {
+    const data = await api.Backup.create({
+      Filename: 'test2.db',
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// createBackup();
+
+const readAllBackups = async () => {
+  try {
+    const data = await api.Backup.readAll();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// readAllBackups();
+
+const readBackup = async () => {
+  try {
+    const data = await api.Backup.read('test2.db');
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// readBackup();
+
+const existsBackup = async () => {
+  try {
+    const data = await api.Backup.exists('test2.db');
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// existsBackup();
+
+const deleteBackup = async () => {
+  try {
+    const data = await api.Backup.delete('test2.db');
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// deleteBackup();
+
+// region ValidateConnectivity
+
 const ValidateConnectivity = async () => {
   try {
     const data = await api.validateConnectivity();
@@ -1074,88 +1150,4 @@ const ValidateConnectivity = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
-ValidateConnectivity();
-
-const useSdk = async () => {
-  //region Graph calls
-  await getGraphById();
-  // await getGraphList();
-  // await createGraph();
-  // await updateGraph();
-  // await deleteGraphById();
-  // await checkIfGraphExistsById();
-  // await searchGraph();
-  // await exportGraphToGexf();
-  //region Node calls
-  // await getNodeById();
-  // await getNodeList();
-  // await createNode();
-  // await multipleNodes();
-  // await updateNode();
-  // await deleteNodeById();
-  // await checkIfNodeExistsById();
-  // await searchNodes();
-  //region Edge calls
-  // await getEdgeById();
-  // await getEdgeList();
-  // await createEdge();
-  // await updateEdge();
-  // await deleteEdgeById();
-  // await checkIfEdgeExistsById();
-  // await searchEdges();
-  //region Routes & Traversal calls
-  // await getEdgesFromNode();
-  // await getEdgesToNode();
-  // await getEdgesBetween();
-  // await getAllNodeEdges();
-  // await getChildrenFromNode();
-  // await getParentsFromNode();
-  // await getNodeNeighbors();
-  // await getRoutes();
-  // await deleteMultipleNodes();
-  //region Tenant calls
-  // readTenants();
-  // readTenant();
-  // createTenant();
-  // tenantExists();
-  // updateTenant();
-  // deleteTenant();
-  // await deleteForceTenant();
-  //region User calls
-  // await readAllUsers();
-  // await readUser();
-  // await createUser();
-  // await existsUser();
-  // await updateUser();
-  // await deleteUser();
-  //region Credential calls
-  // await readAllCredentials();
-  // await readCredential();
-  // await createCredential();
-  // await existsCredential();
-  // await updateCredential();
-  // await deleteCredential();
-  //region Label calls
-  // await readAllLabels();
-  // await readLabel();
-  // await createLabel();
-  // await existsLabel();
-  // await updateLabel();
-  // await deleteLabel();
-  //region Tag calls
-  // await readAllTags();
-  // await readTag();
-  // await createTag();
-  // await existsTag();
-  // await updateTag();
-  // await deleteTag();
-  //region Vectors
-  // await readAllVectors();
-  // await readVector();
-  // await createVector();
-  // await existsVector();
-  // await updateVector();
-  // await deleteVector();
-  // await multipleNodes();
-};
-useSdk();
+// ValidateConnectivity();

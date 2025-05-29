@@ -34,3 +34,8 @@ v1.0.4
 - improved process to demo and test sdk while in development
 - updated README.md
 - updated CHANGELOG.md
+
+v1.0.5
+
+- added backup routes
+- updated README.md and CHANGELOG.md

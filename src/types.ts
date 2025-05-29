@@ -26,9 +26,9 @@ export type CredentialMetadata = {
   /** Indicates if the credential is active */
   Active?: boolean;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 export type CredentialMetadataCreateRequest = {
@@ -49,33 +49,35 @@ export type Edge = {
   /** Unique identifier for the edge */
   GUID: string;
   /** Unique identifier for the graph */
-  GraphGUID?: string;
+  GraphGUID: string;
   /** Name of the edge */
-  Name?: any;
+  Name: string;
   /** From node identifier */
-  From?: any;
+  From: string;
   /** To node identifier */
-  To?: any;
+  To: string;
   /** Cost associated with the edge */
-  Cost?: number;
+  Cost: number;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Additional data associated with the edge */
-  Data?: object | null;
+  Data: object;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
   /** Array of labels */
-  Labels?: string[];
+  Labels: string[];
   /** Key-value pairs of tags */
-  Tags?: { [key: string]: any };
+  Tags: { [key: string]: any };
   /** Array of vector embeddings */
-  Vectors?: any[];
+  Vectors: any[];
 };
 
 /**
  * EdgeCreateRequest.
  */
 export type EdgeCreateRequest = {
+  /** Name of the edge */
+  Name: string;
   /** Globally unique identifier for the graph */
   GraphGUID: string;
   /** Globally unique identifier for the from node */
@@ -85,7 +87,7 @@ export type EdgeCreateRequest = {
   /** Cost associated with the edge */
   Cost?: number;
   /** Object data */
-  Data?: object | null;
+  Data?: object;
   /** Array of labels */
   Labels?: string[];
   /** Key-value pairs of tags */
@@ -99,9 +101,9 @@ export type EdgeCreateRequest = {
  */
 export type EdgeBetween = {
   /** Starting node GUID */
-  From?: any;
+  From?: string;
   /** Ending node GUID */
-  To?: any;
+  To?: string;
 };
 
 /**
@@ -173,11 +175,11 @@ export type LabelMetadata = {
   /** Unique identifier for the edge */
   EdgeGUID: string;
   /** Label of the metadata */
-  Label?: any;
+  Label: string;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 /**
@@ -201,15 +203,30 @@ export type Node = {
   /** Unique identifier for the node */
   GUID: string;
   /** Unique identifier for the graph this node belongs to */
-  GraphGUID?: string;
+  GraphGUID: string;
   /** Name of the node */
-  Name?: any;
+  Name: string;
   /** Object data */
-  Data?: object | null;
+  Data: object;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
+  /** Array of labels */
+  Labels: string[];
+  /** Key-value pairs of tags */
+  Tags: { [key: string]: any };
+  /** Array of vector embeddings */
+  Vectors: any[];
+};
+
+export type NodeCreateRequest = {
+  /** Globally unique identifier for the graph */
+  GraphGUID: string;
+  /** Name of the node */
+  Name: string;
+  /** Object data */
+  Data?: object;
   /** Array of labels */
   Labels?: string[];
   /** Key-value pairs of tags */
@@ -257,7 +274,7 @@ export type RouteResult = {
  */
 export type SearchRequest = {
   /** Unique identifier for the graph */
-  GraphGUID?: string;
+  GraphGUID: string;
   /** Ordering of the search results */
   Ordering?: EnumerationOrderEnum;
   /** Expression for the search request */
@@ -291,13 +308,13 @@ export type TagMetaData = {
   /** Unique identifier for the edge */
   EdgeGUID: string;
   /** Key of the tag */
-  Key?: any;
+  Key: string;
   /** Value of the tag */
-  Value?: any;
+  Value: string;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 export type TagMetaDataCreateRequest = {
@@ -320,13 +337,13 @@ export type TenantMetaData = {
   /** Unique identifier for the tenant */
   GUID: string;
   /** Name of the tenant */
-  Name?: any;
+  Name: string;
   /** Indicates if the tenant is active */
-  Active?: boolean;
+  Active: boolean;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 export type TenantMetaDataCreateRequest = {
@@ -334,6 +351,35 @@ export type TenantMetaDataCreateRequest = {
   Name: string;
   /** Indicates if the tenant is active */
   Active: boolean;
+};
+
+/**
+ * BackupMetaData.
+ */
+export type BackupMetaData = {
+  /** Name of the backup */
+  Filename: string;
+  /** Length of the backup in bytes */
+  Length: number;
+  /** MD5 hash of the backup */
+  MD5Hash: string;
+  /** SHA1 hash of the backup */
+  SHA1Hash: string;
+  /** SHA256 hash of the backup */
+  SHA256Hash: string;
+  /** Creation timestamp */
+  CreatedUtc: string;
+  /** Last update timestamp */
+  LastUpdateUtc: string;
+  /** Last access timestamp */
+  LastAccessUtc: string;
+  /** Backup data in Base64 format */
+  Data?: string;
+};
+
+export type BackupMetaDataCreateRequest = {
+  /** Name of the backup */
+  Filename: string;
 };
 
 /**
@@ -379,9 +425,9 @@ export type UserMetadata = {
   /** Indicates if the user is active */
   Active?: boolean;
   /** Creation timestamp */
-  CreatedUtc?: string;
+  CreatedUtc: string;
   /** Last update timestamp */
-  LastUpdateUtc?: string;
+  LastUpdateUtc: string;
 };
 
 export type UserMetadataCreateRequest = {

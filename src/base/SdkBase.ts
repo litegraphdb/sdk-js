@@ -337,7 +337,7 @@ export default class SdkBase {
       request
         .then((res) => {
           this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
-          resolve(Serializer.deserializeJson(res.text));
+          resolve(Serializer.deserializeJson(res.text || '{}'));
         })
         .catch((err) => {
           this.log(SeverityEnum.Warn, `Failed to retrieve object from ${url}: ${err.message}`);
