@@ -76,6 +76,8 @@ export type Edge = {
  * EdgeCreateRequest.
  */
 export type EdgeCreateRequest = {
+  /** Name of the edge */
+  Name: string;
   /** Globally unique identifier for the graph */
   GraphGUID: string;
   /** Globally unique identifier for the from node */
@@ -216,6 +218,21 @@ export type Node = {
   Tags: { [key: string]: any };
   /** Array of vector embeddings */
   Vectors: any[];
+};
+
+export type NodeCreateRequest = {
+  /** Globally unique identifier for the graph */
+  GraphGUID: string;
+  /** Name of the node */
+  Name: string;
+  /** Object data */
+  Data?: object;
+  /** Array of labels */
+  Labels?: string[];
+  /** Key-value pairs of tags */
+  Tags?: { [key: string]: any };
+  /** Array of vector embeddings */
+  Vectors?: any[];
 };
 
 /**

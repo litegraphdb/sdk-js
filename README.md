@@ -258,6 +258,11 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Route.getParentsFromNode` | Retrieves parent nodes from a node. | `graphGuid` (string) - Graph GUID <br> `nodeGuid` (string) - Node GUID <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<Node[]>` | `GET /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/{nodeGuid}/parents` |
 | `sdk.Route.getNodeNeighbors` | Retrieves neighboring nodes from a node. | `graphGuid` (string) - Graph GUID <br> `nodeGuid` (string) - Node GUID <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<Node[]>` | `GET /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/{nodeGuid}/neighbors` |
 | `sdk.Route.getRoutes` | Retrieves routes between two nodes. | `graphGuid` (string) - Graph GUID <br> `fromNodeGuid` (string) - From node GUID <br> `toNodeGuid` (string) - To node GUID <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<RouteResult>` | `POST /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/routes` |
+| `sdk.Backup.readAll` | Retrieves all backups. | `cancellationToken` (optional) - `AbortSignal` | `Promise<BackupMetaData[]>` | `GET /v1.0/backups` |
+| `sdk.Backup.read` | Retrieves a specific backup with data. | `filename` (string) - Backup filename <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<BackupMetaData>` | `GET /v1.0/backups/{filename}` |
+| `sdk.Backup.create` | Creates a new backup. | `backup` (Object) - Backup object with Filename, CreatedUtc, Size <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<BackupMetaData>` | `PUT /v1.0/backups` |
+| `sdk.Backup.delete` | Deletes a backup. | `filename` (string) - Backup filename <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<void>` | `DELETE /v1.0/backups/{filename}` |
+| `sdk.Backup.exists` | Checks if a backup exists. | `filename` (string) - Backup filename <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<boolean>` | `HEAD /v1.0/backups/{filename}` |
 
 
 ## Core Components

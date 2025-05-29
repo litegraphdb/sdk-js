@@ -2,6 +2,7 @@ import { mockTenantId, tenantData } from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
+import { TenantMetaData } from '../../src/types';
 
 const server = getServer(handlers);
 
@@ -56,7 +57,9 @@ describe('TenantRoute Tests', () => {
     });
 
     test('should update a tenant', async () => {
-      const updateTenant = {
+      const updateTenant: TenantMetaData = {
+        CreatedUtc: '2024-12-27T22:19:02.045989Z',
+        LastUpdateUtc: '2024-12-27T22:19:02.045989Z',
         GUID: mockTenantId,
         Name: 'Updated tenant',
         Active: true,
@@ -77,7 +80,10 @@ describe('TenantRoute Tests', () => {
 
     it('throws error when if missed tenant guid while updating a Tenant', async () => {
       try {
-        const updateTenant = {
+        const updateTenant: TenantMetaData = {
+          CreatedUtc: '2024-12-27T22:19:02.045989Z',
+          LastUpdateUtc: '2024-12-27T22:19:02.045989Z',
+          GUID: mockTenantId,
           Name: 'Updated tenant',
           Active: true,
         };

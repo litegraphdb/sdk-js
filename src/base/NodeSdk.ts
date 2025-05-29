@@ -1,5 +1,5 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { Node, NodeEdgeSearchRequest, SearchResult } from '../types';
+import { Node, NodeCreateRequest, NodeEdgeSearchRequest, SearchResult } from '../types';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -27,11 +27,15 @@ export class NodeSdk extends SdkBase {
   /**
    * Create multiple nodes.
    * @param {string} graphGuid - The GUID of the graph.
-   * @param {Array<Node>} nodes - List of node objects.
+   * @param {Array<NodeCreateRequest>} nodes - List of node objects.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<Array<Node>>} - The list of created nodes.
    */
-  async createBulk(graphGuid: string, nodes: Node[], cancellationToken?: AbortController): Promise<Node[]> {
+  async createBulk(
+    graphGuid: string,
+    nodes: NodeCreateRequest[],
+    cancellationToken?: AbortController
+  ): Promise<Node[]> {
     if (!nodes) {
       GenericExceptionHandlers.ArgumentNullException('Nodes');
     }
@@ -45,11 +49,11 @@ export class NodeSdk extends SdkBase {
 
   /**
    * Create a node.
-   * @param {Object} node - Information about the node.
+   * @param {NodeCreateRequest} node - Information about the node.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<Node>} - The created node.
    */
-  async create(node: Node, cancellationToken?: AbortController): Promise<Node> {
+  async create(node: NodeCreateRequest, cancellationToken?: AbortController): Promise<Node> {
     if (!node) {
       GenericExceptionHandlers.ArgumentNullException('Node');
     }

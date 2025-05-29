@@ -34,12 +34,16 @@ export class EdgeSdk extends SdkBase {
   /**
    * Create multiple edges.
    * @param {string} graphGuid - The GUID of the graph.
-   * @param {Array<Object>} edges - List of edge objects.
+   * @param {Array<EdgeCreateRequest>} edges - List of edge objects.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<Array<Edge>>} - The list of created edges.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
-  async createBulk(graphGuid: string, edges: Edge[], cancellationToken?: AbortController): Promise<Edge[]> {
+  async createBulk(
+    graphGuid: string,
+    edges: EdgeCreateRequest[],
+    cancellationToken?: AbortController
+  ): Promise<Edge[]> {
     if (!edges) {
       GenericExceptionHandlers.ArgumentNullException('Edges');
     }
