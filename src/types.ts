@@ -340,14 +340,24 @@ export type TenantMetaDataCreateRequest = {
  * BackupMetaData.
  */
 export type BackupMetaData = {
-  /** Unique identifier for the backup */
-  GUID: string;
   /** Name of the backup */
   Filename: string;
+  /** Length of the backup in bytes */
+  Length: number;
+  /** MD5 hash of the backup */
+  MD5Hash: string;
+  /** SHA1 hash of the backup */
+  SHA1Hash: string;
+  /** SHA256 hash of the backup */
+  SHA256Hash: string;
   /** Creation timestamp */
   CreatedUtc: string;
   /** Last update timestamp */
   LastUpdateUtc: string;
+  /** Last access timestamp */
+  LastAccessUtc: string;
+  /** Backup data in Base64 format */
+  Data?: string;
 };
 
 export type BackupMetaDataCreateRequest = {
