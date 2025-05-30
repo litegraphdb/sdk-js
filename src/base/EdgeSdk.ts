@@ -126,6 +126,17 @@ export class EdgeSdk extends SdkBase {
   }
 
   /**
+   * Read a first edge of a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Edge>} - The first edge of the graph.
+   */
+  async readFirst(graphGuid: string, cancellationToken?: AbortController): Promise<Edge> {
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/first`;
+    return await this.get<Edge>(url, cancellationToken);
+  }
+
+  /**
    * Update an edge.
    * @param {Edge} edge - Information about the edge.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.

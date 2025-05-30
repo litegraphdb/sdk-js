@@ -1,7 +1,11 @@
 import { LiteGraphSdk } from 'litegraphdb';
 import { Edge, Graph, Node, NodeCreateRequest, NodeEdgeSearchRequest } from 'litegraphdb/dist/types/types';
 
-var api = new LiteGraphSdk('http://localhost:8701/', '<tenant-guid>', '<access-key>');
+var api = new LiteGraphSdk(
+  'http://ec2-18-217-169-161.us-east-2.compute.amazonaws.com:8701/',
+  '5317813d-99b2-4236-8c24-9827f79338c7',
+  'litegraphadmin'
+);
 var guid = '<graph-guid>'; // {String}
 var nodeGuid = '<node-guid>'; // {String}
 var toNodeGuid = '<to-node-guid>';
@@ -1112,13 +1116,13 @@ const readAllBackups = async () => {
 
 const readBackup = async () => {
   try {
-    const data = await api.Backup.read('test2.db');
+    const data = await api.Backup.read('my-backup.db');
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
   }
 };
-// readBackup();
+readBackup();
 
 const existsBackup = async () => {
   try {

@@ -115,6 +115,16 @@ export class NodeSdk extends SdkBase {
   }
 
   /**
+   * Read a first node of a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Node>} - The first node of the graph.
+   */
+  async readFirst(graphGuid: string, cancellationToken?: AbortController): Promise<Node> {
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/first`;
+    return await this.get<Node>(url, cancellationToken);
+  }
+  /**
    * Update a node.
    * @param {Node} node - Information about the node.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
