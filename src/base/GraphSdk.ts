@@ -81,6 +81,9 @@ export class GraphSdk extends SdkBase {
    * @returns {Promise<Graph>} - The first graph.
    */
   async readFirst(guid: string, cancellationToken?: AbortController): Promise<Node> {
+    if (!guid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}/nodes/first`;
     return await this.get<Node>(url, cancellationToken);
   }

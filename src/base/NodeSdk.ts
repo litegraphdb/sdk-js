@@ -121,6 +121,9 @@ export class NodeSdk extends SdkBase {
    * @returns {Promise<Node>} - The first node of the graph.
    */
   async readFirst(graphGuid: string, cancellationToken?: AbortController): Promise<Node> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/first`;
     return await this.get<Node>(url, cancellationToken);
   }

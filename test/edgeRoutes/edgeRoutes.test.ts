@@ -224,5 +224,20 @@ describe('EdgeRoute Tests', () => {
         expect(err.toString()).toBe('Error: ArgumentNullException: Edges is null or empty');
       }
     });
+
+    test('should read a first edge by GUID', async () => {
+      const response = await api.Edge.readFirst(mockGraphGuid);
+      expect(response).toBeDefined();
+      expect(response).toEqual(edgeData[mockEdgeGuid]);
+    });
+
+    test('should throw error for invalid GUID in readFirst', async () => {
+      try {
+        await api.Edge.readFirst(null as any);
+      } catch (err) {
+        expect(err).toBeInstanceOf(Error);
+        expect(err.toString()).toMatch(/GraphGUID is null or empty/i);
+      }
+    });
   });
 });

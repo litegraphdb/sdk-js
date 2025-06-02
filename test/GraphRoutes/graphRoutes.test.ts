@@ -100,5 +100,20 @@ describe('GraphRoute Tests', () => {
       await api.Graph.exportGexf(mockGraphGuid, cancellationToken);
       cancellationToken.abort();
     });
+
+    test('should read the first node of a graph by GUID', async () => {
+      const response = await api.Graph.readFirst(mockGraphGuid);
+      expect(response).toBeDefined();
+      expect(response).toEqual(graphData[mockGraphGuid]);
+    });
+
+    test('should throw error for invalid GUID in readFirst', async () => {
+      try {
+        await api.Graph.readFirst(null as any);
+      } catch (err) {
+        expect(err).toBeInstanceOf(Error);
+        expect(err.toString()).toMatch(/GraphGUID is null or empty/i);
+      }
+    });
   });
 });

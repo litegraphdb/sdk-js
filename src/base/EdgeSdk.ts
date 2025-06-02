@@ -132,6 +132,9 @@ export class EdgeSdk extends SdkBase {
    * @returns {Promise<Edge>} - The first edge of the graph.
    */
   async readFirst(graphGuid: string, cancellationToken?: AbortController): Promise<Edge> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/first`;
     return await this.get<Edge>(url, cancellationToken);
   }

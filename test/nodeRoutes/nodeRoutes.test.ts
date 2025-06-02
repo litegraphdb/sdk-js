@@ -273,5 +273,19 @@ describe('NodeRoute Tests', () => {
         expect(err.toString()).toBe('Error: ArgumentNullException: Nodes is null or empty');
       }
     });
+
+    test('should read a first node by GUID', async () => {
+      const response = await api.Node.readFirst(mockGraphGuid);
+      expect(response).toEqual(nodeData[mockNodeGuid]);
+    });
+
+    test('should throw error for invalid GUID in readFirst', async () => {
+      try {
+        await api.Node.readFirst(null as any);
+      } catch (err) {
+        expect(err).toBeInstanceOf(Error);
+        expect(err.toString()).toMatch(/GraphGUID is null or empty/i);
+      }
+    });
   });
 });
