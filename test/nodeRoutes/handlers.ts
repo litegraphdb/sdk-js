@@ -106,4 +106,20 @@ export const handlers = [
       return HttpResponse.text('false', { status: 404 });
     }
   ),
+
+  // Read a first node by GUID
+  http.post(
+    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/nodes/first`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(nodeData[mockNodeGuid]);
+    }
+  ),
+
+  // if wrong guid is provided
+  http.post(
+    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${'wrongID'}/nodes/first`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(nodeData[mockNodeGuid]);
+    }
+  ),
 ];

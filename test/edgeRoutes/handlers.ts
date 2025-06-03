@@ -106,4 +106,20 @@ export const handlers = [
       return HttpResponse.text('false', { status: 400 });
     }
   ),
+
+  // Read a first edge by GUID
+  http.post(
+    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/edges/first`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(edgeData[mockEdgeGuid]);
+    }
+  ),
+
+  // if wrong guid is provided
+  http.post(
+    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${'wrongID'}/edges/first`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(edgeData[mockEdgeGuid]);
+    }
+  ),
 ];

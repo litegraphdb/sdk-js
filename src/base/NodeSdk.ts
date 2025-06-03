@@ -1,5 +1,5 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { Node, NodeCreateRequest, NodeEdgeSearchRequest, SearchResult } from '../types';
+import { Node, NodeCreateRequest, NodeEdgeSearchRequest, ReadFirstRequest, SearchResult } from '../types';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -114,6 +114,23 @@ export class NodeSdk extends SdkBase {
     return await this.get<Node>(url, cancellationToken);
   }
 
+  /**
+   * Read a first node of a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {ReadFirstRequest} request - Information about the read first request.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Node>} - The first node of the graph.
+   */
+  async readFirst(graphGuid: string, request: ReadFirstRequest, cancellationToken?: AbortController): Promise<Node> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
+    if (!request) {
+      GenericExceptionHandlers.ArgumentNullException('Request');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/first`;
+    return await this.post<Node>(url, request, cancellationToken);
+  }
   /**
    * Update a node.
    * @param {Node} node - Information about the node.

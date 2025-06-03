@@ -1,5 +1,5 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { Edge, EdgeCreateRequest, NodeEdgeSearchRequest, SearchResult } from '../types';
+import { Edge, EdgeCreateRequest, NodeEdgeSearchRequest, ReadFirstRequest, SearchResult } from '../types';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -123,6 +123,24 @@ export class EdgeSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/${edgeGuid}`;
     return await this.get<Edge>(url, cancellationToken);
+  }
+
+  /**
+   * Read a first edge of a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {ReadFirstRequest} request - Information about the read first request.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Edge>} - The first edge of the graph.
+   */
+  async readFirst(graphGuid: string, request: ReadFirstRequest, cancellationToken?: AbortController): Promise<Edge> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
+    if (!request) {
+      GenericExceptionHandlers.ArgumentNullException('Request');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/first`;
+    return await this.post<Edge>(url, request, cancellationToken);
   }
 
   /**

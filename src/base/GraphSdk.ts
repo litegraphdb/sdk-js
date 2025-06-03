@@ -1,5 +1,5 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { Graph, GraphCreateRequest, GraphSearchRequest, SearchResult } from '../types';
+import { Graph, GraphCreateRequest, GraphSearchRequest, ReadFirstRequest, SearchResult } from '../types';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -72,6 +72,20 @@ export class GraphSdk extends SdkBase {
   async read(guid: string, cancellationToken?: AbortController): Promise<Graph> {
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}`;
     return await this.get<Graph>(url, cancellationToken);
+  }
+
+  /**
+   * Read a first graph.
+   * @param {ReadFirstRequest} request - Information about the read first request.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Graph>} - The first graph.
+   */
+  async readFirst(request: ReadFirstRequest, cancellationToken?: AbortController): Promise<Graph> {
+    if (!request) {
+      GenericExceptionHandlers.ArgumentNullException('Request');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/first`;
+    return await this.post<Graph>(url, request, cancellationToken);
   }
 
   /**

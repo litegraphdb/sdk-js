@@ -40,4 +40,7 @@ export const handlers = [
       return HttpResponse.json(graphGEXFData[mockGraphGuid]);
     }
   ),
+  http.post(`${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/first`, ({ request, params, cookies }) => {
+    return HttpResponse.json(graphData[mockGraphGuid]);
+  }),
 ];
