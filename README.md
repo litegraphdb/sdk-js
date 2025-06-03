@@ -210,6 +210,7 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Graph.update` | Updates an existing graph. | `graph` (Object) - Graph object with GUID, name, metadata <br> `cancellationToken` (optional) - `AbortController` | `Promise<Graph>` | `PUT /v1.0/tenants/{tenantGuid}/graphs/{graph.GUID}` |
 | `sdk.Graph.delete` | Deletes a graph by GUID. | `guid` (string) - Graph GUID <br> `force` (boolean) - Force recursive deletion of edges and nodes (optional) <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{guid}?force=true` |
 | `sdk.Graph.exportToGexf` | Exports a graph to GEXF format. | `guid` (string) - Graph GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<string>` | `GET /v1.0/tenants/{tenantGuid}/graphs/{guid}/export/gexf` |
+| `sdk.Graph.readFirst` | Retrieves the first graph. | `request` (Object) - Read first request with Ordering, Labels, Tags, Expr <br> `cancellationToken` (optional) - `AbortController` | `Promise<Graph>` | `POST /v1.0/tenants/{tenantGuid}/graphs/first` |
 
 
 
@@ -228,6 +229,7 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Node.delete` | Deletes a node by GUID. | `graphGuid` (string) - Graph GUID <br> `nodeGuid` (string) - Node GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/{nodeGuid}` |
 | `sdk.Node.deleteAll` | Deletes all nodes in a graph. | `graphGuid` (string) - Graph GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/all` |
 | `sdk.Node.deleteBulk` | Deletes multiple nodes by GUIDs. | `graphGuid` (string) - Graph GUID <br> `nodeGuids` (Array<string>) - List of node GUIDs <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/bulk` |
+| `sdk.Node.readFirst` | Retrieves the first node in a graph. | `graphGuid` (string) - Graph GUID <br> `request` (Object) - Read first request with Ordering, Labels, Tags, Expr <br> `cancellationToken` (optional) - `AbortController` | `Promise<Node>` | `POST /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/first` |
 
 
 ### Edges Operations
@@ -244,6 +246,7 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Edge.delete` | Deletes an edge by GUID. | `graphGuid` (string) - Graph GUID <br> `edgeGuid` (string) - Edge GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/edges/{edgeGuid}` |
 | `sdk.Edge.deleteAll` | Deletes all edges in a graph. | `graphGuid` (string) - Graph GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/edges/all` |
 | `sdk.Edge.deleteBulk` | Deletes multiple edges by GUIDs. | `graphGuid` (string) - Graph GUID <br> `edgeGuids` (Array<string>) - List of edge GUIDs <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/edges/bulk` |
+| `sdk.Edge.readFirst` | Retrieves the first edge in a graph. | `graphGuid` (string) - Graph GUID <br> `request` (Object) - Read first request with Ordering, Labels, Tags, Expr <br> `cancellationToken` (optional) - `AbortController` | `Promise<Edge>` | `POST /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/edges/first` |
 
 
 ### Route Operations

@@ -1,16 +1,25 @@
 import { LiteGraphSdk } from 'litegraphdb';
 import { Edge, Graph, Node, NodeCreateRequest, NodeEdgeSearchRequest } from 'litegraphdb/dist/types/types';
 
-var api = new LiteGraphSdk(
-  'http://ec2-18-217-169-161.us-east-2.compute.amazonaws.com:8701/',
-  '5317813d-99b2-4236-8c24-9827f79338c7',
-  'litegraphadmin'
-);
+var api = new LiteGraphSdk('http://localhost:8701/', '00000000-0000-0000-0000-000000000000', '******');
 var guid = '<graph-guid>'; // {String}
 var nodeGuid = '<node-guid>'; // {String}
 var toNodeGuid = '<to-node-guid>';
 var fromNodeGuid = '<from-node-guid>';
 var edgeGuid = '<edge-guid>';
+
+// read first
+
+const readFirstGraph = async () => {
+  try {
+    const data = await api.Graph.readFirst({});
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+// readFirstGraph();
+
 // region Graph
 const getGraphById = async () => {
   try {
@@ -44,7 +53,9 @@ const createGraph = async () => {
 const updateGraph = async () => {
   // Graph object to update
   const graph: Graph = {
+    TenantGUID: '00000000-0000-0000-0000-000000000000',
     GUID: '08944937-e506-416a-b96e-d7b40344c618',
+    LastUpdateUtc: '2024-10-19T14:35:20.351Z',
     Name: 'Sample Node',
     CreatedUtc: '2024-10-19T14:35:20.351Z',
     Data: {
@@ -132,6 +143,15 @@ const getNodeList = async () => {
   }
 };
 
+const readFirstNode = async () => {
+  try {
+    const data = await api.Node.readFirst('8e72e2b7-86fe-4f94-8483-547c23c8a833', {});
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err), err);
+  }
+};
+// readFirstNode();
 const createNode = async () => {
   // Node object to create
   const node = {
@@ -189,6 +209,7 @@ const multipleNodes = async () => {
 const updateNode = async () => {
   // Node object to update
   const node: Node = {
+    TenantGUID: '00000000-0000-0000-0000-000000000000',
     GUID: 'ab31cc6e-000f-4e31-8068-372d1b038d3d',
     GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
     Name: 'Sample Node',
@@ -269,6 +290,16 @@ const getEdgeList = async () => {
   }
 };
 
+const readFirstEdge = async () => {
+  try {
+    const data = await api.Edge.readFirst('8e72e2b7-86fe-4f94-8483-547c23c8a833', {});
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err), err);
+  }
+};
+// readFirstEdge();
+
 const createEdge = async () => {
   // Edge object to create
   const edge = {
@@ -293,6 +324,7 @@ const createEdge = async () => {
 const updateEdge = async () => {
   // Edge object to update
   const edge: Edge = {
+    TenantGUID: '00000000-0000-0000-0000-000000000000',
     GUID: '01010101-0101-0101-0101-010101010101',
     GraphGUID: '01010101-0101-0101-0101-010101010101',
     Name: 'My test edge',
@@ -1122,7 +1154,7 @@ const readBackup = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
-readBackup();
+// readBackup();
 
 const existsBackup = async () => {
   try {

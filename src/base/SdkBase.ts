@@ -3,6 +3,7 @@ import { SeverityEnum } from '../enums/SeverityEnum';
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import Serializer from '../utils/Serializer';
 import { SdkConfiguration } from './SdkConfiguration';
+import Logger from '../utils/Logger';
 
 /**
  * SDK Base class for making API calls with logging and timeout functionality.
@@ -21,6 +22,7 @@ export default class SdkBase {
       GenericExceptionHandlers.ArgumentNullException('config');
     }
     this.config = config;
+    this.logger = Logger.log;
   }
 
   /**
@@ -61,7 +63,7 @@ export default class SdkBase {
       }
       request
         .then((res) => {
-          this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
+          this.log(SeverityEnum.Debug, `Success reported from ${request.method}: ${url}: ${res.status}`);
           resolve(Serializer.deserializeJson(res.text));
         })
         .catch((err) => {
@@ -97,7 +99,7 @@ export default class SdkBase {
       }
       request
         .then((res) => {
-          this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
+          this.log(SeverityEnum.Debug, `Success reported from ${request.method}: ${url}: ${res.status}`);
           resolve(res.ok);
         })
         .catch((err) => {
@@ -137,7 +139,7 @@ export default class SdkBase {
       }
       request
         .then((res) => {
-          this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
+          this.log(SeverityEnum.Debug, `Success reported from ${request.method}: ${url}: ${res.status}`);
           resolve(Serializer.deserializeJson(res.text));
         })
         .catch((err) => {
@@ -173,7 +175,7 @@ export default class SdkBase {
       }
       request
         .then((res) => {
-          this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
+          this.log(SeverityEnum.Debug, `Success reported from ${request.method}: ${url}: ${res.status}`);
           resolve(res.text ? res.text : Serializer.deserializeJson(res.body));
         })
         .catch((err) => {
@@ -213,7 +215,7 @@ export default class SdkBase {
       }
       request
         .then((res) => {
-          this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
+          this.log(SeverityEnum.Debug, `Success reported from ${request.method}: ${url}: ${res.status}`);
           resolve(Serializer.deserializeJson(res.text));
         })
         .catch((err) => {
@@ -256,7 +258,7 @@ export default class SdkBase {
       }
       request
         .then((res) => {
-          this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
+          this.log(SeverityEnum.Debug, `Success reported from ${request.method}: ${url}: ${res.status}`);
           resolve(Serializer.deserializeJson(res.text));
         })
         .catch((err) => {
@@ -295,7 +297,7 @@ export default class SdkBase {
       }
       request
         .then((res) => {
-          this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
+          this.log(SeverityEnum.Debug, `Success reported from ${request.method}: ${url}: ${res.status}`);
           resolve(true);
         })
         .catch((err) => {
@@ -331,16 +333,16 @@ export default class SdkBase {
       if (cancellationToken) {
         cancellationToken.abort = () => {
           request.abort();
-          this.log(SeverityEnum.Debug, `Request aborted to ${url}.`);
+          this.log(SeverityEnum.Debug, `Request aborted to ${request.method}: ${url}.`);
         };
       }
       request
         .then((res) => {
-          this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
+          this.log(SeverityEnum.Debug, `Success reported from ${request.method}: ${url}: ${res.status}`);
           resolve(Serializer.deserializeJson(res.text || '{}'));
         })
         .catch((err) => {
-          this.log(SeverityEnum.Warn, `Failed to retrieve object from ${url}: ${err.message}`);
+          this.log(SeverityEnum.Warn, `Failed to retrieve object from ${request.method}: ${url}: ${err.message}`);
           const errorResponse = err?.response?.body || null;
           if (errorResponse) {
             reject(errorResponse);
@@ -374,22 +376,22 @@ export default class SdkBase {
       if (cancellationToken) {
         cancellationToken.abort = () => {
           request.abort();
-          this.log(SeverityEnum.Debug, `Request aborted to ${url}.`);
+          this.log(SeverityEnum.Debug, `Request aborted to ${request.method}: ${url}.`);
         };
       }
 
       request
         .then((res) => {
           if (res.status >= 200 && res.status <= 299) {
-            this.log(SeverityEnum.Debug, `Success reported from ${url}: ${res.status}`);
+            this.log(SeverityEnum.Debug, `Success reported from ${request.method}: ${url}: ${res.status}`);
             resolve(true);
           } else {
-            this.log(SeverityEnum.Warn, `Non-success reported from ${url}: ${res.status}`);
+            this.log(SeverityEnum.Warn, `Non-success reported from ${request.method}: ${url}: ${res.status}`);
             resolve(false);
           }
         })
         .catch((err) => {
-          this.log(SeverityEnum.Warn, `Failed to retrieve object from ${url}: ${err.message}`);
+          this.log(SeverityEnum.Warn, `Failed to retrieve object from ${request.method}: ${url}: ${err.message}`);
           const errorResponse = err?.response?.body || null;
           if (errorResponse) {
             reject(errorResponse);

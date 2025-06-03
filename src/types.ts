@@ -48,6 +48,8 @@ export type CredentialMetadataCreateRequest = {
 export type Edge = {
   /** Unique identifier for the edge */
   GUID: string;
+  /** Unique identifier for the tenant */
+  TenantGUID: string;
   /** Unique identifier for the graph */
   GraphGUID: string;
   /** Name of the edge */
@@ -128,12 +130,16 @@ export type ExistenceResult = {
  * Graph.
  */
 export type Graph = {
+  /** Unique identifier for the tenant */
+  TenantGUID: string;
   /** Unique identifier */
   GUID: string;
   /** Name of the graph */
   Name: any;
   /** Creation timestamp */
   CreatedUtc: string;
+  /** Last update timestamp */
+  LastUpdateUtc: string;
   /** Object data */
   Data: object | null;
   /** Array of labels */
@@ -200,6 +206,8 @@ export type LabelMetadataCreateRequest = {
  * Node.
  */
 export type Node = {
+  /** Unique identifier for the tenant */
+  TenantGUID: string;
   /** Unique identifier for the node */
   GUID: string;
   /** Unique identifier for the graph this node belongs to */
@@ -554,4 +562,15 @@ export type VectorSearchRequest = {
   Expr?: Record<string, any>;
   /** Vector embeddings to search against */
   Embeddings: number[];
+};
+
+export type ReadFirstRequest = {
+  /** Globally unique identifier for the graph */
+  Ordering?: string;
+  /** Array of labels associated with the graph */
+  Labels?: string[];
+  /** Key-value pairs of tags associated with the graph */
+  Tags?: Record<string, any>;
+  /** Expression used for the search */
+  Expr?: Record<string, any>;
 };
