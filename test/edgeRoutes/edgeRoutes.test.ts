@@ -2,6 +2,7 @@ import { mockEdgeGuid, mockGraphGuid, edgeData, searchEdgeData, mockEdgeGuids, m
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
+import { Edge } from '../../src/types';
 
 const server = getServer(handlers);
 
@@ -77,7 +78,17 @@ describe('EdgeRoute Tests', () => {
     });
 
     test('should update a edge', async () => {
-      const updatedEdgeData = {
+      const updatedEdgeData: Edge = {
+        TenantGUID: '00000000-0000-0000-0000-000000000000',
+        LastUpdateUtc: '2024-10-19T14:35:20.351Z',
+        Labels: ['label1', 'label2'],
+        Tags: ['tag1', 'tag2'],
+        Vectors: [
+          {
+            Key: 'vector1',
+            Value: 'vector1Value',
+          },
+        ],
         GUID: '01010101-0101-0101-0101-010101010101',
         GraphGUID: '01010101-0101-0101-0101-010101010101',
         Name: 'My test edge',
@@ -188,6 +199,9 @@ describe('EdgeRoute Tests', () => {
           Name: 'Sample Edge 1',
           Data: { key1: 'value1' },
           CreatedUtc: '2024-10-19T14:35:20.351Z',
+          From: '2b1520be-d285-4f22-8c74-f296047162b9',
+          To: '784cfa37-fb06-4f81-b10d-f1167dfe2b22',
+          Cost: 10,
         },
         {
           GUID: '02020202-0202-0202-0202-020202020202',
@@ -195,6 +209,9 @@ describe('EdgeRoute Tests', () => {
           Name: 'Sample Edge 2',
           Data: { key2: 'value2' },
           CreatedUtc: '2024-10-19T14:35:20.351Z',
+          From: '2b1520be-d285-4f22-8c74-f296047162b9',
+          To: '784cfa37-fb06-4f81-b10d-f1167dfe2b22',
+          Cost: 10,
         },
       ];
 
@@ -226,14 +243,14 @@ describe('EdgeRoute Tests', () => {
     });
 
     test('should read a first edge by GUID', async () => {
-      const response = await api.Edge.readFirst(mockGraphGuid);
+      const response = await api.Edge.readFirst(mockGraphGuid, {});
       expect(response).toBeDefined();
       expect(response).toEqual(edgeData[mockEdgeGuid]);
     });
 
     test('should throw error for invalid GUID in readFirst', async () => {
       try {
-        await api.Edge.readFirst(null as any);
+        await api.Edge.readFirst(null as any, {});
       } catch (err) {
         expect(err).toBeInstanceOf(Error);
         expect(err.toString()).toMatch(/GraphGUID is null or empty/i);

@@ -102,7 +102,7 @@ describe('GraphRoute Tests', () => {
     });
 
     test('should read the first node of a graph by GUID', async () => {
-      const response = await api.Graph.readFirst(mockGraphGuid);
+      const response = await api.Graph.readFirst({});
       expect(response).toBeDefined();
       expect(response).toEqual(graphData[mockGraphGuid]);
     });
@@ -112,7 +112,7 @@ describe('GraphRoute Tests', () => {
         await api.Graph.readFirst(null as any);
       } catch (err) {
         expect(err).toBeInstanceOf(Error);
-        expect(err.toString()).toMatch(/GraphGUID is null or empty/i);
+        expect(err.toString()).toMatch(/Request is null or empty/i);
       }
     });
   });

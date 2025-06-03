@@ -108,7 +108,7 @@ export const handlers = [
   ),
 
   // Read a first node by GUID
-  http.get(
+  http.post(
     `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/nodes/first`,
     ({ request, params, cookies }) => {
       return HttpResponse.json(nodeData[mockNodeGuid]);
@@ -116,7 +116,7 @@ export const handlers = [
   ),
 
   // if wrong guid is provided
-  http.get(
+  http.post(
     `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${'wrongID'}/nodes/first`,
     ({ request, params, cookies }) => {
       return HttpResponse.json(nodeData[mockNodeGuid]);

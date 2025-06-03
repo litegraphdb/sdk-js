@@ -40,16 +40,7 @@ export const handlers = [
       return HttpResponse.json(graphGEXFData[mockGraphGuid]);
     }
   ),
-  http.get(
-    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/nodes/first`,
-    ({ request, params, cookies }) => {
-      return HttpResponse.json(graphData[mockGraphGuid]);
-    }
-  ),
-  http.get(
-    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${'wrongID'}/nodes/first`,
-    ({ request, params, cookies }) => {
-      return HttpResponse.json(graphData[mockGraphGuid]);
-    }
-  ),
+  http.post(`${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/first`, ({ request, params, cookies }) => {
+    return HttpResponse.json(graphData[mockGraphGuid]);
+  }),
 ];

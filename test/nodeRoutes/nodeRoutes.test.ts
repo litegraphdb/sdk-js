@@ -2,6 +2,7 @@ import { mockNodeGuid, mockGraphGuid, nodeData, searchNodeData, mockNodeGuids } 
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
+import { Node } from '../../src/types';
 
 const server = getServer(handlers);
 
@@ -19,6 +20,25 @@ describe('NodeRoute Tests', () => {
   });
 
   describe('NodeRoute', () => {
+    const updatedNodeData: Node = {
+      TenantGUID: '00000000-0000-0000-0000-000000000000',
+      LastUpdateUtc: '2024-10-19T14:35:20.351Z',
+      GUID: '01010101-0101-0101-0101-010101010101',
+      GraphGUID: '01010101-0101-0101-0101-010101010101',
+      Name: 'Updated Node',
+      Data: {
+        key1: 'updatedValue',
+      },
+      Labels: ['label1', 'label2'],
+      Tags: ['tag1', 'tag2'],
+      Vectors: [
+        {
+          Key: 'vector1',
+          Value: 'vector1Value',
+        },
+      ],
+      CreatedUtc: '2024-10-19T14:35:20.351Z',
+    };
     test('should check if node exists by GUID', async () => {
       const response = await api.Node.exists(mockGraphGuid, mockNodeGuid);
       expect(response).toBe(true); // Assuming the mock returns true
@@ -119,30 +139,12 @@ describe('NodeRoute Tests', () => {
     });
 
     test('should update a node', async () => {
-      const updatedNodeData = {
-        GUID: '01010101-0101-0101-0101-010101010101',
-        GraphGUID: '01010101-0101-0101-0101-010101010101',
-        Name: 'Updated Node',
-        Data: {
-          key1: 'updatedValue',
-        },
-        CreatedUtc: '2024-10-19T14:35:20.351Z',
-      };
       const response = await api.Node.update(updatedNodeData);
       expect(response).toEqual(nodeData[mockNodeGuid]);
     });
 
     test('should update a node with abort', async () => {
       const cancellationToken = new AbortController();
-      const updatedNodeData = {
-        GUID: '01010101-0101-0101-0101-010101010101',
-        GraphGUID: '01010101-0101-0101-0101-010101010101',
-        Name: 'Updated Node',
-        Data: {
-          key1: 'updatedValue',
-        },
-        CreatedUtc: '2024-10-19T14:35:20.351Z',
-      };
       await api.Node.update(updatedNodeData, cancellationToken);
       cancellationToken.abort();
     });
@@ -275,13 +277,13 @@ describe('NodeRoute Tests', () => {
     });
 
     test('should read a first node by GUID', async () => {
-      const response = await api.Node.readFirst(mockGraphGuid);
+      const response = await api.Node.readFirst(mockGraphGuid, {});
       expect(response).toEqual(nodeData[mockNodeGuid]);
     });
 
     test('should throw error for invalid GUID in readFirst', async () => {
       try {
-        await api.Node.readFirst(null as any);
+        await api.Node.readFirst(null as any, {});
       } catch (err) {
         expect(err).toBeInstanceOf(Error);
         expect(err.toString()).toMatch(/GraphGUID is null or empty/i);
