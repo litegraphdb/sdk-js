@@ -39,3 +39,10 @@ v1.0.5
 
 - added backup routes
 - updated README.md and CHANGELOG.md
+
+v1.0.6
+
+- added ReadFirst and ReadLast for nodes, edges and graphs
+- updated test cases
+- updated README.md
+- updated CHANGELOG.md
