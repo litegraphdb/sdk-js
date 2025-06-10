@@ -154,4 +154,8 @@ export const handlers = [
     const body = await request.json();
     return new HttpResponse(null, { status: 202 });
   }),
+
+  http.post(`${mockEndpoint}/v1.0/flush`, () => {
+    return new HttpResponse(null, { status: 204 });
+  }),
 ];

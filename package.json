@@ -19,7 +19,7 @@
     "prepare": "husky",
     "build:types": "tsc",
     "build:js": "babel src --extensions \".ts,.js\" --out-dir dist --source-maps",
-    "build": "npm run clean && npm run build:types && npm run build:js"
+    "build": "npm run lint && npm run clean && npm run build:types && npm run build:js"
   },
   "browser": {
     "fs": false

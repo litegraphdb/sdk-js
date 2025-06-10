@@ -17,6 +17,7 @@ import SdkBase from '../src/base/SdkBase';
 import { AuthenticationSdk } from '../src/base/AuthenticationSdk';
 import { BackupSdk } from '../src/base/BackupSdk';
 import { SdkConfiguration } from '../src/base/SdkConfiguration';
+import { AdminSdk } from '../src/base/AdminSdk';
 
 class TestSdk extends SdkBase {
   constructor(config: SdkConfiguration) {
@@ -139,6 +140,7 @@ describe('LiteGraph SDK', () => {
         expect(api.Vector).toBeInstanceOf(VectorSdk);
         expect(api.Authentication).toBeInstanceOf(AuthenticationSdk);
         expect(api.Backup).toBeInstanceOf(BackupSdk);
+        expect(api.Admin).toBeInstanceOf(AdminSdk);
       });
 
       it('should pass the same config to all modules', () => {
@@ -379,6 +381,14 @@ describe('LiteGraph SDK', () => {
         it('should handle DELETE many with different status codes', async () => {
           const testData = { ids: [1, 2, 3] };
           const response = await testApi.deleteMany(`${mockEndpoint}/test-delete-many-status`, testData);
+          expect(response).toBe(true);
+        });
+      });
+
+      describe('Admin SDK Methods', () => {
+        it('should handle successful flush', async () => {
+          const api2 = new sdk.LiteGraphSdk(mockEndpoint, mockTenantId, mockAccessToken);
+          const response = await api2.Admin.flush();
           expect(response).toBe(true);
         });
       });

@@ -4,7 +4,7 @@ export default class Serializer {
    * @param {jsonString} jsonString
    * @return {Object}
    */
-  static deserializeJson(response: string) {
+  static deserializeJson(response: string): any {
     if (typeof response === 'string') {
       try {
         const data = JSON.parse(response);

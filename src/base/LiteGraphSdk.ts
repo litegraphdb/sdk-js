@@ -14,6 +14,7 @@ import { SdkConfiguration } from './SdkConfiguration';
 import { SeverityEnum } from '../enums/SeverityEnum';
 import Logger from '../utils/Logger';
 import { BackupSdk } from './BackupSdk';
+import { AdminSdk } from './AdminSdk';
 /**
  * LiteGraph SDK class.
  * Extends the SdkBase class.
@@ -41,6 +42,7 @@ export default class LiteGraphSdk {
   public Vector: VectorSdk;
   public Authentication: AuthenticationSdk;
   public Backup: BackupSdk;
+  public Admin: AdminSdk;
 
   constructor(endpoint: string = 'http://localhost:8000/', tenantGuid?: string, accessKey?: string) {
     const config = new SdkConfiguration(endpoint, tenantGuid, accessKey);
@@ -57,6 +59,7 @@ export default class LiteGraphSdk {
     this.Vector = new VectorSdk(this.config);
     this.Authentication = new AuthenticationSdk(this.config);
     this.Backup = new BackupSdk(this.config);
+    this.Admin = new AdminSdk(this.config);
   }
 
   /**
