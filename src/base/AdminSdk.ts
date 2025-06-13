@@ -1,5 +1,6 @@
 import { SdkConfiguration } from './SdkConfiguration';
 import SdkBase from './SdkBase';
+import { SeverityEnum } from '../enums/SeverityEnum';
 
 export class AdminSdk extends SdkBase {
   /**
@@ -13,10 +14,16 @@ export class AdminSdk extends SdkBase {
   /**
    * Flushes the cache for the tenant.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<void>}
+   * @returns {Promise<boolean>}
    */
-  flush = async (cancellationToken?: AbortController) => {
+  flush = async (cancellationToken?: AbortController): Promise<boolean> => {
     const url = `${this.config.endpoint}v1.0/flush`;
-    return this.post(url, cancellationToken);
+    try {
+      await this.post(url, {}, cancellationToken);
+      return true;
+    } catch (error) {
+      this.log(SeverityEnum.Error, `Failed to flush cache: ${error}`);
+      return false;
+    }
   };
 }

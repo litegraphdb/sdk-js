@@ -155,7 +155,7 @@ export const handlers = [
     return new HttpResponse(null, { status: 202 });
   }),
 
-  http.post(`${mockEndpoint}/v1.0/flush`, () => {
-    return new HttpResponse(null, { status: 204 });
+  http.post(`${mockEndpoint}v1.0/flush`, () => {
+    return new HttpResponse(null, { status: 200 });
   }),
 ];

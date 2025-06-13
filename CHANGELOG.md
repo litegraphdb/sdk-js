@@ -46,3 +46,10 @@ v1.0.6
 - updated test cases
 - updated README.md
 - updated CHANGELOG.md
+
+v1.0.7
+
+- added flush for admin sdk
+- updated test cases
+- updated README.md
+- updated CHANGELOG.md

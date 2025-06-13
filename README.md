@@ -267,6 +267,13 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Backup.delete` | Deletes a backup. | `filename` (string) - Backup filename <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<void>` | `DELETE /v1.0/backups/{filename}` |
 | `sdk.Backup.exists` | Checks if a backup exists. | `filename` (string) - Backup filename <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<boolean>` | `HEAD /v1.0/backups/{filename}` |
 
+### Admin SDK Operations
+
+| Method | Description | Parameters | Returns | Endpoint |
+|--------|-------------|------------|---------|----------|
+| `sdk.Admin.flush` | Flushes the cache. | `cancellationToken` (optional) - `AbortSignal` | `Promise<boolean>` | `POST /v1.0/flush` |
+
+
 
 ## Core Components
 
