@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { mockTenantId, tenantData, tenantMockApiResponse } from './mockData';
+import { mockEnumerateTenantsResponse, mockTenantId, tenantData, tenantMockApiResponse } from './mockData';
 import { mockEndpoint } from '../setupTest';
 
 export const handlers = [
@@ -41,5 +41,13 @@ export const handlers = [
   http.delete(`${mockEndpoint}v1.0/tenants/${mockTenantId}/force`, ({ request, params, cookies }) => {
     // Simulate edge deletion
     return HttpResponse.json(tenantData);
+  }),
+
+  http.get(`${mockEndpoint}v2.0/tenants`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockEnumerateTenantsResponse);
+  }),
+
+  http.post(`${mockEndpoint}v2.0/tenants`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockEnumerateTenantsResponse);
   }),
 ];

@@ -1,4 +1,12 @@
-import { mockEdgeGuid, mockGraphGuid, edgeData, searchEdgeData, mockEdgeGuids, mockEmptyEdgeGuids } from './mockData';
+import {
+  mockEdgeGuid,
+  mockGraphGuid,
+  edgeData,
+  searchEdgeData,
+  mockEdgeGuids,
+  mockEmptyEdgeGuids,
+  mockEnumerateEdgesResponse,
+} from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -23,6 +31,24 @@ describe('EdgeRoute Tests', () => {
     test('should check if edge exists by GUID', async () => {
       const response = await api.Edge.exists(mockGraphGuid, mockEdgeGuid);
       expect(response).toBe(true); // Assuming the mock returns true
+    });
+
+    test('should throw error when checking if edge exists with null or empty edge GUID', async () => {
+      try {
+        await api.Edge.exists(mockGraphGuid, null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: GUID is null or empty');
+      }
+    });
+
+    test('should throw error when checking if edge exists with null or empty graph GUID', async () => {
+      try {
+        await api.Edge.exists(null as any, mockEdgeGuid);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: GraphGUID is null or empty');
+      }
     });
 
     test('should create a edge', async () => {
@@ -51,11 +77,38 @@ describe('EdgeRoute Tests', () => {
       }
     });
 
+    test('should throw error when creating a edge with null or empty graph GUID', async () => {
+      try {
+        await api.Edge.create(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: edge is null or empty');
+      }
+    });
+
+    test('should throw error when creating a edge with null or empty edge GUID', async () => {
+      try {
+        await api.Edge.create(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: edge is null or empty');
+      }
+    });
+
     test('should read all edges of a graph', async () => {
       const response = await api.Edge.readAll(mockGraphGuid);
       response.map((edge) => {
         expect(edge).toEqual(edgeData[edge.GUID as string]);
       });
+    });
+
+    test('should throw error when reading all edges with null or empty graph GUID', async () => {
+      try {
+        await api.Edge.readAll(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: GraphGUID is null or empty');
+      }
     });
 
     test('should search edges', async () => {
@@ -75,6 +128,24 @@ describe('EdgeRoute Tests', () => {
     test('should read a specific edge by GUID', async () => {
       const response = await api.Edge.read(mockGraphGuid, mockEdgeGuid);
       expect(response.GUID).toEqual(mockEdgeGuid);
+    });
+
+    test('should throw error when reading a edge with null or empty edge GUID', async () => {
+      try {
+        await api.Edge.read(mockGraphGuid, null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: EdgeGUID is null or empty');
+      }
+    });
+
+    test('should throw error when reading a edge with null or empty graph GUID', async () => {
+      try {
+        await api.Edge.read(null as any, mockEdgeGuid);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: GraphGUID is null or empty');
+      }
     });
 
     test('should update a edge', async () => {
@@ -256,5 +327,33 @@ describe('EdgeRoute Tests', () => {
         expect(err.toString()).toMatch(/GraphGUID is null or empty/i);
       }
     });
+  });
+
+  test('should enumerate edges', async () => {
+    const response = await api.Edge.enumerate(mockGraphGuid);
+    expect(response).toEqual(mockEnumerateEdgesResponse);
+  });
+
+  test('should throw error when enumerating edges with null or empty graph GUID', async () => {
+    try {
+      await api.Edge.enumerate(null as any);
+    } catch (err) {
+      expect(err instanceof Error).toBe(true);
+      expect(err.toString()).toBe('Error: ArgumentNullException: GraphGUID is null or empty');
+    }
+  });
+
+  test('should enumerate edges with request', async () => {
+    const response = await api.Edge.enumerateAndSearch(mockGraphGuid, {
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    expect(response).toEqual(mockEnumerateEdgesResponse);
   });
 });

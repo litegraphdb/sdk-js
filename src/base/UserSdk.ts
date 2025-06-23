@@ -1,5 +1,6 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { UserMetadata, UserMetadataCreateRequest } from '../types';
+import { EnumerateAndSearchRequest, EnumerateRequest, UserMetadata, UserMetadataCreateRequest } from '../types';
+import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -102,5 +103,31 @@ export class UserSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/users/${guid}`;
     return await this.del(url, cancellationToken);
+  }
+
+  /**
+   * Enumerate all users.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<UserMetadata[]>} - An array of users.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<UserMetadata[]> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/users`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<UserMetadata[]>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<UserMetadata[]>} - An array of users.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerateAndSearch(
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<UserMetadata[]> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/users`;
+    return await this.post<UserMetadata[]>(url, request, cancellationToken);
   }
 }

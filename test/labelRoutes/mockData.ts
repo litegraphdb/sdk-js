@@ -10,3 +10,18 @@ export const labelData = {
 };
 
 export const labelMockApiResponse = [labelData];
+
+export const mockEnumerateLabelsResponse = {
+  Success: true,
+  Timestamp: {
+    Start: '2025-06-23T08:43:26.472061Z',
+    End: '2025-06-23T08:43:26.475994Z',
+    TotalMs: 3.93,
+    Messages: {},
+  },
+  MaxResults: 1000,
+  EndOfResults: true,
+  TotalRecords: 1,
+  RecordsRemaining: 0,
+  Objects: [labelData],
+};

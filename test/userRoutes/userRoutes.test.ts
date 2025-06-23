@@ -1,4 +1,4 @@
-import { mockUserId, userData } from './mockData';
+import { mockEnumerateUsersResponse, mockUserId, userData } from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -105,6 +105,25 @@ describe('userRoute Tests', () => {
       const cancellationToken = new AbortController();
       await api.User.delete(mockUserId, cancellationToken);
       cancellationToken.abort();
+    });
+
+    test('should enumerate users', async () => {
+      const response = await api.User.enumerate();
+      expect(response).toEqual(mockEnumerateUsersResponse);
+    });
+
+    test('should enumerate users with request', async () => {
+      const response = await api.User.enumerateAndSearch({
+        Ordering: 'CreatedDescending',
+        IncludeData: false,
+        IncludeSubordinates: false,
+        MaxResults: 5,
+        ContinuationToken: null,
+        Labels: [],
+        Tags: {},
+        Expr: {},
+      });
+      expect(response).toEqual(mockEnumerateUsersResponse);
     });
   });
 });

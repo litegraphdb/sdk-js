@@ -1,4 +1,4 @@
-import { mockTagGuid, tagData } from './mockData';
+import { mockEnumerateTagsResponse, mockTagGuid, tagData } from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -161,6 +161,25 @@ describe('tagRoute Tests', () => {
       const cancellationToken = new AbortController();
       await api.Tag.delete(mockTagGuid, cancellationToken);
       cancellationToken.abort();
+    });
+
+    test('should enumerate tags', async () => {
+      const response = await api.Tag.enumerate();
+      expect(response).toEqual(mockEnumerateTagsResponse);
+    });
+
+    test('should enumerate tags with request', async () => {
+      const response = await api.Tag.enumerateAndSearch({
+        Ordering: 'CreatedDescending',
+        IncludeData: false,
+        IncludeSubordinates: false,
+        MaxResults: 5,
+        ContinuationToken: null,
+        Labels: [],
+        Tags: {},
+        Expr: {},
+      });
+      expect(response).toEqual(mockEnumerateTagsResponse);
     });
   });
 });

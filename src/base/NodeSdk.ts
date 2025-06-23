@@ -1,5 +1,14 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { Node, NodeCreateRequest, NodeEdgeSearchRequest, ReadFirstRequest, SearchResult } from '../types';
+import {
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  Node,
+  NodeCreateRequest,
+  NodeEdgeSearchRequest,
+  ReadFirstRequest,
+  SearchResult,
+} from '../types';
+import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -195,5 +204,36 @@ export class NodeSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/bulk`;
     return await this.deleteMany(url, nodeGuids, cancellationToken);
+  }
+
+  /**
+   * Enumerate all nodes.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Node[]>} - An array of nodes.
+   */
+  async enumerate(graphGuid: string, request?: EnumerateRequest, cancellationToken?: AbortController): Promise<Node[]> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<Node[]>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Node[]>} - An array of nodes.
+   */
+  async enumerateAndSearch(
+    graphGuid: string,
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<Node[]> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes`;
+    return await this.post<Node[]>(url, request, cancellationToken);
   }
 }

@@ -574,3 +574,19 @@ export type ReadFirstRequest = {
   /** Expression used for the search */
   Expr?: Record<string, any>;
 };
+
+export type EnumerateRequest = {
+  token?: string;
+  maxKeys?: number;
+};
+
+export type EnumerateAndSearchRequest = {
+  Ordering?: string;
+  IncludeData?: boolean;
+  IncludeSubordinates?: boolean;
+  MaxResults?: number;
+  ContinuationToken?: string | null;
+  Labels?: string[];
+  Tags?: Record<string, string>; // key-value pairs of strings
+  Expr?: Record<string, any>; // expression object, loosely typed
+};

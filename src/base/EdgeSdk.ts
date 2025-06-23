@@ -1,5 +1,14 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { Edge, EdgeCreateRequest, NodeEdgeSearchRequest, ReadFirstRequest, SearchResult } from '../types';
+import {
+  EnumerateRequest,
+  Edge,
+  EdgeCreateRequest,
+  NodeEdgeSearchRequest,
+  ReadFirstRequest,
+  SearchResult,
+} from '../types';
+import { EnumerateAndSearchRequest } from '../types';
+import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -212,5 +221,36 @@ export class EdgeSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/bulk`;
     return await this.deleteMany(url, edgeGuids, cancellationToken);
+  }
+
+  /**
+   * Enumerate all edges.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Edge[]>} - An array of edges.
+   */
+  async enumerate(graphGuid: string, request?: EnumerateRequest, cancellationToken?: AbortController): Promise<Edge[]> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<Edge[]>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Edge[]>} - An array of edges.
+   */
+  async enumerateAndSearch(
+    graphGuid: string,
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<Edge[]> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges`;
+    return await this.post<Edge[]>(url, request, cancellationToken);
   }
 }

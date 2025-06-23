@@ -1,4 +1,4 @@
-import { mockGraphGuid, graphData, searchGraphData } from './mockData';
+import { mockGraphGuid, graphData, searchGraphData, mockEnumerateGraphsResponse } from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -55,6 +55,15 @@ describe('GraphRoute Tests', () => {
       };
       const response = await api.Graph.search(searchRequest);
       expect(response).toEqual(searchGraphData[mockGraphGuid]);
+    });
+
+    test('should throw error when searching graphs with null or empty search request', async () => {
+      try {
+        await api.Graph.search(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: Search Request is null or empty');
+      }
     });
 
     test('should read a specific graph by GUID', async () => {
@@ -114,6 +123,25 @@ describe('GraphRoute Tests', () => {
         expect(err).toBeInstanceOf(Error);
         expect(err.toString()).toMatch(/Request is null or empty/i);
       }
+    });
+
+    test('should enumerate graphs', async () => {
+      const response = await api.Graph.enumerate();
+      expect(response).toEqual(mockEnumerateGraphsResponse);
+    });
+
+    test('should enumerate graphs with request', async () => {
+      const response = await api.Graph.enumerateAndSearch({
+        Ordering: 'CreatedDescending',
+        IncludeData: false,
+        IncludeSubordinates: false,
+        MaxResults: 5,
+        ContinuationToken: null,
+        Labels: [],
+        Tags: {},
+        Expr: {},
+      });
+      expect(response).toEqual(mockEnumerateGraphsResponse);
     });
   });
 });

@@ -1,5 +1,14 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { Graph, GraphCreateRequest, GraphSearchRequest, ReadFirstRequest, SearchResult } from '../types';
+import {
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  Graph,
+  GraphCreateRequest,
+  GraphSearchRequest,
+  ReadFirstRequest,
+  SearchResult,
+} from '../types';
+import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -125,5 +134,26 @@ export class GraphSdk extends SdkBase {
   async exportGexf(guid: string, cancellationToken?: AbortController): Promise<string> {
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}/export/gexf`;
     return await this.get<string>(url, cancellationToken);
+  }
+
+  /**
+   * Enumerate all graphs.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Graph[]>} - An array of graphs.
+   */
+  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<Graph[]> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<Graph[]>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Graph[]>} - An array of graphs.
+   */
+  async enumerateAndSearch(request: EnumerateAndSearchRequest, cancellationToken?: AbortController): Promise<Graph[]> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs`;
+    return await this.post<Graph[]>(url, request, cancellationToken);
   }
 }

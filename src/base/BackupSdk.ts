@@ -1,5 +1,6 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { BackupMetaData, BackupMetaDataCreateRequest } from '../types';
+import { BackupMetaData, BackupMetaDataCreateRequest, EnumerateRequest } from '../types';
+import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -81,5 +82,17 @@ export class BackupSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/backups/${filename}`;
     return await this.head(url, cancellationToken);
+  }
+
+  /**
+   * Enumerate all backups.
+   * @param {AbortController} [cancellationToken] - The cancellation token.
+   * @returns {Promise<BackupMetaData[]>} - The backups.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<BackupMetaData[]> {
+    const url = `${this.config.endpoint}v2.0/backups`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<BackupMetaData[]>(url + params, cancellationToken);
   }
 }

@@ -1,7 +1,7 @@
 import { LiteGraphSdk } from 'litegraphdb';
 import { Edge, Graph, Node, NodeCreateRequest, NodeEdgeSearchRequest } from 'litegraphdb/dist/types/types';
 
-var api = new LiteGraphSdk('http://localhost:8701/', '00000000-0000-0000-0000-000000000000', '******');
+var api = new LiteGraphSdk('http://localhost:8701/', '00000000-0000-0000-0000-000000000000', 'litegraphadmin');
 var guid = '<graph-guid>'; // {String}
 var nodeGuid = '<node-guid>'; // {String}
 var toNodeGuid = '<to-node-guid>';
@@ -123,6 +123,37 @@ const exportGraphToGexf = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
+
+const enumerateGraphs = async () => {
+  try {
+    const data = await api.Graph.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateGraphs();
+
+const enumerateAndSearchGraphs = async () => {
+  try {
+    const data = await api.Graph.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchGraphs();
 
 // region Node
 const getNodeById = async () => {
@@ -271,6 +302,37 @@ const searchNodes = async () => {
   }
 };
 
+const enumerateNodes = async () => {
+  try {
+    const data = await api.Node.enumerate('00000000-0000-0000-0000-000000000000');
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+enumerateNodes();
+
+const enumerateAndSearchNodes = async () => {
+  try {
+    const data = await api.Node.enumerateAndSearch('00000000-0000-0000-0000-000000000000', {
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchNodes();
+
 // region Edge
 const getEdgeById = async () => {
   try {
@@ -388,6 +450,37 @@ const searchEdges = async () => {
     console.log('Error searching graph:', JSON.stringify(err), err);
   }
 };
+
+const enumerateEdges = async () => {
+  try {
+    const data = await api.Edge.enumerate('00000000-0000-0000-0000-000000000000');
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateEdges();
+
+const enumerateAndSearchEdges = async () => {
+  try {
+    const data = await api.Edge.enumerateAndSearch('00000000-0000-0000-0000-000000000000', {
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchEdges();
 
 //region Routes & Traversal
 const getEdgesFromNode = async () => {
@@ -540,6 +633,37 @@ const deleteUser = async () => {
   }
 };
 
+const enumerateUsers = async () => {
+  try {
+    const data = await api.User.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateUsers();
+
+const enumerateAndSearchUsers = async () => {
+  try {
+    const data = await api.User.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchUsers();
+
 //endregion
 
 //region Tenant
@@ -614,6 +738,37 @@ const deleteForceTenant = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
+
+const enumerateTenants = async () => {
+  try {
+    const data = await api.Tenant.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateTenants();
+
+const enumerateAndSearchTenants = async () => {
+  try {
+    const data = await api.Tenant.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchTenants();
 
 //endregion
 
@@ -692,6 +847,37 @@ const deleteCredential = async () => {
   }
 };
 
+const enumerateCredentials = async () => {
+  try {
+    const data = await api.Credential.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateCredentials();
+
+const enumerateAndSearchCredentials = async () => {
+  try {
+    const data = await api.Credential.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchCredentials();
+
 //endregion
 
 //region Labels
@@ -762,6 +948,37 @@ const deleteLabel = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
+
+const enumerateLabels = async () => {
+  try {
+    const data = await api.Label.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateLabels();
+
+const enumerateAndSearchLabels = async () => {
+  try {
+    const data = await api.Label.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchLabels();
 
 //endregion
 
@@ -876,6 +1093,37 @@ const deleteMultipleTags = async () => {
   }
 };
 // deleteMultipleTags();
+
+const enumerateTags = async () => {
+  try {
+    const data = await api.Tag.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateTags();
+
+const enumerateAndSearchTags = async () => {
+  try {
+    const data = await api.Tag.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchTags();
 
 //endregion
 
@@ -999,6 +1247,37 @@ const createMultipleVectors = async () => {
   }
 };
 // createMultipleVectors();
+
+const enumerateVectors = async () => {
+  try {
+    const data = await api.Vector.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateVectors();
+
+const enumerateAndSearchVectors = async () => {
+  try {
+    const data = await api.Vector.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchVectors();
 
 //endregion
 
@@ -1175,6 +1454,17 @@ const deleteBackup = async () => {
   }
 };
 // deleteBackup();
+
+const enumerateBackups = async () => {
+  try {
+    const data = await api.Backup.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateBackups();
 
 // region ValidateConnectivity
 

@@ -1,4 +1,4 @@
-import { mockTenantId, tenantData } from './mockData';
+import { mockEnumerateTenantsResponse, mockTenantId, tenantData, tenantMockApiResponse } from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -103,6 +103,25 @@ describe('TenantRoute Tests', () => {
       const cancellationToken = new AbortController();
       await api.Tenant.delete(mockTenantId, undefined, cancellationToken);
       cancellationToken.abort();
+    });
+
+    test('should enumerate tenants', async () => {
+      const response = await api.Tenant.enumerate();
+      expect(response).toEqual(mockEnumerateTenantsResponse);
+    });
+
+    test('should enumerate tenants with request', async () => {
+      const response = await api.Tenant.enumerateAndSearch({
+        Ordering: 'CreatedDescending',
+        IncludeData: false,
+        IncludeSubordinates: false,
+        MaxResults: 5,
+        ContinuationToken: null,
+        Labels: [],
+        Tags: {},
+        Expr: {},
+      });
+      expect(response).toEqual(mockEnumerateTenantsResponse);
     });
   });
 });

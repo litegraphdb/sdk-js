@@ -1,8 +1,15 @@
-import { VectorCreateRequest, VectorMetadata, VectorSearchRequest } from '../types';
+import {
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  VectorCreateRequest,
+  VectorMetadata,
+  VectorSearchRequest,
+} from '../types';
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { VectorSearchResult } from '../types';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
+import Utils from '../utils/Utils';
 
 export class VectorSdk extends SdkBase {
   /**
@@ -148,5 +155,31 @@ export class VectorSdk extends SdkBase {
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors`;
     const json = JSON.stringify(searchReq);
     return await this.post<VectorSearchResult[]>(url, json, cancellationToken);
+  }
+
+  /**
+   * Enumerate all vectors.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorMetadata[]>} - An array of vectors.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<VectorMetadata[]> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/vectors`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<VectorMetadata[]>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorMetadata[]>} - An array of vectors.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerateAndSearch(
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<VectorMetadata[]> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/vectors`;
+    return await this.post<VectorMetadata[]>(url, request, cancellationToken);
   }
 }

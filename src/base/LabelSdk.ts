@@ -1,5 +1,6 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { LabelMetadata, LabelMetadataCreateRequest } from '../types';
+import { EnumerateAndSearchRequest, EnumerateRequest, LabelMetadata, LabelMetadataCreateRequest } from '../types';
+import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -136,5 +137,31 @@ export class LabelSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/labels/bulk`;
     return await this.deleteMany(url, guids, cancellationToken);
+  }
+
+  /**
+   * Enumerate all labels.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<LabelMetadata[]>} - An array of labels.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<LabelMetadata[]> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/labels`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<LabelMetadata[]>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<LabelMetadata[]>} - An array of labels.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerateAndSearch(
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<LabelMetadata[]> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/labels`;
+    return await this.post<LabelMetadata[]>(url, request, cancellationToken);
   }
 }

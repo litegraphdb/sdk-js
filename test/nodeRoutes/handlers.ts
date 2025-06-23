@@ -6,6 +6,7 @@ import {
   searchNodeData,
   nodeMockApiResponse,
   nodeMockSearchApiResponse,
+  mockEnumerateNodesResponse,
 } from './mockData';
 import { mockEndpoint, mockTenantId } from '../setupTest';
 
@@ -120,6 +121,20 @@ export const handlers = [
     `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${'wrongID'}/nodes/first`,
     ({ request, params, cookies }) => {
       return HttpResponse.json(nodeData[mockNodeGuid]);
+    }
+  ),
+
+  http.get(
+    `${mockEndpoint}v2.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/nodes`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockEnumerateNodesResponse);
+    }
+  ),
+
+  http.post(
+    `${mockEndpoint}v2.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/nodes`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockEnumerateNodesResponse);
     }
   ),
 ];

@@ -1,4 +1,11 @@
-import { mockNodeGuid, mockGraphGuid, nodeData, searchNodeData, mockNodeGuids } from './mockData';
+import {
+  mockNodeGuid,
+  mockGraphGuid,
+  nodeData,
+  searchNodeData,
+  mockNodeGuids,
+  mockEnumerateNodesResponse,
+} from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -288,6 +295,25 @@ describe('NodeRoute Tests', () => {
         expect(err).toBeInstanceOf(Error);
         expect(err.toString()).toMatch(/GraphGUID is null or empty/i);
       }
+    });
+
+    test('should enumerate nodes', async () => {
+      const response = await api.Node.enumerate(mockGraphGuid);
+      expect(response).toEqual(mockEnumerateNodesResponse);
+    });
+
+    test('should enumerate nodes with request', async () => {
+      const response = await api.Node.enumerateAndSearch(mockGraphGuid, {
+        Ordering: 'CreatedDescending',
+        IncludeData: false,
+        IncludeSubordinates: false,
+        MaxResults: 5,
+        ContinuationToken: null,
+        Labels: [],
+        Tags: {},
+        Expr: {},
+      });
+      expect(response).toEqual(mockEnumerateNodesResponse);
     });
   });
 });

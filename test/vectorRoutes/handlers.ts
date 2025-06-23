@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { mockVectorGuid, vectorMockApiResponse, vectorData } from './mockData';
+import { mockVectorGuid, vectorMockApiResponse, vectorData, mockEnumerateVectorsResponse } from './mockData';
 import { mockEndpoint, mockTenantId } from '../setupTest';
 
 export const handlers = [
@@ -49,5 +49,13 @@ export const handlers = [
   http.put(`${mockEndpoint}v1.0/tenants/${mockTenantId}/vectors/bulk`, ({ request, params, cookies }) => {
     // Simulate vector creation
     return HttpResponse.json([vectorData]);
+  }),
+
+  http.get(`${mockEndpoint}v2.0/tenants/${mockTenantId}/vectors`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockEnumerateVectorsResponse);
+  }),
+
+  http.post(`${mockEndpoint}v2.0/tenants/${mockTenantId}/vectors`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockEnumerateVectorsResponse);
   }),
 ];

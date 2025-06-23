@@ -1,4 +1,4 @@
-import { mockVectorGuid, vectorData } from './mockData';
+import { mockEnumerateVectorsResponse, mockVectorGuid, vectorData } from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -171,6 +171,25 @@ describe('vectorRoute Tests', () => {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: Vectors array is empty');
       }
+    });
+
+    test('should enumerate vectors', async () => {
+      const response = await api.Vector.enumerate();
+      expect(response).toEqual(mockEnumerateVectorsResponse);
+    });
+
+    test('should enumerate vectors with request', async () => {
+      const response = await api.Vector.enumerateAndSearch({
+        Ordering: 'CreatedDescending',
+        IncludeData: false,
+        IncludeSubordinates: false,
+        MaxResults: 5,
+        ContinuationToken: null,
+        Labels: [],
+        Tags: {},
+        Expr: {},
+      });
+      expect(response).toEqual(mockEnumerateVectorsResponse);
     });
   });
 });
