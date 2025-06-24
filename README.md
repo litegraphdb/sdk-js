@@ -118,6 +118,10 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Tenant.update` | Updates an existing tenant. | `tenant` (TenantMetaData) - The tenant object <br> `tenant.name` (string) - Name of the tenant <br> `tenant.Active` (boolean) - Active status <br> `guid` (string) - The GUID of the tenant <br> `cancellationToken` (optional) - `AbortController` | `Promise<TenantMetaData>` - Updated tenant | `PUT /v1.0/tenants/{guid}` |
 | `sdk.Tenant.delete` | Deletes a tenant by GUID. | `tenantGuid` (string) - The GUID of the tenant <br> `cancellationToken` (optional) - `AbortController` | `Promise<boolean>` | `DELETE /v1.0/tenants/{tenantGuid}` |
 | `sdk.Tenant.exists` | Checks if a tenant exists by GUID. | `tenantGuid` (string) - The GUID of the tenant <br> `cancellationToken` (optional) - `AbortController` | `Promise<boolean>` | `HEAD /v1.0/tenants/{tenantGuid}` |
+| `sdk.Tenant.enumerate` | Enumerates tenants. | `request` (optional) - `EnumerateRequest` <br> `cancellationToken` (optional) - `AbortController` | `Promise<TenantMetaData[]>` - Array of tenants | `GET /v2.0/tenants` |
+| `sdk.Tenant.enumerateAndSearch` | Enumerates and searches tenants. | `request` (EnumerateAndSearchRequest) - The request object <br> `cancellationToken` (optional) - `AbortController` | `Promise<TenantMetaData[]>` - Array of tenants | `POST /v2.0/tenants` |
+| `sdk.Tenant.readStatistics` | Retrieves statistics for a tenant. | `cancellationToken` (optional) - `AbortController` | `Promise<TenantStatisticsResponse>` | `GET /v1.0/tenants/{tenantGuid}/stats` |
+| `sdk.Tenant.readAllStatistics` | Retrieves statistics for all tenants. | `cancellationToken` (optional) - `AbortController` | `Promise<TenantStatisticsResponse[]>` | `GET /v1.0/tenants/stats` |
 
 ### User Operations
 
@@ -129,6 +133,9 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.User.exists` | Checks if a user exists by GUID. | `guid` (string) - User GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<boolean>` | `HEAD /v1.0/tenants/{tenantGuid}/users/{guid}` |
 | `sdk.User.update` | Updates an existing user. | `user` (Object) - User object with FirstName, LastName, Active, Email, Password <br> `guid` (string) - User GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<UserMetadata>` | `PUT /v1.0/tenants/{tenantGuid}/users/{guid}` |
 | `sdk.User.delete` | Deletes a user by GUID. | `guid` (string) - User GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<boolean>` | `DELETE /v1.0/tenants/{tenantGuid}/users/{guid}` |
+| `sdk.User.enumerate` | Enumerates users. | `request` (optional) - `EnumerateRequest` <br> `cancellationToken` (optional) - `AbortController` | `Promise<UserMetadata[]>` - Array of users | `GET /v2.0/tenants/{tenantGuid}/users` |
+| `sdk.User.enumerateAndSearch` | Enumerates and searches users. | `request` (EnumerateAndSearchRequest) - The request object <br> `cancellationToken` (optional) - `AbortController` | `Promise<UserMetadata[]>` - Array of users | `POST /v2.0/tenants/{tenantGuid}/users` |
+
 
 
 
@@ -152,6 +159,9 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Credential.update` | Updates an existing credential. | `credential` (Object) - Credential object with Name, BearerToken, Active <br> `guid` (string) - Credential GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<CredentialMetadata>` | `PUT /v1.0/tenants/{tenantGuid}/credentials/{guid}` |
 | `sdk.Credential.delete` | Deletes a credential by GUID. | `guid` (string) - Credential GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<boolean>` | `DELETE /v1.0/tenants/{tenantGuid}/credentials/{guid}` |
 | `sdk.Credential.exists` | Checks if a credential exists by GUID. | `guid` (string) - Credential GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<boolean>` | `HEAD /v1.0/tenants/{tenantGuid}/credentials/{guid}` |
+| `sdk.Credential.enumerate` | Enumerates credentials. | `request` (optional) - `EnumerateRequest` <br> `cancellationToken` (optional) - `AbortController` | `Promise<CredentialMetadata[]>` - Array of credentials | `GET /v2.0/tenants/{tenantGuid}/credentials` |
+| `sdk.Credential.enumerateAndSearch` | Enumerates and searches credentials. | `request` (EnumerateAndSearchRequest) - The request object <br> `cancellationToken` (optional) - `AbortController` | `Promise<CredentialMetadata[]>` - Array of credentials | `POST /v2.0/tenants/{tenantGuid}/credentials` |
+
 
 
 
@@ -182,6 +192,8 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Tag.update` | Updates an existing tag. | `tag` (Object) - Tag object <br> `guid` (string) - Tag GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<TagMetaData>` | `PUT /v1.0/tenants/{tenantGuid}/tags/{guid}` |
 | `sdk.Tag.delete` | Deletes a tag by GUID. | `guid` (string) - Tag GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/tags/{guid}` |
 | `sdk.Tag.deleteBulk` | Deletes multiple tags. | `guids` (Array<string>) - List of tag GUIDs <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/tags/bulk` |
+| `sdk.Tag.enumerate` | Enumerates tags. | `request` (optional) - `EnumerateRequest` <br> `cancellationToken` (optional) - `AbortController` | `Promise<TagMetadata[]>` - Array of tags | `GET /v2.0/tenants/{tenantGuid}/tags` |
+| `sdk.Tag.enumerateAndSearch` | Enumerates and searches tags. | `request` (EnumerateAndSearchRequest) - The request object <br> `cancellationToken` (optional) - `AbortController` | `Promise<TagMetadata[]>` - Array of tags | `POST /v2.0/tenants/{tenantGuid}/tags` |
 
 ### Vector Operations
 
@@ -196,7 +208,8 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Vector.delete` | Deletes a vector by GUID. | `guid` (string) - Vector GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/vectors/{guid}` |
 | `sdk.Vector.deleteBulk` | Deletes multiple vectors. | `guids` (Array<string>) - List of vector GUIDs <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/vectors/bulk` |
 | `sdk.Vector.search` | Searches vectors based on criteria. | `searchReq` (Object) - Search request with GraphGUID, Domain, SearchType, Labels <br> `cancellationToken` (optional) - `AbortController` | `Promise<VectorSearchResult>` | `POST /v1.0/tenants/{tenantGuid}/vectors` |
-
+| `sdk.Vector.enumerate` | Enumerates vectors. | `request` (optional) - `EnumerateRequest` <br> `cancellationToken` (optional) - `AbortController` | `Promise<VectorMetadata[]>` - Array of vectors | `GET /v2.0/tenants/{tenantGuid}/vectors` |
+| `sdk.Vector.enumerateAndSearch` | Enumerates and searches vectors. | `request` (EnumerateAndSearchRequest) - The request object <br> `cancellationToken` (optional) - `AbortController` | `Promise<VectorMetadata[]>` - Array of vectors | `POST /v2.0/tenants/{tenantGuid}/vectors` |
 
 ### Graph Operations
 
@@ -211,8 +224,10 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Graph.delete` | Deletes a graph by GUID. | `guid` (string) - Graph GUID <br> `force` (boolean) - Force recursive deletion of edges and nodes (optional) <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{guid}?force=true` |
 | `sdk.Graph.exportToGexf` | Exports a graph to GEXF format. | `guid` (string) - Graph GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<string>` | `GET /v1.0/tenants/{tenantGuid}/graphs/{guid}/export/gexf` |
 | `sdk.Graph.readFirst` | Retrieves the first graph. | `request` (Object) - Read first request with Ordering, Labels, Tags, Expr <br> `cancellationToken` (optional) - `AbortController` | `Promise<Graph>` | `POST /v1.0/tenants/{tenantGuid}/graphs/first` |
-
-
+| `sdk.Graph.enumerate` | Enumerates graphs. | `request` (optional) - `EnumerateRequest` <br> `cancellationToken` (optional) - `AbortController` | `Promise<Graph[]>` - Array of graphs | `GET /v2.0/tenants/{tenantGuid}/graphs` |
+| `sdk.Graph.enumerateAndSearch` | Enumerates and searches graphs. | `request` (EnumerateAndSearchRequest) - The request object <br> `cancellationToken` (optional) - `AbortController` | `Promise<Graph[]>` - Array of graphs | `POST /v2.0/tenants/{tenantGuid}/graphs` |
+| `sdk.Graph.readStatistics` | Retrieves statistics for a graph. | `cancellationToken` (optional) - `AbortController` | `Promise<GraphStatisticsResponse>` | `GET /v1.0/tenants/{tenantGuid}/graphs/stats` |
+| `sdk.Graph.readStatistic` | Retrieves statistics for a graph. | `graphGuid` (string) - Graph GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<GraphStatistics>` | `GET /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/stats` |
 
 
 ### Node Operations
@@ -230,7 +245,8 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Node.deleteAll` | Deletes all nodes in a graph. | `graphGuid` (string) - Graph GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/all` |
 | `sdk.Node.deleteBulk` | Deletes multiple nodes by GUIDs. | `graphGuid` (string) - Graph GUID <br> `nodeGuids` (Array<string>) - List of node GUIDs <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/bulk` |
 | `sdk.Node.readFirst` | Retrieves the first node in a graph. | `graphGuid` (string) - Graph GUID <br> `request` (Object) - Read first request with Ordering, Labels, Tags, Expr <br> `cancellationToken` (optional) - `AbortController` | `Promise<Node>` | `POST /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/first` |
-
+| `sdk.Node.enumerate` | Enumerates nodes. | `graphGuid` (string) - Graph GUID <br> `request` (optional) - `EnumerateRequest` <br> `cancellationToken` (optional) - `AbortController` | `Promise<Node[]>` - Array of nodes | `GET /v2.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes` |
+| `sdk.Node.enumerateAndSearch` | Enumerates and searches nodes. | `graphGuid` (string) - Graph GUID <br> `request` (EnumerateAndSearchRequest) - The request object <br> `cancellationToken` (optional) - `AbortController` | `Promise<Node[]>` - Array of nodes | `POST /v2.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes` |
 
 ### Edges Operations
 
@@ -247,7 +263,8 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Edge.deleteAll` | Deletes all edges in a graph. | `graphGuid` (string) - Graph GUID <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/edges/all` |
 | `sdk.Edge.deleteBulk` | Deletes multiple edges by GUIDs. | `graphGuid` (string) - Graph GUID <br> `edgeGuids` (Array<string>) - List of edge GUIDs <br> `cancellationToken` (optional) - `AbortController` | `Promise<void>` | `DELETE /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/edges/bulk` |
 | `sdk.Edge.readFirst` | Retrieves the first edge in a graph. | `graphGuid` (string) - Graph GUID <br> `request` (Object) - Read first request with Ordering, Labels, Tags, Expr <br> `cancellationToken` (optional) - `AbortController` | `Promise<Edge>` | `POST /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/edges/first` |
-
+| `sdk.Edge.enumerate` | Enumerates edges. | `graphGuid` (string) - Graph GUID <br> `request` (optional) - `EnumerateRequest` <br> `cancellationToken` (optional) - `AbortController` | `Promise<Edge[]>` - Array of edges | `GET /v2.0/tenants/{tenantGuid}/graphs/{graphGuid}/edges` |
+| `sdk.Edge.enumerateAndSearch` | Enumerates and searches edges. | `graphGuid` (string) - Graph GUID <br> `request` (EnumerateAndSearchRequest) - The request object <br> `cancellationToken` (optional) - `AbortController` | `Promise<Edge[]>` - Array of edges | `POST /v2.0/tenants/{tenantGuid}/graphs/{graphGuid}/edges` |
 
 ### Route Operations
 
@@ -261,11 +278,17 @@ sdk.Node.search(searchRequest).then((response) => {
 | `sdk.Route.getParentsFromNode` | Retrieves parent nodes from a node. | `graphGuid` (string) - Graph GUID <br> `nodeGuid` (string) - Node GUID <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<Node[]>` | `GET /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/{nodeGuid}/parents` |
 | `sdk.Route.getNodeNeighbors` | Retrieves neighboring nodes from a node. | `graphGuid` (string) - Graph GUID <br> `nodeGuid` (string) - Node GUID <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<Node[]>` | `GET /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/nodes/{nodeGuid}/neighbors` |
 | `sdk.Route.getRoutes` | Retrieves routes between two nodes. | `graphGuid` (string) - Graph GUID <br> `fromNodeGuid` (string) - From node GUID <br> `toNodeGuid` (string) - To node GUID <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<RouteResult>` | `POST /v1.0/tenants/{tenantGuid}/graphs/{graphGuid}/routes` |
+
+### Backup Operations
+
+| Method | Description | Parameters | Returns | Endpoint |
+|--------|-------------|------------|---------|----------|
 | `sdk.Backup.readAll` | Retrieves all backups. | `cancellationToken` (optional) - `AbortSignal` | `Promise<BackupMetaData[]>` | `GET /v1.0/backups` |
 | `sdk.Backup.read` | Retrieves a specific backup with data. | `filename` (string) - Backup filename <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<BackupMetaData>` | `GET /v1.0/backups/{filename}` |
 | `sdk.Backup.create` | Creates a new backup. | `backup` (Object) - Backup object with Filename, CreatedUtc, Size <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<BackupMetaData>` | `PUT /v1.0/backups` |
 | `sdk.Backup.delete` | Deletes a backup. | `filename` (string) - Backup filename <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<void>` | `DELETE /v1.0/backups/{filename}` |
 | `sdk.Backup.exists` | Checks if a backup exists. | `filename` (string) - Backup filename <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<boolean>` | `HEAD /v1.0/backups/{filename}` |
+| `sdk.Backup.enumerate` | Enumerates backups. | `request` (optional) - `EnumerateRequest` <br> `cancellationToken` (optional) - `AbortSignal` | `Promise<BackupMetaData[]>` - Array of backups | `GET /v2.0/backups` |
 
 ### Admin SDK Operations
 
