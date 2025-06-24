@@ -53,3 +53,11 @@ v1.0.7
 - updated test cases
 - updated README.md
 - updated CHANGELOG.md
+
+v1.0.8
+
+- added enumerate and enumerateAndSearch for all routes
+- added statistics endpoints for Graph and Tenant
+- updated test cases
+- updated README.md
+- updated CHANGELOG.md
