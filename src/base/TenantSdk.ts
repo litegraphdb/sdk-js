@@ -1,5 +1,12 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { EnumerateAndSearchRequest, EnumerateRequest, TenantMetaData, TenantMetaDataCreateRequest } from '../types';
+import {
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  TenantMetaData,
+  TenantMetaDataCreateRequest,
+  TenantStatistics,
+  TenantStatisticsResponse,
+} from '../types';
 import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
@@ -123,8 +130,37 @@ export class TenantSdk extends SdkBase {
    * @returns {Promise<TenantMetaData[]>} - An array of tenants.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
-  async enumerateAndSearch(request: EnumerateAndSearchRequest, cancellationToken?: AbortController): Promise<TenantMetaData[]> {
+  async enumerateAndSearch(
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<TenantMetaData[]> {
     const url = `${this.config.endpoint}v2.0/tenants`;
     return await this.post<TenantMetaData[]>(url, request, cancellationToken);
+  }
+
+  /**
+   * Read all tenants Statistics
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<TenantStatisticsResponse>} - An array of tenants statistics.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readStatistics(cancellationToken?: AbortController): Promise<TenantStatisticsResponse> {
+    const url = `${this.config.endpoint}v1.0/tenants/stats`;
+    return await this.get<TenantStatisticsResponse>(url, cancellationToken);
+  }
+
+  /**
+   * Read tenant Statistics
+   * @param {string} tenantGuid - The GUID of the tenant.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<TenantStatistics>} - A tenant statistics.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readStatistic(tenantGuid: string, cancellationToken?: AbortController): Promise<TenantStatistics> {
+    if (!tenantGuid) {
+      GenericExceptionHandlers.ArgumentNullException('tenantGuid');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${tenantGuid}/stats`;
+    return await this.get<TenantStatistics>(url, cancellationToken);
   }
 }

@@ -590,3 +590,24 @@ export type EnumerateAndSearchRequest = {
   Tags?: Record<string, string>; // key-value pairs of strings
   Expr?: Record<string, any>; // expression object, loosely typed
 };
+
+export type TenantStatistics = {
+  Graphs: number;
+  Nodes: number;
+  Edges: number;
+  Labels: number;
+  Tags: number;
+  Vectors: number;
+};
+
+export type TenantStatisticsResponse = Record<string, TenantStatistics>;
+
+export type GraphStatistics = {
+  Nodes: number;
+  Edges: number;
+  Labels: number;
+  Tags: number;
+  Vectors: number;
+};
+
+export type GraphStatisticsResponse = Record<string, GraphStatistics>;

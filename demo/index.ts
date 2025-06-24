@@ -2,7 +2,7 @@ import { LiteGraphSdk } from 'litegraphdb';
 import { Edge, Graph, Node, NodeCreateRequest, NodeEdgeSearchRequest } from 'litegraphdb/dist/types/types';
 
 var api = new LiteGraphSdk('http://localhost:8701/', '00000000-0000-0000-0000-000000000000', 'litegraphadmin');
-var guid = '<graph-guid>'; // {String}
+var guid = '00000000-0000-0000-0000-000000000000'; // {String}
 var nodeGuid = '<node-guid>'; // {String}
 var toNodeGuid = '<to-node-guid>';
 var fromNodeGuid = '<from-node-guid>';
@@ -154,6 +154,28 @@ const enumerateAndSearchGraphs = async () => {
 };
 
 // enumerateAndSearchGraphs();
+
+const readGraphStatistic = async () => {
+  try {
+    const data = await api.Graph.readStatistic(guid);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readGraphStatistic();
+
+const readAllGraphStatistics = async () => {
+  try {
+    const data = await api.Graph.readStatistics();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readAllGraphStatistics();
 
 // region Node
 const getNodeById = async () => {
@@ -311,7 +333,7 @@ const enumerateNodes = async () => {
   }
 };
 
-enumerateNodes();
+// enumerateNodes();
 
 const enumerateAndSearchNodes = async () => {
   try {
@@ -769,6 +791,28 @@ const enumerateAndSearchTenants = async () => {
 };
 
 // enumerateAndSearchTenants();
+
+const readTenantStatistic = async () => {
+  try {
+    const data = await api.Tenant.readStatistic(guid);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readTenantStatistic();
+
+const readAllTenantStatistics = async () => {
+  try {
+    const data = await api.Tenant.readStatistics();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readAllTenantStatistics();
 
 //endregion
 

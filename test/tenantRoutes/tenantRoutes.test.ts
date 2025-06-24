@@ -1,4 +1,10 @@
-import { mockEnumerateTenantsResponse, mockTenantId, tenantData, tenantMockApiResponse } from './mockData';
+import {
+  mockEnumerateTenantsResponse,
+  mockTenantId,
+  mockTenantStatisticsResponse,
+  tenantData,
+  tenantMockApiResponse,
+} from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -122,6 +128,25 @@ describe('TenantRoute Tests', () => {
         Expr: {},
       });
       expect(response).toEqual(mockEnumerateTenantsResponse);
+    });
+
+    test('should read all tenants statistics', async () => {
+      const response = await api.Tenant.readStatistics();
+      expect(response).toEqual(mockTenantStatisticsResponse);
+    });
+
+    test('should read a tenant statistics', async () => {
+      const response = await api.Tenant.readStatistic(mockTenantId);
+      expect(response).toEqual(mockTenantStatisticsResponse[mockTenantId]);
+    });
+
+    test('should throw error when reading a tenant statistics with null or empty tenantGuid', async () => {
+      try {
+        await api.Tenant.readStatistic(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: tenantGuid is null or empty');
+      }
     });
   });
 });

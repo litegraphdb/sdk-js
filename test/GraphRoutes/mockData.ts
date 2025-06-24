@@ -66,3 +66,14 @@ export const mockEnumerateGraphsResponse = {
   RecordsRemaining: 0,
   Objects: [graphData],
 };
+
+export const mockGraphStatisticsResponse = {
+  [mockGraphGuid]: {
+    Nodes: 1,
+    Edges: 1,
+    Labels: 1,
+    Tags: 1,
+    Vectors: 1,
+  },
+};
+

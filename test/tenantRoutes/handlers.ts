@@ -1,5 +1,11 @@
 import { http, HttpResponse } from 'msw';
-import { mockEnumerateTenantsResponse, mockTenantId, tenantData, tenantMockApiResponse } from './mockData';
+import {
+  mockEnumerateTenantsResponse,
+  mockTenantId,
+  tenantData,
+  tenantMockApiResponse,
+  mockTenantStatisticsResponse,
+} from './mockData';
 import { mockEndpoint } from '../setupTest';
 
 export const handlers = [
@@ -49,5 +55,12 @@ export const handlers = [
 
   http.post(`${mockEndpoint}v2.0/tenants`, ({ request, params, cookies }) => {
     return HttpResponse.json(mockEnumerateTenantsResponse);
+  }),
+
+  http.get(`${mockEndpoint}v1.0/tenants/stats`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockTenantStatisticsResponse);
+  }),
+  http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/stats`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockTenantStatisticsResponse[mockTenantId]);
   }),
 ];

@@ -36,3 +36,14 @@ export const mockEnumerateTenantsResponse = {
     },
   ],
 };
+
+export const mockTenantStatisticsResponse = {
+  [mockTenantId]: {
+    Graphs: 1,
+    Nodes: 1,
+    Edges: 1,
+    Labels: 1,
+    Tags: 1,
+    Vectors: 1,
+  },
+};

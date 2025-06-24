@@ -1,4 +1,10 @@
-import { mockGraphGuid, graphData, searchGraphData, mockEnumerateGraphsResponse } from './mockData';
+import {
+  mockGraphGuid,
+  graphData,
+  searchGraphData,
+  mockEnumerateGraphsResponse,
+  mockGraphStatisticsResponse,
+} from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -142,6 +148,25 @@ describe('GraphRoute Tests', () => {
         Expr: {},
       });
       expect(response).toEqual(mockEnumerateGraphsResponse);
+    });
+
+    test('should read all graphs statistics', async () => {
+      const response = await api.Graph.readStatistics();
+      expect(response).toEqual(mockGraphStatisticsResponse);
+    });
+
+    test('should read a graph statistics', async () => {
+      const response = await api.Graph.readStatistic(mockGraphGuid);
+      expect(response).toEqual(mockGraphStatisticsResponse[mockGraphGuid]);
+    });
+
+    test('should throw error when reading a graph statistics with null or empty graphGuid', async () => {
+      try {
+        await api.Graph.readStatistic(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: graphGuid is null or empty');
+      }
     });
   });
 });

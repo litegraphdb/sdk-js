@@ -7,6 +7,7 @@ import {
   graphMockApiResponse,
   graphMockSearchApiResponse,
   mockEnumerateGraphsResponse,
+  mockGraphStatisticsResponse,
 } from './mockData';
 import { mockEndpoint, mockTenantId } from '../setupTest';
 
@@ -50,4 +51,14 @@ export const handlers = [
   http.post(`${mockEndpoint}v2.0/tenants/${mockTenantId}/graphs`, ({ request, params, cookies }) => {
     return HttpResponse.json(mockEnumerateGraphsResponse);
   }),
+
+  http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/stats`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockGraphStatisticsResponse);
+  }),
+  http.get(
+    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/stats`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockGraphStatisticsResponse[mockGraphGuid]);
+    }
+  ),
 ];
