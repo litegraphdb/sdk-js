@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { mockBackupFilename, backupData, backupMockApiResponse, mockEnumerateBackupsResponse } from './mockData';
+import { mockBackupFilename, backupData, backupMockApiResponse } from './mockData';
 import { mockEndpoint } from '../setupTest';
 
 export const handlers = [
@@ -29,9 +29,5 @@ export const handlers = [
   http.delete(`${mockEndpoint}v1.0/backups/${mockBackupFilename}`, ({ request, params, cookies }) => {
     // Simulate edge deletion
     return HttpResponse.json(backupData);
-  }),
-
-  http.get(`${mockEndpoint}v2.0/backups`, ({ request, params, cookies }) => {
-    return HttpResponse.json(mockEnumerateBackupsResponse);
   }),
 ];

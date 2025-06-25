@@ -2,6 +2,7 @@ import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import {
   EnumerateAndSearchRequest,
   EnumerateRequest,
+  EnumerateResponse,
   Node,
   NodeCreateRequest,
   NodeEdgeSearchRequest,
@@ -209,31 +210,35 @@ export class NodeSdk extends SdkBase {
   /**
    * Enumerate all nodes.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<Node[]>} - An array of nodes.
+   * @returns {Promise<EnumerateResponse<Node>>} - An array of nodes.
    */
-  async enumerate(graphGuid: string, request?: EnumerateRequest, cancellationToken?: AbortController): Promise<Node[]> {
+  async enumerate(
+    graphGuid: string,
+    request?: EnumerateRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<Node>> {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes`;
     const params = Utils.createUrlParams(request);
-    return await this.get<Node[]>(url + params, cancellationToken);
+    return await this.get<EnumerateResponse<Node>>(url + params, cancellationToken);
   }
 
   /**
    * Enumerate and Search
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<Node[]>} - An array of nodes.
+   * @returns {Promise<EnumerateResponse<Node>>} - An array of nodes.
    */
   async enumerateAndSearch(
     graphGuid: string,
     request: EnumerateAndSearchRequest,
     cancellationToken?: AbortController
-  ): Promise<Node[]> {
+  ): Promise<EnumerateResponse<Node>> {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes`;
-    return await this.post<Node[]>(url, request, cancellationToken);
+    return await this.post<EnumerateResponse<Node>>(url, request, cancellationToken);
   }
 }

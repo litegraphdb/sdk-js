@@ -2,6 +2,7 @@ import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import {
   EnumerateAndSearchRequest,
   EnumerateRequest,
+  EnumerateResponse,
   Graph,
   GraphCreateRequest,
   GraphSearchRequest,
@@ -141,22 +142,25 @@ export class GraphSdk extends SdkBase {
   /**
    * Enumerate all graphs.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<Graph[]>} - An array of graphs.
+   * @returns {Promise<EnumerateResponse<Graph>} - An array of graphs.
    */
-  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<Graph[]> {
+  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<EnumerateResponse<Graph>> {
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs`;
     const params = Utils.createUrlParams(request);
-    return await this.get<Graph[]>(url + params, cancellationToken);
+    return await this.get<EnumerateResponse<Graph>>(url + params, cancellationToken);
   }
 
   /**
    * Enumerate and Search
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<Graph[]>} - An array of graphs.
+   * @returns {Promise<EnumerateResponse<Graph>>} - An array of graphs.
    */
-  async enumerateAndSearch(request: EnumerateAndSearchRequest, cancellationToken?: AbortController): Promise<Graph[]> {
+  async enumerateAndSearch(
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<Graph>> {
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs`;
-    return await this.post<Graph[]>(url, request, cancellationToken);
+    return await this.post<EnumerateResponse<Graph>>(url, request, cancellationToken);
   }
 
   /**

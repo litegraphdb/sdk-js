@@ -6,6 +6,7 @@ import {
   NodeEdgeSearchRequest,
   ReadFirstRequest,
   SearchResult,
+  EnumerateResponse,
 } from '../types';
 import { EnumerateAndSearchRequest } from '../types';
 import Utils from '../utils/Utils';
@@ -226,31 +227,35 @@ export class EdgeSdk extends SdkBase {
   /**
    * Enumerate all edges.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<Edge[]>} - An array of edges.
+   * @returns {Promise<EnumerateResponse<Edge>>} - An array of edges.
    */
-  async enumerate(graphGuid: string, request?: EnumerateRequest, cancellationToken?: AbortController): Promise<Edge[]> {
+  async enumerate(
+    graphGuid: string,
+    request?: EnumerateRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<Edge>> {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges`;
     const params = Utils.createUrlParams(request);
-    return await this.get<Edge[]>(url + params, cancellationToken);
+    return await this.get<EnumerateResponse<Edge>>(url + params, cancellationToken);
   }
 
   /**
    * Enumerate and Search
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<Edge[]>} - An array of edges.
+   * @returns {Promise<EnumerateResponse<Edge>>} - An array of edges.
    */
   async enumerateAndSearch(
     graphGuid: string,
     request: EnumerateAndSearchRequest,
     cancellationToken?: AbortController
-  ): Promise<Edge[]> {
+  ): Promise<EnumerateResponse<Edge>> {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges`;
-    return await this.post<Edge[]>(url, request, cancellationToken);
+    return await this.post<EnumerateResponse<Edge>>(url, request, cancellationToken);
   }
 }

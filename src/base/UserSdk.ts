@@ -1,5 +1,11 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { EnumerateAndSearchRequest, EnumerateRequest, UserMetadata, UserMetadataCreateRequest } from '../types';
+import {
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  EnumerateResponse,
+  UserMetadata,
+  UserMetadataCreateRequest,
+} from '../types';
 import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
@@ -108,26 +114,29 @@ export class UserSdk extends SdkBase {
   /**
    * Enumerate all users.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<UserMetadata[]>} - An array of users.
+   * @returns {Promise<EnumerateResponse<UserMetadata>>} - An array of users.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
-  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<UserMetadata[]> {
+  async enumerate(
+    request?: EnumerateRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<UserMetadata>> {
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/users`;
     const params = Utils.createUrlParams(request);
-    return await this.get<UserMetadata[]>(url + params, cancellationToken);
+    return await this.get<EnumerateResponse<UserMetadata>>(url + params, cancellationToken);
   }
 
   /**
    * Enumerate and Search
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<UserMetadata[]>} - An array of users.
+   * @returns {Promise<EnumerateResponse<UserMetadata>>} - An array of users.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
   async enumerateAndSearch(
     request: EnumerateAndSearchRequest,
     cancellationToken?: AbortController
-  ): Promise<UserMetadata[]> {
+  ): Promise<EnumerateResponse<UserMetadata>> {
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/users`;
-    return await this.post<UserMetadata[]>(url, request, cancellationToken);
+    return await this.post<EnumerateResponse<UserMetadata>>(url, request, cancellationToken);
   }
 }

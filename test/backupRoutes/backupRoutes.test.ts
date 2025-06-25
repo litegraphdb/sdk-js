@@ -1,4 +1,4 @@
-import { mockBackupFilename, backupData, mockEnumerateBackupsResponse } from './mockData';
+import { mockBackupFilename, backupData } from './mockData';
 import { api, mockTenantId } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -56,7 +56,7 @@ describe('BackupRoute Tests', () => {
         expect(backup).toEqual(backupData);
       });
     });
-    
+
     test('should read a specific backup by filename', async () => {
       const response = await api.Backup.read(mockBackupFilename);
       expect(response).toEqual(backupData);
@@ -89,11 +89,6 @@ describe('BackupRoute Tests', () => {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: filename is null or empty');
       }
-    });
-
-    test('should enumerate backups', async () => {
-      const response = await api.Backup.enumerate();
-      expect(response).toEqual(mockEnumerateBackupsResponse);
     });
   });
 });

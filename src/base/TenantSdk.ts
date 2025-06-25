@@ -2,6 +2,7 @@ import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import {
   EnumerateAndSearchRequest,
   EnumerateRequest,
+  EnumerateResponse,
   TenantMetaData,
   TenantMetaDataCreateRequest,
   TenantStatistics,
@@ -115,27 +116,30 @@ export class TenantSdk extends SdkBase {
   /**
    * Enumerate all tenants.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<TenantMetaData[]>} - An array of tenants.
+   * @returns {Promise<EnumerateResponse<TenantMetaData>>} - An array of tenants.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
-  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<TenantMetaData[]> {
+  async enumerate(
+    request?: EnumerateRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<TenantMetaData>> {
     const url = `${this.config.endpoint}v2.0/tenants`;
     const params = Utils.createUrlParams(request);
-    return await this.get<TenantMetaData[]>(url + params, cancellationToken);
+    return await this.get<EnumerateResponse<TenantMetaData>>(url + params, cancellationToken);
   }
 
   /**
    * Enumerate and Search
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<TenantMetaData[]>} - An array of tenants.
+   * @returns {Promise<EnumerateResponse<TenantMetaData>>} - An array of tenants.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
   async enumerateAndSearch(
     request: EnumerateAndSearchRequest,
     cancellationToken?: AbortController
-  ): Promise<TenantMetaData[]> {
+  ): Promise<EnumerateResponse<TenantMetaData>> {
     const url = `${this.config.endpoint}v2.0/tenants`;
-    return await this.post<TenantMetaData[]>(url, request, cancellationToken);
+    return await this.post<EnumerateResponse<TenantMetaData>>(url, request, cancellationToken);
   }
 
   /**

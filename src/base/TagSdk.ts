@@ -1,5 +1,11 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { EnumerateAndSearchRequest, EnumerateRequest, TagMetaData, TagMetaDataCreateRequest } from '../types';
+import {
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  EnumerateResponse,
+  TagMetaData,
+  TagMetaDataCreateRequest,
+} from '../types';
 import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
@@ -87,18 +93,17 @@ export class TagSdk extends SdkBase {
   /**
    * Update a tag.
    * @param {TagMetaData} tag - The tag to update.
-   * @param {string} guid - The GUID of the tag.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<TagMetaData>}
    */
-  async update(tag: TagMetaData, guid: string, cancellationToken?: AbortController): Promise<TagMetaData> {
-    if (!guid) {
-      GenericExceptionHandlers.ArgumentNullException('guid');
-    }
+  async update(tag: TagMetaData, cancellationToken?: AbortController): Promise<TagMetaData> {
     if (!tag) {
       GenericExceptionHandlers.ArgumentNullException('tag');
     }
-    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags/${guid}`;
+    if (!tag.GUID) {
+      GenericExceptionHandlers.ArgumentNullException('tag.GUID');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags/${tag.GUID}`;
     return await this.putUpdate<TagMetaData>(url, tag, cancellationToken);
   }
 
@@ -138,26 +143,29 @@ export class TagSdk extends SdkBase {
   /**
    * Enumerate all tags.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<TagMetaData[]>} - An array of tags.
+   * @returns {Promise<EnumerateResponse<TagMetaData>>} - An array of tags.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
-  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<TagMetaData[]> {
+  async enumerate(
+    request?: EnumerateRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<TagMetaData>> {
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/tags`;
     const params = Utils.createUrlParams(request);
-    return await this.get<TagMetaData[]>(url + params, cancellationToken);
+    return await this.get<EnumerateResponse<TagMetaData>>(url + params, cancellationToken);
   }
 
   /**
    * Enumerate and Search
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
-   * @returns {Promise<TagMetaData[]>} - An array of tags.
+   * @returns {Promise<EnumerateResponse<TagMetaData>>} - An array of tags.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
   async enumerateAndSearch(
     request: EnumerateAndSearchRequest,
     cancellationToken?: AbortController
-  ): Promise<TagMetaData[]> {
+  ): Promise<EnumerateResponse<TagMetaData>> {
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/tags`;
-    return await this.post<TagMetaData[]>(url, request, cancellationToken);
+    return await this.post<EnumerateResponse<TagMetaData>>(url, request, cancellationToken);
   }
 }

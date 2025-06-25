@@ -1499,17 +1499,6 @@ const deleteBackup = async () => {
 };
 // deleteBackup();
 
-const enumerateBackups = async () => {
-  try {
-    const data = await api.Backup.enumerate();
-    console.log(data, 'chk data');
-  } catch (err) {
-    console.log('err:', JSON.stringify(err));
-  }
-};
-
-// enumerateBackups();
-
 // region ValidateConnectivity
 
 const ValidateConnectivity = async () => {

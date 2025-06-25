@@ -591,6 +591,22 @@ export type EnumerateAndSearchRequest = {
   Expr?: Record<string, any>; // expression object, loosely typed
 };
 
+export type EnumerateResponse<T> = {
+  Success: boolean;
+  Timestamp: {
+    Start: string;
+    End: string;
+    TotalMs: number;
+    Messages: Record<string, unknown>;
+  };
+  ContinuationToken?: string;
+  MaxResults: number;
+  EndOfResults: boolean;
+  TotalRecords: number;
+  RecordsRemaining: number;
+  Objects: T[];
+};
+
 export type TenantStatistics = {
   Graphs: number;
   Nodes: number;
