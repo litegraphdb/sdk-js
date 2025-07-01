@@ -409,9 +409,9 @@ export type Token = {
   /** Token validity status */
   Valid?: any;
   /** User metadata */
-  User?: any;
+  User?: UserMetadata;
   /** Tenant metadata */
-  Tenant?: any;
+  Tenant?: TenantMetaData;
 };
 
 /**
@@ -578,14 +578,19 @@ export type ReadFirstRequest = {
 export type EnumerateRequest = {
   token?: string;
   maxKeys?: number;
+  includeData?: boolean;
+  includeSubordinates?: boolean;
+  skip?: number;
 };
 
 export type EnumerateAndSearchRequest = {
+  GraphGUID?: string;
   Ordering?: string;
   IncludeData?: boolean;
   IncludeSubordinates?: boolean;
   MaxResults?: number;
   ContinuationToken?: string | null;
+  Skip?: number;
   Labels?: string[];
   Tags?: Record<string, string>; // key-value pairs of strings
   Expr?: Record<string, any>; // expression object, loosely typed

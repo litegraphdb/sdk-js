@@ -48,6 +48,21 @@ export class TenantSdk extends SdkBase {
   }
 
   /**
+   * Read multiple tenants.
+   * @param {string[]} tenantGuids - The GUIDs of the tenants.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<TenantMetaData[]>} - The tenants.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(tenantGuids: string[], cancellationToken?: AbortController): Promise<TenantMetaData[]> {
+    if (!tenantGuids || tenantGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('tenantGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants?guids=${tenantGuids.join(',')}`;
+    return await this.get<TenantMetaData[]>(url, cancellationToken);
+  }
+
+  /**
    * Create a tenant.
    * @param {TenantMetaDataCreateRequest} tenant - The tenant to create.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.

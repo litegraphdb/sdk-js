@@ -136,6 +136,24 @@ export class EdgeSdk extends SdkBase {
   }
 
   /**
+   * Read multiple edges.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {string[]} edgeGuids - The GUIDs of the edges.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Edge[]>} - An array of edges.
+   */
+  async readMany(graphGuid: string, edgeGuids: string[], cancellationToken?: AbortController): Promise<Edge[]> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
+    if (!edgeGuids || edgeGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('edgeGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges?guids=${edgeGuids.join(',')}`;
+    return await this.get<Edge[]>(url, cancellationToken);
+  }
+
+  /**
    * Read a first edge of a graph.
    * @param {string} graphGuid - The GUID of the graph.
    * @param {ReadFirstRequest} request - Information about the read first request.

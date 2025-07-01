@@ -89,6 +89,21 @@ export class NodeSdk extends SdkBase {
   }
 
   /**
+   * Read multiple nodes.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {string[]} nodeGuids - The GUIDs of the nodes.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Node[]>} - An array of nodes.
+   */
+  async readMany(graphGuid: string, nodeGuids: string[], cancellationToken?: AbortController): Promise<Node[]> {
+    if (!nodeGuids || nodeGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('nodeGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes?guids=${nodeGuids.join(',')}`;
+    return await this.get<Node[]>(url, cancellationToken);
+  }
+
+  /**
    * Search nodes.
    * @param {NodeEdgeSearchRequest} searchReq - Information about the search request.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.

@@ -44,6 +44,21 @@ export class TagSdk extends SdkBase {
   }
 
   /**
+   * Read multiple tags.
+   * @param {string[]} tagGuids - The GUIDs of the tags.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<TagMetaData[]>} - The tags.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(tagGuids: string[], cancellationToken?: AbortController): Promise<TagMetaData[]> {
+    if (!tagGuids || tagGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('tagGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/tags?guids=${tagGuids.join(',')}`;
+    return await this.get<TagMetaData[]>(url, cancellationToken);
+  }
+
+  /**
    * Tag exists.
    * @param {string} guid - The GUID of the tag.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.

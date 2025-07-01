@@ -58,6 +58,7 @@ v1.0.8
 
 - added enumerate and enumerateAndSearch for all routes
 - added statistics endpoints for Graph and Tenant
+- added readMany for all routes
 - updated test cases
 - updated README.md
 - updated CHANGELOG.md

@@ -45,6 +45,21 @@ export class CredentialSdk extends SdkBase {
   }
 
   /**
+   * Read multiple credentials.
+   * @param {string[]} credentialGuids - The GUIDs of the credentials.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<CredentialMetadata[]>} - The credentials.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(credentialGuids: string[], cancellationToken?: AbortController): Promise<CredentialMetadata[]> {
+    if (!credentialGuids || credentialGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('credentialGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials?guids=${credentialGuids.join(',')}`;
+    return await this.get<CredentialMetadata[]>(url, cancellationToken);
+  }
+
+  /**
    * Create a credential.
    * @param {CredentialMetadataCreateRequest} credential - The credential to create.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.

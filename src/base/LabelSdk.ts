@@ -44,6 +44,21 @@ export class LabelSdk extends SdkBase {
   }
 
   /**
+   * Read multiple labels.
+   * @param {string[]} labelGuids - The GUIDs of the labels.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<LabelMetadata[]>} - The labels.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(labelGuids: string[], cancellationToken?: AbortController): Promise<LabelMetadata[]> {
+    if (!labelGuids || labelGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('labelGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/labels?guids=${labelGuids.join(',')}`;
+    return await this.get<LabelMetadata[]>(url, cancellationToken);
+  }
+
+  /**
    * Label exists.
    * @param {string} guid - The GUID of the label.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.

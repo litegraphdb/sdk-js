@@ -45,6 +45,21 @@ export class VectorSdk extends SdkBase {
   }
 
   /**
+   * Read multiple vectors.
+   * @param {string[]} vectorGuids - The GUIDs of the vectors.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorMetadata[]>} - The vectors.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(vectorGuids: string[], cancellationToken?: AbortController): Promise<VectorMetadata[]> {
+    if (!vectorGuids || vectorGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('vectorGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors?guids=${vectorGuids.join(',')}`;
+    return await this.get<VectorMetadata[]>(url, cancellationToken);
+  }
+
+  /**
    * Vector exists.
    * @param {string} guid - The GUID of the vector.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.

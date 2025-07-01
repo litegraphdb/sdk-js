@@ -60,6 +60,21 @@ export class GraphSdk extends SdkBase {
   }
 
   /**
+   * Read multiple graphs.
+   * @param {string[]} graphGuids - The GUIDs of the graphs.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Graph[]>} - The graphs.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(graphGuids: string[], cancellationToken?: AbortController): Promise<Graph[]> {
+    if (!graphGuids || graphGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('graphGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs?guids=${graphGuids.join(',')}`;
+    return await this.get<Graph[]>(url, cancellationToken);
+  }
+
+  /**
    * Search graphs.
    * @param {GraphSearchRequest} searchReq - Information about the search request.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
@@ -136,7 +151,7 @@ export class GraphSdk extends SdkBase {
    */
   async exportGexf(guid: string, cancellationToken?: AbortController): Promise<string> {
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}/export/gexf`;
-    return await this.get<string>(url, cancellationToken);
+    return await this.get<string>(url, cancellationToken, undefined, true);
   }
 
   /**

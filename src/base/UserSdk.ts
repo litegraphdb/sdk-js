@@ -46,6 +46,21 @@ export class UserSdk extends SdkBase {
   }
 
   /**
+   * Read multiple users.
+   * @param {string[]} userGuids - The GUIDs of the users.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<UserMetadata[]>} - The users.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(userGuids: string[], cancellationToken?: AbortController): Promise<UserMetadata[]> {
+    if (!userGuids || userGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('userGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/users?guids=${userGuids.join(',')}`;
+    return await this.get<UserMetadata[]>(url, cancellationToken);
+  }
+
+  /**
    * Create a user.
    * @param {UserMetadataCreateRequest} user - The user to create.
    * @param {String} user.FirstName - The first name of the user.
