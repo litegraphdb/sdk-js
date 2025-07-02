@@ -1,5 +1,17 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { Graph, GraphCreateRequest, GraphSearchRequest, ReadFirstRequest, SearchResult } from '../types';
+import {
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  EnumerateResponse,
+  Graph,
+  GraphCreateRequest,
+  GraphSearchRequest,
+  GraphStatistics,
+  GraphStatisticsResponse,
+  ReadFirstRequest,
+  SearchResult,
+} from '../types';
+import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -45,6 +57,21 @@ export class GraphSdk extends SdkBase {
   async readAll(cancellationToken?: AbortController): Promise<Graph[]> {
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs`;
     return await this.getMany<Graph>(url, cancellationToken);
+  }
+
+  /**
+   * Read multiple graphs.
+   * @param {string[]} graphGuids - The GUIDs of the graphs.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Graph[]>} - The graphs.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(graphGuids: string[], cancellationToken?: AbortController): Promise<Graph[]> {
+    if (!graphGuids || graphGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('graphGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs?guids=${graphGuids.join(',')}`;
+    return await this.get<Graph[]>(url, cancellationToken);
   }
 
   /**
@@ -124,6 +151,54 @@ export class GraphSdk extends SdkBase {
    */
   async exportGexf(guid: string, cancellationToken?: AbortController): Promise<string> {
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}/export/gexf`;
-    return await this.get<string>(url, cancellationToken);
+    return await this.get<string>(url, cancellationToken, undefined, true);
+  }
+
+  /**
+   * Enumerate all graphs.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<EnumerateResponse<Graph>} - An array of graphs.
+   */
+  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<EnumerateResponse<Graph>> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<EnumerateResponse<Graph>>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<EnumerateResponse<Graph>>} - An array of graphs.
+   */
+  async enumerateAndSearch(
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<Graph>> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs`;
+    return await this.post<EnumerateResponse<Graph>>(url, request, cancellationToken);
+  }
+
+  /**
+   * Read all graphs Statistics
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<GraphStatisticsResponse>} - An array of graphs statistics.
+   */
+  async readStatistics(cancellationToken?: AbortController): Promise<GraphStatisticsResponse> {
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/stats`;
+    return await this.get<GraphStatisticsResponse>(url, cancellationToken);
+  }
+
+  /**
+   * Read a graph Statistics
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<GraphStatistics>} - A graph statistics.
+   */
+  async readStatistic(graphGuid: string, cancellationToken?: AbortController): Promise<GraphStatistics> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('graphGuid');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/stats`;
+    return await this.get<GraphStatistics>(url, cancellationToken);
   }
 }

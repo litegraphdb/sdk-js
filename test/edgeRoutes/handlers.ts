@@ -6,6 +6,7 @@ import {
   searchEdgeData,
   edgeMockApiResponse,
   edgeMockSearchApiResponse,
+  mockEnumerateEdgesResponse,
 } from './mockData';
 import { mockEndpoint, mockTenantId } from '../setupTest';
 
@@ -41,6 +42,10 @@ export const handlers = [
     `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/edges`,
     ({ request, params, cookies }) => {
       // Return an array of edges related to the graph
+      const hasGuids = request.url.includes('guids');
+      if (hasGuids) {
+        return HttpResponse.json([edgeData[mockEdgeGuid]]);
+      }
       return HttpResponse.json(edgeMockApiResponse);
     }
   ),
@@ -120,6 +125,20 @@ export const handlers = [
     `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${'wrongID'}/edges/first`,
     ({ request, params, cookies }) => {
       return HttpResponse.json(edgeData[mockEdgeGuid]);
+    }
+  ),
+
+  http.get(
+    `${mockEndpoint}v2.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/edges`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockEnumerateEdgesResponse);
+    }
+  ),
+
+  http.post(
+    `${mockEndpoint}v2.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/edges`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockEnumerateEdgesResponse);
     }
   ),
 ];

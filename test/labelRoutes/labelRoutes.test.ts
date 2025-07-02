@@ -1,4 +1,4 @@
-import { labelData, mockLabelGuid } from './mockData';
+import { labelData, mockEnumerateLabelsResponse, mockLabelGuid } from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -22,6 +22,15 @@ describe('labelRoute Tests', () => {
     test('should check if label exists by GUID', async () => {
       const response = await api.Label.exists(mockLabelGuid);
       expect(response).toBe(true); // Assuming the mock returns true
+    });
+
+    test('should throw error when checking if label exists with null or empty GUID', async () => {
+      try {
+        await api.Label.exists(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: guid is null or empty');
+      }
     });
 
     test('should create a label', async () => {
@@ -88,6 +97,15 @@ describe('labelRoute Tests', () => {
       expect(response).toEqual(labelData);
     });
 
+    test('should throw error when reading a label with null or empty GUID', async () => {
+      try {
+        await api.Label.read(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: guid is null or empty');
+      }
+    });
+
     test('should update a label', async () => {
       const updateLabel = {
         GUID: mockLabelGuid,
@@ -96,7 +114,7 @@ describe('labelRoute Tests', () => {
         CreatedUtc: '2024-12-27T18:12:38.653402Z',
         LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
       };
-      const response = await api.Label.update(updateLabel);
+      const response = await api.Label.update(updateLabel as any);
       expect(response).toEqual(labelData);
     });
 
@@ -117,7 +135,7 @@ describe('labelRoute Tests', () => {
           CreatedUtc: '2024-12-27T18:12:38.653402Z',
           LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
         };
-        await api.Label.update(updateLabel, null as any);
+        await api.Label.update(updateLabel as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: label.GUID is null or empty');
@@ -132,6 +150,15 @@ describe('labelRoute Tests', () => {
     test('should delete multiple labels', async () => {
       const response = await api.Label.deleteBulk([mockLabelGuid]);
       expect(response).toBe(true); // Assuming delete operation returns nothing
+    });
+
+    test('should throw error when deleting a label with null or empty GUID', async () => {
+      try {
+        await api.Label.delete(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: guid is null or empty');
+      }
     });
 
     test('should throw error when deleting multiple labels with empty array', async () => {
@@ -153,6 +180,39 @@ describe('labelRoute Tests', () => {
       const cancellationToken = new AbortController();
       await api.Label.delete(mockLabelGuid, cancellationToken);
       cancellationToken.abort();
+    });
+
+    test('should enumerate labels', async () => {
+      const response = await api.Label.enumerate();
+      expect(response).toEqual(mockEnumerateLabelsResponse);
+    });
+
+    test('should enumerate labels with request', async () => {
+      const response = await api.Label.enumerateAndSearch({
+        Ordering: 'CreatedDescending',
+        IncludeData: false,
+        IncludeSubordinates: false,
+        MaxResults: 5,
+        ContinuationToken: null,
+        Labels: [],
+        Tags: {},
+        Expr: {},
+      });
+      expect(response).toEqual(mockEnumerateLabelsResponse);
+    });
+
+    test('should read multiple labels', async () => {
+      const response = await api.Label.readMany([mockLabelGuid]);
+      expect(response).toEqual([labelData]);
+    });
+
+    test('should throw error when reading multiple labels with null or empty labelGuids', async () => {
+      try {
+        await api.Label.readMany(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: labelGuids is null or empty');
+      }
     });
   });
 });

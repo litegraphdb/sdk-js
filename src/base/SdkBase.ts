@@ -119,10 +119,16 @@ export default class SdkBase {
    * @param {string} url - The URL of the object.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @param {Object} [headers] - Additional headers.
-   * @return {Promise<Object>} Resolves with the retrieved object.
+   * @param {boolean} [doNotDeserialize] - Optional flag to not deserialize the response.
+   * @return {Promise<any>} Resolves with the retrieved object.
    * @throws {Error} Rejects if the URL is invalid or if the request fails.
    */
-  protected get<T>(url: string, cancellationToken?: AbortController, headers?: any): Promise<T> {
+  protected get<T>(
+    url: string,
+    cancellationToken?: AbortController,
+    headers?: any,
+    doNotDeserialize?: boolean
+  ): Promise<T> {
     return new Promise((resolve, reject) => {
       if (!url) return reject(new Error('URL cannot be null or empty.'));
 
@@ -140,7 +146,7 @@ export default class SdkBase {
       request
         .then((res) => {
           this.log(SeverityEnum.Debug, `Success reported from ${request.method}: ${url}: ${res.status}`);
-          resolve(Serializer.deserializeJson(res.text));
+          resolve(doNotDeserialize ? res.text : Serializer.deserializeJson(res.text));
         })
         .catch((err) => {
           this.log(SeverityEnum.Warn, `Failed to retrieve object from ${url}: ${err.message}`);

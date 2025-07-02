@@ -6,11 +6,17 @@ import {
   graphGEXFData,
   graphMockApiResponse,
   graphMockSearchApiResponse,
+  mockEnumerateGraphsResponse,
+  mockGraphStatisticsResponse,
 } from './mockData';
 import { mockEndpoint, mockTenantId } from '../setupTest';
 
 export const handlers = [
   http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs`, ({ request, params, cookies }) => {
+    const hasGuids = request.url.includes('guids');
+    if (hasGuids) {
+      return HttpResponse.json([graphData[mockGraphGuid]]);
+    }
     return HttpResponse.json(graphMockApiResponse);
   }),
   http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}`, ({ request, params, cookies }) => {
@@ -43,4 +49,20 @@ export const handlers = [
   http.post(`${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/first`, ({ request, params, cookies }) => {
     return HttpResponse.json(graphData[mockGraphGuid]);
   }),
+  http.get(`${mockEndpoint}v2.0/tenants/${mockTenantId}/graphs`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockEnumerateGraphsResponse);
+  }),
+  http.post(`${mockEndpoint}v2.0/tenants/${mockTenantId}/graphs`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockEnumerateGraphsResponse);
+  }),
+
+  http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/stats`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockGraphStatisticsResponse);
+  }),
+  http.get(
+    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/stats`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockGraphStatisticsResponse[mockGraphGuid]);
+    }
+  ),
 ];

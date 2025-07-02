@@ -1,5 +1,14 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { TenantMetaData, TenantMetaDataCreateRequest } from '../types';
+import {
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  EnumerateResponse,
+  TenantMetaData,
+  TenantMetaDataCreateRequest,
+  TenantStatistics,
+  TenantStatisticsResponse,
+} from '../types';
+import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -36,6 +45,21 @@ export class TenantSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${tenantGuid}`;
     return await this.get<TenantMetaData>(url, cancellationToken);
+  }
+
+  /**
+   * Read multiple tenants.
+   * @param {string[]} tenantGuids - The GUIDs of the tenants.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<TenantMetaData[]>} - The tenants.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(tenantGuids: string[], cancellationToken?: AbortController): Promise<TenantMetaData[]> {
+    if (!tenantGuids || tenantGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('tenantGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants?guids=${tenantGuids.join(',')}`;
+    return await this.get<TenantMetaData[]>(url, cancellationToken);
   }
 
   /**
@@ -102,5 +126,60 @@ export class TenantSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${tenantGuid}`;
     return await this.head(url, cancellationToken);
+  }
+
+  /**
+   * Enumerate all tenants.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<EnumerateResponse<TenantMetaData>>} - An array of tenants.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerate(
+    request?: EnumerateRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<TenantMetaData>> {
+    const url = `${this.config.endpoint}v2.0/tenants`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<EnumerateResponse<TenantMetaData>>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<EnumerateResponse<TenantMetaData>>} - An array of tenants.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerateAndSearch(
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<TenantMetaData>> {
+    const url = `${this.config.endpoint}v2.0/tenants`;
+    return await this.post<EnumerateResponse<TenantMetaData>>(url, request, cancellationToken);
+  }
+
+  /**
+   * Read all tenants Statistics
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<TenantStatisticsResponse>} - An array of tenants statistics.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readStatistics(cancellationToken?: AbortController): Promise<TenantStatisticsResponse> {
+    const url = `${this.config.endpoint}v1.0/tenants/stats`;
+    return await this.get<TenantStatisticsResponse>(url, cancellationToken);
+  }
+
+  /**
+   * Read tenant Statistics
+   * @param {string} tenantGuid - The GUID of the tenant.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<TenantStatistics>} - A tenant statistics.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readStatistic(tenantGuid: string, cancellationToken?: AbortController): Promise<TenantStatistics> {
+    if (!tenantGuid) {
+      GenericExceptionHandlers.ArgumentNullException('tenantGuid');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${tenantGuid}/stats`;
+    return await this.get<TenantStatistics>(url, cancellationToken);
   }
 }

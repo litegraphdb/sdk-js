@@ -1,4 +1,4 @@
-import { mockVectorGuid, vectorData } from './mockData';
+import { mockEnumerateVectorsResponse, mockVectorGuid, vectorData } from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -107,14 +107,15 @@ describe('vectorRoute Tests', () => {
         Vectors: [0.1, 0.2, 0.3, 0.4, 0.5],
         CreatedUtc: '2025-01-10T10:00:00.000Z',
         LastUpdateUtc: '2025-01-10T12:00:00.000Z',
+        GUID: mockVectorGuid,
       };
-      const response = await api.Vector.update(updateVector, mockVectorGuid);
+      const response = await api.Vector.update(updateVector);
       expect(response).toEqual(vectorData);
     });
 
     it('throws error when if missed vector guid while updating a vector', async () => {
       try {
-        await api.Vector.update(null as any, mockVectorGuid);
+        await api.Vector.update(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: vector is null or empty');
@@ -134,11 +135,12 @@ describe('vectorRoute Tests', () => {
           Vectors: [0.1, 0.2, 0.3, 0.4, 0.5],
           CreatedUtc: '2025-01-10T10:00:00.000Z',
           LastUpdateUtc: '2025-01-10T12:00:00.000Z',
+          GUID: '',
         };
-        await api.Vector.update(updateVector, null as any);
+        await api.Vector.update(updateVector);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
-        expect(err.toString()).toBe('Error: ArgumentNullException: guid is null or empty');
+        expect(err.toString()).toBe('Error: ArgumentNullException: vector.GUID is null or empty');
       }
     });
 
@@ -170,6 +172,39 @@ describe('vectorRoute Tests', () => {
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: Vectors array is empty');
+      }
+    });
+
+    test('should enumerate vectors', async () => {
+      const response = await api.Vector.enumerate();
+      expect(response).toEqual(mockEnumerateVectorsResponse);
+    });
+
+    test('should enumerate vectors with request', async () => {
+      const response = await api.Vector.enumerateAndSearch({
+        Ordering: 'CreatedDescending',
+        IncludeData: false,
+        IncludeSubordinates: false,
+        MaxResults: 5,
+        ContinuationToken: null,
+        Labels: [],
+        Tags: {},
+        Expr: {},
+      });
+      expect(response).toEqual(mockEnumerateVectorsResponse);
+    });
+
+    test('should read multiple vectors', async () => {
+      const response = await api.Vector.readMany([mockVectorGuid]);
+      expect(response).toEqual([vectorData]);
+    });
+
+    test('should throw error when reading multiple vectors with null or empty vectorGuids', async () => {
+      try {
+        await api.Vector.readMany(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: vectorGuids is null or empty');
       }
     });
   });

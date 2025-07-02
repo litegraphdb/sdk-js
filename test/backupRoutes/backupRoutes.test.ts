@@ -24,6 +24,15 @@ describe('BackupRoute Tests', () => {
       expect(response).toBe(true); // Assuming the mock returns true
     });
 
+    test('should check if filename is null or empty', async () => {
+      try {
+        await api.Backup.exists(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: filename is null or empty');
+      }
+    });
+
     test('should create a backup', async () => {
       const newBackup = {
         Filename: mockBackupFilename,
@@ -53,6 +62,15 @@ describe('BackupRoute Tests', () => {
       expect(response).toEqual(backupData);
     });
 
+    test('should throw error when reading a backup with null or empty filename', async () => {
+      try {
+        await api.Backup.read(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: filename is null or empty');
+      }
+    });
+
     test('should delete a backup', async () => {
       const response = await api.Backup.delete(mockBackupFilename);
       expect(response).toBe(true); // Assuming delete operation returns nothing
@@ -62,6 +80,15 @@ describe('BackupRoute Tests', () => {
       const cancellationToken = new AbortController();
       await api.Backup.delete(mockBackupFilename, cancellationToken);
       cancellationToken.abort();
+    });
+
+    test('should throw error when deleting a backup with null or empty filename', async () => {
+      try {
+        await api.Backup.delete(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: filename is null or empty');
+      }
     });
   });
 });

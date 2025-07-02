@@ -1,5 +1,12 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { CredentialMetadata, CredentialMetadataCreateRequest } from '../types';
+import {
+  CredentialMetadata,
+  CredentialMetadataCreateRequest,
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  EnumerateResponse,
+} from '../types';
+import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -38,6 +45,21 @@ export class CredentialSdk extends SdkBase {
   }
 
   /**
+   * Read multiple credentials.
+   * @param {string[]} credentialGuids - The GUIDs of the credentials.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<CredentialMetadata[]>} - The credentials.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(credentialGuids: string[], cancellationToken?: AbortController): Promise<CredentialMetadata[]> {
+    if (!credentialGuids || credentialGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('credentialGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials?guids=${credentialGuids.join(',')}`;
+    return await this.get<CredentialMetadata[]>(url, cancellationToken);
+  }
+
+  /**
    * Create a credential.
    * @param {CredentialMetadataCreateRequest} credential - The credential to create.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
@@ -61,18 +83,14 @@ export class CredentialSdk extends SdkBase {
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<CredentialMetadata>} - The updated credential.
    */
-  async update(
-    credential: CredentialMetadata,
-    guid: string,
-    cancellationToken?: AbortController
-  ): Promise<CredentialMetadata> {
-    if (!guid) {
-      GenericExceptionHandlers.ArgumentNullException('guid');
-    }
+  async update(credential: CredentialMetadata, cancellationToken?: AbortController): Promise<CredentialMetadata> {
     if (!credential) {
       GenericExceptionHandlers.ArgumentNullException('credential');
     }
-    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials/${guid}`;
+    if (!credential.GUID) {
+      GenericExceptionHandlers.ArgumentNullException('credential.GUID');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials/${credential.GUID}`;
     return await this.putUpdate<CredentialMetadata>(url, credential, cancellationToken);
   }
 
@@ -104,5 +122,34 @@ export class CredentialSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/credentials/${guid}`;
     return await this.head(url, cancellationToken);
+  }
+
+  /**
+   * Enumerate all credentials.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<EnumerateResponse>} - An array of credentials.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerate(
+    request?: EnumerateRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<CredentialMetadata>> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/credentials`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<EnumerateResponse<CredentialMetadata>>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<EnumerateResponse>} - An array of credentials.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerateAndSearch(
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<CredentialMetadata>> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/credentials`;
+    return await this.post<EnumerateResponse<CredentialMetadata>>(url, request, cancellationToken);
   }
 }

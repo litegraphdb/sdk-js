@@ -409,9 +409,9 @@ export type Token = {
   /** Token validity status */
   Valid?: any;
   /** User metadata */
-  User?: any;
+  User?: UserMetadata;
   /** Tenant metadata */
-  Tenant?: any;
+  Tenant?: TenantMetaData;
 };
 
 /**
@@ -574,3 +574,61 @@ export type ReadFirstRequest = {
   /** Expression used for the search */
   Expr?: Record<string, any>;
 };
+
+export type EnumerateRequest = {
+  token?: string;
+  maxKeys?: number;
+  includeData?: boolean;
+  includeSubordinates?: boolean;
+  skip?: number;
+};
+
+export type EnumerateAndSearchRequest = {
+  GraphGUID?: string;
+  Ordering?: string;
+  IncludeData?: boolean;
+  IncludeSubordinates?: boolean;
+  MaxResults?: number;
+  ContinuationToken?: string | null;
+  Skip?: number;
+  Labels?: string[];
+  Tags?: Record<string, string>; // key-value pairs of strings
+  Expr?: Record<string, any>; // expression object, loosely typed
+};
+
+export type EnumerateResponse<T> = {
+  Success: boolean;
+  Timestamp: {
+    Start: string;
+    End: string;
+    TotalMs: number;
+    Messages: Record<string, unknown>;
+  };
+  ContinuationToken?: string;
+  MaxResults: number;
+  EndOfResults: boolean;
+  TotalRecords: number;
+  RecordsRemaining: number;
+  Objects: T[];
+};
+
+export type TenantStatistics = {
+  Graphs: number;
+  Nodes: number;
+  Edges: number;
+  Labels: number;
+  Tags: number;
+  Vectors: number;
+};
+
+export type TenantStatisticsResponse = Record<string, TenantStatistics>;
+
+export type GraphStatistics = {
+  Nodes: number;
+  Edges: number;
+  Labels: number;
+  Tags: number;
+  Vectors: number;
+};
+
+export type GraphStatisticsResponse = Record<string, GraphStatistics>;

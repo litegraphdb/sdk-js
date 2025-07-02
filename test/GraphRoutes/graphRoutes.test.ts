@@ -1,4 +1,10 @@
-import { mockGraphGuid, graphData, searchGraphData } from './mockData';
+import {
+  mockGraphGuid,
+  graphData,
+  searchGraphData,
+  mockEnumerateGraphsResponse,
+  mockGraphStatisticsResponse,
+} from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
 import { getServer } from '../server';
@@ -57,6 +63,15 @@ describe('GraphRoute Tests', () => {
       expect(response).toEqual(searchGraphData[mockGraphGuid]);
     });
 
+    test('should throw error when searching graphs with null or empty search request', async () => {
+      try {
+        await api.Graph.search(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: Search Request is null or empty');
+      }
+    });
+
     test('should read a specific graph by GUID', async () => {
       const response = await api.Graph.read(mockGraphGuid);
       expect(response.GUID).toEqual(mockGraphGuid);
@@ -113,6 +128,58 @@ describe('GraphRoute Tests', () => {
       } catch (err) {
         expect(err).toBeInstanceOf(Error);
         expect(err.toString()).toMatch(/Request is null or empty/i);
+      }
+    });
+
+    test('should enumerate graphs', async () => {
+      const response = await api.Graph.enumerate();
+      expect(response).toEqual(mockEnumerateGraphsResponse);
+    });
+
+    test('should enumerate graphs with request', async () => {
+      const response = await api.Graph.enumerateAndSearch({
+        Ordering: 'CreatedDescending',
+        IncludeData: false,
+        IncludeSubordinates: false,
+        MaxResults: 5,
+        ContinuationToken: null,
+        Labels: [],
+        Tags: {},
+        Expr: {},
+      });
+      expect(response).toEqual(mockEnumerateGraphsResponse);
+    });
+
+    test('should read all graphs statistics', async () => {
+      const response = await api.Graph.readStatistics();
+      expect(response).toEqual(mockGraphStatisticsResponse);
+    });
+
+    test('should read a graph statistics', async () => {
+      const response = await api.Graph.readStatistic(mockGraphGuid);
+      expect(response).toEqual(mockGraphStatisticsResponse[mockGraphGuid]);
+    });
+
+    test('should throw error when reading a graph statistics with null or empty graphGuid', async () => {
+      try {
+        await api.Graph.readStatistic(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: graphGuid is null or empty');
+      }
+    });
+
+    test('should read multiple graphs', async () => {
+      const response = await api.Graph.readMany([mockGraphGuid]);
+      expect(response).toEqual([graphData[mockGraphGuid]]);
+    });
+
+    test('should throw error when reading multiple graphs with null or empty graphGuids', async () => {
+      try {
+        await api.Graph.readMany(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: graphGuids is null or empty');
       }
     });
   });

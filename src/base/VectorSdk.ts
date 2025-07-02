@@ -1,8 +1,15 @@
-import { VectorCreateRequest, VectorMetadata, VectorSearchRequest } from '../types';
+import {
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  VectorCreateRequest,
+  VectorMetadata,
+  VectorSearchRequest,
+} from '../types';
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
 import { VectorSearchResult } from '../types';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
+import Utils from '../utils/Utils';
 
 export class VectorSdk extends SdkBase {
   /**
@@ -35,6 +42,21 @@ export class VectorSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors/${guid}`;
     return await this.get<VectorMetadata>(url, cancellationToken);
+  }
+
+  /**
+   * Read multiple vectors.
+   * @param {string[]} vectorGuids - The GUIDs of the vectors.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorMetadata[]>} - The vectors.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async readMany(vectorGuids: string[], cancellationToken?: AbortController): Promise<VectorMetadata[]> {
+    if (!vectorGuids || vectorGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('vectorGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors?guids=${vectorGuids.join(',')}`;
+    return await this.get<VectorMetadata[]>(url, cancellationToken);
   }
 
   /**
@@ -87,18 +109,17 @@ export class VectorSdk extends SdkBase {
   /**
    * Update a vector.
    * @param {VectorMetadata} vector - The vector to update.
-   * @param {string} guid - The GUID of the vector.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<VectorMetadata>}
    */
-  async update(vector: VectorMetadata, guid: string, cancellationToken?: AbortController): Promise<VectorMetadata> {
-    if (!guid) {
-      GenericExceptionHandlers.ArgumentNullException('guid');
-    }
+  async update(vector: VectorMetadata, cancellationToken?: AbortController): Promise<VectorMetadata> {
     if (!vector) {
       GenericExceptionHandlers.ArgumentNullException('vector');
     }
-    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors/${guid}`;
+    if (!vector.GUID) {
+      GenericExceptionHandlers.ArgumentNullException('vector.GUID');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors/${vector.GUID}`;
     return await this.putUpdate<VectorMetadata>(url, vector, cancellationToken);
   }
 
@@ -148,5 +169,31 @@ export class VectorSdk extends SdkBase {
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/vectors`;
     const json = JSON.stringify(searchReq);
     return await this.post<VectorSearchResult[]>(url, json, cancellationToken);
+  }
+
+  /**
+   * Enumerate all vectors.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorMetadata[]>} - An array of vectors.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerate(request?: EnumerateRequest, cancellationToken?: AbortController): Promise<VectorMetadata[]> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/vectors`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<VectorMetadata[]>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorMetadata[]>} - An array of vectors.
+   * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
+   */
+  async enumerateAndSearch(
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<VectorMetadata[]> {
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/vectors`;
+    return await this.post<VectorMetadata[]>(url, request, cancellationToken);
   }
 }

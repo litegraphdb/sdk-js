@@ -1,5 +1,15 @@
 import GenericExceptionHandlers from '../exception/GenericExceptionHandlers';
-import { Node, NodeCreateRequest, NodeEdgeSearchRequest, ReadFirstRequest, SearchResult } from '../types';
+import {
+  EnumerateAndSearchRequest,
+  EnumerateRequest,
+  EnumerateResponse,
+  Node,
+  NodeCreateRequest,
+  NodeEdgeSearchRequest,
+  ReadFirstRequest,
+  SearchResult,
+} from '../types';
+import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
 import { SdkConfiguration } from './SdkConfiguration';
 
@@ -75,6 +85,21 @@ export class NodeSdk extends SdkBase {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes`;
+    return await this.get<Node[]>(url, cancellationToken);
+  }
+
+  /**
+   * Read multiple nodes.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {string[]} nodeGuids - The GUIDs of the nodes.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<Node[]>} - An array of nodes.
+   */
+  async readMany(graphGuid: string, nodeGuids: string[], cancellationToken?: AbortController): Promise<Node[]> {
+    if (!nodeGuids || nodeGuids.length === 0) {
+      GenericExceptionHandlers.ArgumentNullException('nodeGuids');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes?guids=${nodeGuids.join(',')}`;
     return await this.get<Node[]>(url, cancellationToken);
   }
 
@@ -195,5 +220,40 @@ export class NodeSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/bulk`;
     return await this.deleteMany(url, nodeGuids, cancellationToken);
+  }
+
+  /**
+   * Enumerate all nodes.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<EnumerateResponse<Node>>} - An array of nodes.
+   */
+  async enumerate(
+    graphGuid: string,
+    request?: EnumerateRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<Node>> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes`;
+    const params = Utils.createUrlParams(request);
+    return await this.get<EnumerateResponse<Node>>(url + params, cancellationToken);
+  }
+
+  /**
+   * Enumerate and Search
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<EnumerateResponse<Node>>} - An array of nodes.
+   */
+  async enumerateAndSearch(
+    graphGuid: string,
+    request: EnumerateAndSearchRequest,
+    cancellationToken?: AbortController
+  ): Promise<EnumerateResponse<Node>> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('GraphGUID');
+    }
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes`;
+    return await this.post<EnumerateResponse<Node>>(url, request, cancellationToken);
   }
 }

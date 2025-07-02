@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { mockLabelGuid, labelMockApiResponse, labelData } from './mockData';
+import { mockLabelGuid, labelMockApiResponse, labelData, mockEnumerateLabelsResponse } from './mockData';
 import { mockEndpoint, mockTenantId } from '../setupTest';
 
 export const handlers = [
@@ -17,6 +17,10 @@ export const handlers = [
   // Read all tenants
   http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/labels`, ({ request, params, cookies }) => {
     // Return an array of tenants
+    const hasGuids = request.url.includes('guids');
+    if (hasGuids) {
+      return HttpResponse.json([labelData]);
+    }
     return HttpResponse.json(labelMockApiResponse);
   }),
 
@@ -47,5 +51,13 @@ export const handlers = [
   http.put(`${mockEndpoint}v1.0/tenants/${mockTenantId}/labels/bulk`, ({ request, params, cookies }) => {
     // Simulate edge deletion
     return HttpResponse.json([labelData]);
+  }),
+
+  http.get(`${mockEndpoint}v2.0/tenants/${mockTenantId}/labels`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockEnumerateLabelsResponse);
+  }),
+
+  http.post(`${mockEndpoint}v2.0/tenants/${mockTenantId}/labels`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockEnumerateLabelsResponse);
   }),
 ];

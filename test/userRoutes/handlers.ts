@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { mockUserId, userData, userMockApiResponse } from './mockData';
+import { mockEnumerateUsersResponse, mockUserId, userData, userMockApiResponse } from './mockData';
 import { mockEndpoint, mockTenantId } from '../setupTest';
 
 export const handlers = [
@@ -17,6 +17,10 @@ export const handlers = [
   // Read all users
   http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/users`, ({ request, params, cookies }) => {
     // Return an array of users
+    const hasGuids = request.url.includes('guids');
+    if (hasGuids) {
+      return HttpResponse.json([userData]);
+    }
     return HttpResponse.json(userMockApiResponse);
   }),
 
@@ -35,5 +39,13 @@ export const handlers = [
   http.delete(`${mockEndpoint}v1.0/tenants/${mockTenantId}/users/${mockUserId}`, ({ request, params, cookies }) => {
     // Simulate user deletion
     return HttpResponse.json(userData);
+  }),
+
+  http.get(`${mockEndpoint}v2.0/tenants/${mockTenantId}/users`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockEnumerateUsersResponse);
+  }),
+
+  http.post(`${mockEndpoint}v2.0/tenants/${mockTenantId}/users`, ({ request, params, cookies }) => {
+    return HttpResponse.json(mockEnumerateUsersResponse);
   }),
 ];

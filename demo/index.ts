@@ -1,12 +1,19 @@
 import { LiteGraphSdk } from 'litegraphdb';
 import { Edge, Graph, Node, NodeCreateRequest, NodeEdgeSearchRequest } from 'litegraphdb/dist/types/types';
 
-var api = new LiteGraphSdk('http://localhost:8701/', '00000000-0000-0000-0000-000000000000', '******');
-var guid = '<graph-guid>'; // {String}
-var nodeGuid = '<node-guid>'; // {String}
+var api = new LiteGraphSdk('http://localhost:8701/', '00000000-0000-0000-0000-000000000000', 'litegraphadmin');
+var guid = '00000000-0000-0000-0000-000000000000'; // {String}
+var nodeGuid = '00000000-0000-0000-0000-000000000000'; // {String}
+var edgeGuid = '00000000-0000-0000-0000-000000000000'; // {String}
+var vectorGuid = '00000000-0000-0000-0000-000000000000'; // {String}
+var labelGuid = '00000000-0000-0000-0000-000000000000'; // {String}
+var tagGuid = '00000000-0000-0000-0000-000000000000'; // {String}
+var credentialGuid = '00000000-0000-0000-0000-000000000000'; // {String}
+var userGuid = '00000000-0000-0000-0000-000000000000'; // {String}
+var tenantGuid = '00000000-0000-0000-0000-000000000000'; // {String}
 var toNodeGuid = '<to-node-guid>';
 var fromNodeGuid = '<from-node-guid>';
-var edgeGuid = '<edge-guid>';
+var edgeGuid = '00000000-0000-0000-0000-000000000000'; // {String}
 
 // read first
 
@@ -20,6 +27,16 @@ const readFirstGraph = async () => {
 };
 // readFirstGraph();
 
+const readManyGraphs = async () => {
+  try {
+    const data = await api.Graph.readMany([guid]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readManyGraphs();
 // region Graph
 const getGraphById = async () => {
   try {
@@ -123,6 +140,59 @@ const exportGraphToGexf = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
+
+const enumerateGraphs = async () => {
+  try {
+    const data = await api.Graph.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateGraphs();
+
+const enumerateAndSearchGraphs = async () => {
+  try {
+    const data = await api.Graph.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchGraphs();
+
+const readGraphStatistic = async () => {
+  try {
+    const data = await api.Graph.readStatistic(guid);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readGraphStatistic();
+
+const readAllGraphStatistics = async () => {
+  try {
+    const data = await api.Graph.readStatistics();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readAllGraphStatistics();
 
 // region Node
 const getNodeById = async () => {
@@ -233,6 +303,17 @@ const updateNode = async () => {
   }
 };
 
+const readManyNodes = async () => {
+  try {
+    const data = await api.Node.readMany(guid, [nodeGuid]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readManyNodes();
+
 const deleteNodeById = async () => {
   try {
     const data = await api.Node.delete(guid, nodeGuid);
@@ -271,6 +352,37 @@ const searchNodes = async () => {
   }
 };
 
+const enumerateNodes = async () => {
+  try {
+    const data = await api.Node.enumerate('00000000-0000-0000-0000-000000000000');
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateNodes();
+
+const enumerateAndSearchNodes = async () => {
+  try {
+    const data = await api.Node.enumerateAndSearch('00000000-0000-0000-0000-000000000000', {
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchNodes();
+
 // region Edge
 const getEdgeById = async () => {
   try {
@@ -299,6 +411,17 @@ const readFirstEdge = async () => {
   }
 };
 // readFirstEdge();
+
+const readManyEdges = async () => {
+  try {
+    const data = await api.Edge.readMany(guid, [edgeGuid]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readManyEdges();
 
 const createEdge = async () => {
   // Edge object to create
@@ -388,6 +511,37 @@ const searchEdges = async () => {
     console.log('Error searching graph:', JSON.stringify(err), err);
   }
 };
+
+const enumerateEdges = async () => {
+  try {
+    const data = await api.Edge.enumerate('00000000-0000-0000-0000-000000000000');
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateEdges();
+
+const enumerateAndSearchEdges = async () => {
+  try {
+    const data = await api.Edge.enumerateAndSearch('00000000-0000-0000-0000-000000000000', {
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchEdges();
 
 //region Routes & Traversal
 const getEdgesFromNode = async () => {
@@ -489,6 +643,17 @@ const readUser = async () => {
   }
 };
 
+const readManyUsers = async () => {
+  try {
+    const data = await api.User.readMany([userGuid]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readManyUsers();
+
 const createUser = async () => {
   try {
     const data = await api.User.create({
@@ -540,6 +705,37 @@ const deleteUser = async () => {
   }
 };
 
+const enumerateUsers = async () => {
+  try {
+    const data = await api.User.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateUsers();
+
+const enumerateAndSearchUsers = async () => {
+  try {
+    const data = await api.User.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchUsers();
+
 //endregion
 
 //region Tenant
@@ -560,6 +756,17 @@ const readTenant = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
+
+const readManyTenants = async () => {
+  try {
+    const data = await api.Tenant.readMany([tenantGuid]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readManyTenants();
 
 const createTenant = async () => {
   try {
@@ -615,6 +822,59 @@ const deleteForceTenant = async () => {
   }
 };
 
+const enumerateTenants = async () => {
+  try {
+    const data = await api.Tenant.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateTenants();
+
+const enumerateAndSearchTenants = async () => {
+  try {
+    const data = await api.Tenant.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchTenants();
+
+const readTenantStatistic = async () => {
+  try {
+    const data = await api.Tenant.readStatistic(guid);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readTenantStatistic();
+
+const readAllTenantStatistics = async () => {
+  try {
+    const data = await api.Tenant.readStatistics();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readAllTenantStatistics();
+
 //endregion
 
 //region Credentials
@@ -635,6 +895,17 @@ const readCredential = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
+
+const readManyCredentials = async () => {
+  try {
+    const data = await api.Credential.readMany([credentialGuid]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readManyCredentials();
 
 const createCredential = async () => {
   /** @type {CredentialMetadata} */
@@ -664,19 +935,16 @@ const existsCredential = async () => {
 
 const updateCredential = async () => {
   try {
-    const data = await api.Credential.update(
-      {
-        UserGUID: 'a2b230c7-c57f-4194-b042-1333102226b1',
-        Name: 'Updated credential',
-        BearerToken: 'default',
-        Active: true,
-        LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
-        CreatedUtc: '2024-12-27T18:12:38.653402Z',
-        GUID: 'fba86eda-21ea-4095-852c-5f5c542f0ffc',
-        TenantGUID: '',
-      },
-      'fba86eda-21ea-4095-852c-5f5c542f0ffc'
-    );
+    const data = await api.Credential.update({
+      UserGUID: 'a2b230c7-c57f-4194-b042-1333102226b1',
+      Name: 'Updated credential',
+      BearerToken: 'default',
+      Active: true,
+      LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
+      CreatedUtc: '2024-12-27T18:12:38.653402Z',
+      GUID: 'fba86eda-21ea-4095-852c-5f5c542f0ffc',
+      TenantGUID: '',
+    });
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -691,6 +959,37 @@ const deleteCredential = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
+
+const enumerateCredentials = async () => {
+  try {
+    const data = await api.Credential.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateCredentials();
+
+const enumerateAndSearchCredentials = async () => {
+  try {
+    const data = await api.Credential.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchCredentials();
 
 //endregion
 
@@ -712,6 +1011,17 @@ const readLabel = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
+
+const readManyLabels = async () => {
+  try {
+    const data = await api.Label.readMany([labelGuid]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readManyLabels();
 
 const createLabel = async () => {
   try {
@@ -763,6 +1073,37 @@ const deleteLabel = async () => {
   }
 };
 
+const enumerateLabels = async () => {
+  try {
+    const data = await api.Label.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateLabels();
+
+const enumerateAndSearchLabels = async () => {
+  try {
+    const data = await api.Label.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchLabels();
+
 //endregion
 
 //region Tag
@@ -783,6 +1124,17 @@ const readTag = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
+
+const readManyTags = async () => {
+  try {
+    const data = await api.Tag.readMany([tagGuid]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readManyTags();
 
 const createTag = async () => {
   try {
@@ -810,20 +1162,17 @@ const existsTag = async () => {
 
 const updateTag = async () => {
   try {
-    const data = await api.Tag.update(
-      {
-        Key: 'updatedkey',
-        Value: 'myvalue',
-        CreatedUtc: '2024-12-27T18:12:38.653402Z',
-        LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
-        GUID: '',
-        TenantGUID: '',
-        GraphGUID: '',
-        NodeGUID: '',
-        EdgeGUID: '',
-      },
-      '51e84292-8be4-468e-b9af-5e44c10dc551'
-    );
+    const data = await api.Tag.update({
+      GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
+      NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+      EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
+      Key: 'updatedkey',
+      Value: 'myvalue',
+      CreatedUtc: '2024-12-27T18:12:38.653402Z',
+      LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
+      GUID: '51e84292-8be4-468e-b9af-5e44c10dc551',
+      TenantGUID: '',
+    });
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -877,6 +1226,37 @@ const deleteMultipleTags = async () => {
 };
 // deleteMultipleTags();
 
+const enumerateTags = async () => {
+  try {
+    const data = await api.Tag.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateTags();
+
+const enumerateAndSearchTags = async () => {
+  try {
+    const data = await api.Tag.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchTags();
+
 //endregion
 
 //region Vectors
@@ -898,6 +1278,17 @@ const readVector = async () => {
     console.log('err:', JSON.stringify(err));
   }
 };
+
+const readManyVectors = async () => {
+  try {
+    const data = await api.Vector.readMany([vectorGuid]);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+readManyVectors();
 
 const createVector = async () => {
   try {
@@ -927,22 +1318,19 @@ const existsVector = async () => {
 
 const updateVector = async () => {
   try {
-    const data = await api.Vector.update(
-      {
-        GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
-        NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
-        EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
-        Model: 'all-MiniLM-L6-v2',
-        Dimensionality: 388,
-        Content: 'test Ashish',
-        Vectors: [0.5, 0.7, 0.9],
-        GUID: '',
-        TenantGUID: '',
-        CreatedUtc: '',
-        LastUpdateUtc: '',
-      },
-      '70cd93dd-0f38-435d-b57d-f5d1bc1b4481'
-    );
+    const data = await api.Vector.update({
+      GUID: '70cd93dd-0f38-435d-b57d-f5d1bc1b4481',
+      GraphGUID: '00900db5-c9b7-4631-b250-c9e635a9036e',
+      NodeGUID: 'dce18cf8-6443-4d14-b4a3-c72dcc28d6d8',
+      EdgeGUID: '53b94bd9-98ea-47e6-9e5a-4fe346298717',
+      Model: 'all-MiniLM-L6-v2',
+      Dimensionality: 388,
+      Content: 'test Ashish',
+      Vectors: [0.5, 0.7, 0.9],
+      TenantGUID: '',
+      CreatedUtc: '',
+      LastUpdateUtc: '',
+    });
     console.log(data, 'chk data');
   } catch (err) {
     console.log('err:', JSON.stringify(err));
@@ -999,6 +1387,37 @@ const createMultipleVectors = async () => {
   }
 };
 // createMultipleVectors();
+
+const enumerateVectors = async () => {
+  try {
+    const data = await api.Vector.enumerate();
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateVectors();
+
+const enumerateAndSearchVectors = async () => {
+  try {
+    const data = await api.Vector.enumerateAndSearch({
+      Ordering: 'CreatedDescending',
+      IncludeData: false,
+      IncludeSubordinates: false,
+      MaxResults: 5,
+      ContinuationToken: null,
+      Labels: [],
+      Tags: {},
+      Expr: {},
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enumerateAndSearchVectors();
 
 //endregion
 
