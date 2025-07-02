@@ -42,6 +42,10 @@ export const handlers = [
     `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/edges`,
     ({ request, params, cookies }) => {
       // Return an array of edges related to the graph
+      const hasGuids = request.url.includes('guids');
+      if (hasGuids) {
+        return HttpResponse.json([edgeData[mockEdgeGuid]]);
+      }
       return HttpResponse.json(edgeMockApiResponse);
     }
   ),

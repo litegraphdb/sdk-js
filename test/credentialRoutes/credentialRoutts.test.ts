@@ -76,18 +76,21 @@ describe('credentialRoute Tests', () => {
 
     test('should update a credential', async () => {
       const updateCredential = {
+        GUID: mockCredentialGuid,
+        CreatedUtc: '2024-12-27T18:12:38.653402Z',
+        LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
         UserGUID: mockCredentialGuid,
         Name: 'Updated credential',
         BearerToken: 'default',
         Active: true,
       };
-      const response = await api.Credential.update(updateCredential, mockCredentialGuid);
+      const response = await api.Credential.update(updateCredential);
       expect(response).toEqual(credentialData);
     });
 
     it('throws error when if missed credential data while updating a Credential', async () => {
       try {
-        await api.Credential.update(null as any, mockCredentialGuid);
+        await api.Credential.update(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: credential is null or empty');
@@ -101,11 +104,14 @@ describe('credentialRoute Tests', () => {
           Name: 'Updated credential',
           BearerToken: 'default',
           Active: true,
+          GUID: '',
+          CreatedUtc: '',
+          LastUpdateUtc: '',
         };
-        await api.Credential.update(updateCredential, null as any);
+        await api.Credential.update(updateCredential);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
-        expect(err.toString()).toBe('Error: ArgumentNullException: guid is null or empty');
+        expect(err.toString()).toBe('Error: ArgumentNullException: credential.GUID is null or empty');
       }
     });
 
@@ -146,6 +152,20 @@ describe('credentialRoute Tests', () => {
         Expr: {},
       });
       expect(response).toEqual(mockEnumerateCredentialsResponse);
+    });
+
+    test('should read multiple credentials', async () => {
+      const response = await api.Credential.readMany([mockCredentialGuid]);
+      expect(response).toEqual([credentialData]);
+    });
+
+    test('should throw error when reading multiple credentials with null or empty credentialGuids', async () => {
+      try {
+        await api.Credential.readMany(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: credentialGuids is null or empty');
+      }
     });
   });
 });

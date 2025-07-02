@@ -114,7 +114,7 @@ describe('labelRoute Tests', () => {
         CreatedUtc: '2024-12-27T18:12:38.653402Z',
         LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
       };
-      const response = await api.Label.update(updateLabel);
+      const response = await api.Label.update(updateLabel as any);
       expect(response).toEqual(labelData);
     });
 
@@ -135,7 +135,7 @@ describe('labelRoute Tests', () => {
           CreatedUtc: '2024-12-27T18:12:38.653402Z',
           LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
         };
-        await api.Label.update(updateLabel, null as any);
+        await api.Label.update(updateLabel as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: label.GUID is null or empty');
@@ -199,6 +199,20 @@ describe('labelRoute Tests', () => {
         Expr: {},
       });
       expect(response).toEqual(mockEnumerateLabelsResponse);
+    });
+
+    test('should read multiple labels', async () => {
+      const response = await api.Label.readMany([mockLabelGuid]);
+      expect(response).toEqual([labelData]);
+    });
+
+    test('should throw error when reading multiple labels with null or empty labelGuids', async () => {
+      try {
+        await api.Label.readMany(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: labelGuids is null or empty');
+      }
     });
   });
 });

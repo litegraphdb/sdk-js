@@ -168,5 +168,19 @@ describe('GraphRoute Tests', () => {
         expect(err.toString()).toBe('Error: ArgumentNullException: graphGuid is null or empty');
       }
     });
+
+    test('should read multiple graphs', async () => {
+      const response = await api.Graph.readMany([mockGraphGuid]);
+      expect(response).toEqual([graphData[mockGraphGuid]]);
+    });
+
+    test('should throw error when reading multiple graphs with null or empty graphGuids', async () => {
+      try {
+        await api.Graph.readMany(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: graphGuids is null or empty');
+      }
+    });
   });
 });

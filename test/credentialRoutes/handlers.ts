@@ -25,6 +25,10 @@ export const handlers = [
   // Read all credentials
   http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/credentials`, ({ request, params, cookies }) => {
     // Return an array of credentials
+    const hasGuids = request.url.includes('guids');
+    if (hasGuids) {
+      return HttpResponse.json([credentialData]);
+    }
     return HttpResponse.json(credentialMockApiResponse);
   }),
 

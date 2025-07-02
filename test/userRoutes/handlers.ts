@@ -17,6 +17,10 @@ export const handlers = [
   // Read all users
   http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/users`, ({ request, params, cookies }) => {
     // Return an array of users
+    const hasGuids = request.url.includes('guids');
+    if (hasGuids) {
+      return HttpResponse.json([userData]);
+    }
     return HttpResponse.json(userMockApiResponse);
   }),
 

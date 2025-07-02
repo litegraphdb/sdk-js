@@ -17,6 +17,10 @@ export const handlers = [
   // Read all vectors
   http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/vectors`, ({ request, params, cookies }) => {
     // Return an array of vectors
+    const hasGuids = request.url.includes('guids');
+    if (hasGuids) {
+      return HttpResponse.json([vectorData]);
+    }
     return HttpResponse.json(vectorMockApiResponse);
   }),
 

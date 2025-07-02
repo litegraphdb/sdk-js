@@ -13,6 +13,10 @@ import { mockEndpoint, mockTenantId } from '../setupTest';
 
 export const handlers = [
   http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs`, ({ request, params, cookies }) => {
+    const hasGuids = request.url.includes('guids');
+    if (hasGuids) {
+      return HttpResponse.json([graphData[mockGraphGuid]]);
+    }
     return HttpResponse.json(graphMockApiResponse);
   }),
   http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}`, ({ request, params, cookies }) => {

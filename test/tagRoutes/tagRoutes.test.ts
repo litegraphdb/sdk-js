@@ -93,14 +93,19 @@ describe('tagRoute Tests', () => {
         Value: 'myvalue',
         CreatedUtc: '2024-12-27T18:12:38.653402Z',
         LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
+        GUID: mockTagGuid,
+        TenantGUID: '00000000-0000-0000-0000-000000000000',
+        GraphGUID: '00000000-0000-0000-0000-000000000000',
+        NodeGUID: '00000000-0000-0000-0000-000000000000',
+        EdgeGUID: '00000000-0000-0000-0000-000000000000',
       };
-      const response = await api.Tag.update(updateTag, mockTagGuid);
+      const response = await api.Tag.update(updateTag);
       expect(response).toEqual(tagData);
     });
 
     it('throws error when if missed tag data while updating a tag', async () => {
       try {
-        await api.Tag.update(null as any, mockTagGuid);
+        await api.Tag.update(null as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: tag is null or empty');
@@ -115,10 +120,10 @@ describe('tagRoute Tests', () => {
           CreatedUtc: '2024-12-27T18:12:38.653402Z',
           LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
         };
-        await api.Tag.update(updateTag, null as any);
+        await api.Tag.update(updateTag as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
-        expect(err.toString()).toBe('Error: ArgumentNullException: guid is null or empty');
+        expect(err.toString()).toBe('Error: ArgumentNullException: tag.GUID is null or empty');
       }
     });
 
@@ -180,6 +185,20 @@ describe('tagRoute Tests', () => {
         Expr: {},
       });
       expect(response).toEqual(mockEnumerateTagsResponse);
+    });
+
+    test('should read multiple tags', async () => {
+      const response = await api.Tag.readMany([mockTagGuid]);
+      expect(response).toEqual([tagData]);
+    });
+
+    test('should throw error when reading multiple tags with null or empty tagGuids', async () => {
+      try {
+        await api.Tag.readMany(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: tagGuids is null or empty');
+      }
     });
   });
 });

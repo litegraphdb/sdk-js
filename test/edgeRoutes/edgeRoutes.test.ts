@@ -356,4 +356,18 @@ describe('EdgeRoute Tests', () => {
     });
     expect(response).toEqual(mockEnumerateEdgesResponse);
   });
+
+  test('should read multiple edges', async () => {
+    const response = await api.Edge.readMany(mockGraphGuid, [mockEdgeGuid]);
+    expect(response).toEqual([edgeData[mockEdgeGuid]]);
+  });
+
+  test('should throw error when reading multiple edges with null or empty edgeGuids', async () => {
+    try {
+      await api.Edge.readMany(mockGraphGuid, null as any);
+    } catch (err) {
+      expect(err instanceof Error).toBe(true);
+      expect(err.toString()).toBe('Error: ArgumentNullException: edgeGuids is null or empty');
+    }
+  });
 });

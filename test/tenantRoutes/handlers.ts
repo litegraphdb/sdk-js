@@ -23,6 +23,10 @@ export const handlers = [
   // Read all tenants
   http.get(`${mockEndpoint}v1.0/tenants`, ({ request, params, cookies }) => {
     // Return an array of tenants
+    const hasGuids = request.url.includes('guids');
+    if (hasGuids) {
+      return HttpResponse.json([tenantData]);
+    }
     return HttpResponse.json(tenantMockApiResponse);
   }),
 

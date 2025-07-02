@@ -17,6 +17,10 @@ export const handlers = [
   // Read all tags
   http.get(`${mockEndpoint}v1.0/tenants/${mockTenantId}/tags`, ({ request, params, cookies }) => {
     // Return an array of tags
+    const hasGuids = request.url.includes('guids');
+    if (hasGuids) {
+      return HttpResponse.json([tagData]);
+    }
     return HttpResponse.json(tagMockApiResponse);
   }),
 

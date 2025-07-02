@@ -148,5 +148,19 @@ describe('TenantRoute Tests', () => {
         expect(err.toString()).toBe('Error: ArgumentNullException: tenantGuid is null or empty');
       }
     });
+
+    test('should read multiple tenants', async () => {
+      const response = await api.Tenant.readMany([mockTenantId]);
+      expect(response).toEqual([tenantData]);
+    });
+
+    test('should throw error when reading multiple tenants with null or empty tenantGuids', async () => {
+      try {
+        await api.Tenant.readMany(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: tenantGuids is null or empty');
+      }
+    });
   });
 });

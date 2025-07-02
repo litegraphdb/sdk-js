@@ -66,6 +66,8 @@ describe('userRoute Tests', () => {
         Email: 'anotherbbb@user.com',
         Password: 'password',
         Active: true,
+        CreatedUtc: '2024-12-27T18:12:38.653402Z',
+        LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
       };
       const response = await api.User.update(updateUser);
       expect(response).toEqual(userData);
@@ -88,8 +90,10 @@ describe('userRoute Tests', () => {
           Email: 'anotherbbb@user.com',
           Password: 'password',
           Active: true,
+          CreatedUtc: '2024-12-27T18:12:38.653402Z',
+          LastUpdateUtc: '2024-12-27T18:12:38.653402Z',
         };
-        await api.User.update(updateUser, null as any);
+        await api.User.update(updateUser as any);
       } catch (err) {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: user.GUID is null or empty');
@@ -124,6 +128,20 @@ describe('userRoute Tests', () => {
         Expr: {},
       });
       expect(response).toEqual(mockEnumerateUsersResponse);
+    });
+
+    test('should read multiple users', async () => {
+      const response = await api.User.readMany([mockUserId]);
+      expect(response).toEqual([userData]);
+    });
+
+    test('should throw error when reading multiple users with null or empty userGuids', async () => {
+      try {
+        await api.User.readMany(null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: userGuids is null or empty');
+      }
     });
   });
 });

@@ -315,5 +315,19 @@ describe('NodeRoute Tests', () => {
       });
       expect(response).toEqual(mockEnumerateNodesResponse);
     });
+
+    test('should read multiple nodes', async () => {
+      const response = await api.Node.readMany(mockGraphGuid, [mockNodeGuid]);
+      expect(response).toEqual([nodeData[mockNodeGuid]]);
+    });
+
+    test('should throw error when reading multiple nodes with null or empty nodeGuids', async () => {
+      try {
+        await api.Node.readMany(mockGraphGuid, null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: nodeGuids is null or empty');
+      }
+    });
   });
 });
