@@ -8,6 +8,7 @@ import {
   GraphSearchRequest,
   GraphStatistics,
   GraphStatisticsResponse,
+  IncludeDataAndSubordinates,
   ReadFirstRequest,
   SearchResult,
 } from '../types';
@@ -51,12 +52,14 @@ export class GraphSdk extends SdkBase {
 
   /**
    * Read all graphs.
+   * @param {IncludeDataAndSubordinates} request - Information about the read all request.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<Graph[]>} - An array of graphs.
    */
-  async readAll(cancellationToken?: AbortController): Promise<Graph[]> {
+  async readAll(request?: IncludeDataAndSubordinates, cancellationToken?: AbortController): Promise<Graph[]> {
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs`;
-    return await this.getMany<Graph>(url, cancellationToken);
+    const params = Utils.createUrlParams(request);
+    return await this.getMany<Graph>(url + params, cancellationToken);
   }
 
   /**
@@ -92,13 +95,15 @@ export class GraphSdk extends SdkBase {
   /**
    * Read a specific graph.
    * @param {string} guid - The GUID of the graph.
+   * @param {IncludeDataAndSubordinates} request - Information about the read request.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<Graph>} - The requested graph.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
-  async read(guid: string, cancellationToken?: AbortController): Promise<Graph> {
+  async read(guid: string, request?: IncludeDataAndSubordinates, cancellationToken?: AbortController): Promise<Graph> {
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}`;
-    return await this.get<Graph>(url, cancellationToken);
+    const params = Utils.createUrlParams(request);
+    return await this.get<Graph>(url + params, cancellationToken);
   }
 
   /**

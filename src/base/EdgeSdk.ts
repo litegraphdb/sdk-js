@@ -7,6 +7,7 @@ import {
   ReadFirstRequest,
   SearchResult,
   EnumerateResponse,
+  IncludeDataAndSubordinates,
 } from '../types';
 import { EnumerateAndSearchRequest } from '../types';
 import Utils from '../utils/Utils';
@@ -86,16 +87,22 @@ export class EdgeSdk extends SdkBase {
   /**
    * Read edges.
    * @param {string} graphGuid - Graph GUID.
+   * @param {IncludeDataAndSubordinates} request - Information about the read all request.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<Edge[]>} - List of edges.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
-  async readAll(graphGuid: string, cancellationToken?: AbortController): Promise<Edge[]> {
+  async readAll(
+    graphGuid: string,
+    request?: IncludeDataAndSubordinates,
+    cancellationToken?: AbortController
+  ): Promise<Edge[]> {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges`;
-    return await this.get<Edge[]>(url, cancellationToken);
+    const params = Utils.createUrlParams(request);
+    return await this.get<Edge[]>(url + params, cancellationToken);
   }
 
   /**
@@ -120,11 +127,17 @@ export class EdgeSdk extends SdkBase {
    * Read an edge.
    * @param {string} graphGuid - Graph GUID.
    * @param {string} edgeGuid - Edge GUID.
+   * @param {IncludeDataAndSubordinates} request - Information about the read request.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<Edge>} - The requested edge.
    * @throws {Error | ApiErrorResponse} Rejects if the URL is invalid or if the request fails.
    */
-  async read(graphGuid: string, edgeGuid: string, cancellationToken?: AbortController): Promise<Edge> {
+  async read(
+    graphGuid: string,
+    edgeGuid: string,
+    request?: IncludeDataAndSubordinates,
+    cancellationToken?: AbortController
+  ): Promise<Edge> {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
@@ -132,7 +145,8 @@ export class EdgeSdk extends SdkBase {
       GenericExceptionHandlers.ArgumentNullException('EdgeGUID');
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/edges/${edgeGuid}`;
-    return await this.get<Edge>(url, cancellationToken);
+    const params = Utils.createUrlParams(request);
+    return await this.get<Edge>(url + params, cancellationToken);
   }
 
   /**

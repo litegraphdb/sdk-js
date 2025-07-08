@@ -3,6 +3,7 @@ import {
   EnumerateAndSearchRequest,
   EnumerateRequest,
   EnumerateResponse,
+  IncludeDataAndSubordinates,
   Node,
   NodeCreateRequest,
   NodeEdgeSearchRequest,
@@ -77,15 +78,21 @@ export class NodeSdk extends SdkBase {
   /**
    * Read nodes for a specific graph.
    * @param {string} graphGuid - The GUID of the graph.
+   * @param {IncludeDataAndSubordinates} request - Information about the read all request.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<Node[]>} - An array of nodes.
    */
-  async readAll(graphGuid: string, cancellationToken?: AbortController): Promise<Node[]> {
+  async readAll(
+    graphGuid: string,
+    request?: IncludeDataAndSubordinates,
+    cancellationToken?: AbortController
+  ): Promise<Node[]> {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes`;
-    return await this.get<Node[]>(url, cancellationToken);
+    const params = Utils.createUrlParams(request);
+    return await this.get<Node[]>(url + params, cancellationToken);
   }
 
   /**
@@ -125,10 +132,16 @@ export class NodeSdk extends SdkBase {
    * Read a specific node.
    * @param {string} graphGuid - The GUID of the graph.
    * @param {string} nodeGuid - The GUID of the node.
+   * @param {IncludeDataAndSubordinates} request - Information about the read request.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<Node>} - The requested node.
    */
-  async read(graphGuid: string, nodeGuid: string, cancellationToken?: AbortController): Promise<Node> {
+  async read(
+    graphGuid: string,
+    nodeGuid: string,
+    request?: IncludeDataAndSubordinates,
+    cancellationToken?: AbortController
+  ): Promise<Node> {
     if (!graphGuid) {
       GenericExceptionHandlers.ArgumentNullException('GraphGUID');
     }
@@ -136,7 +149,8 @@ export class NodeSdk extends SdkBase {
       GenericExceptionHandlers.ArgumentNullException('NodeGUID');
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}`;
-    return await this.get<Node>(url, cancellationToken);
+    const params = Utils.createUrlParams(request);
+    return await this.get<Node>(url + params, cancellationToken);
   }
 
   /**

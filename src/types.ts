@@ -526,6 +526,8 @@ export type GraphSearchRequest = {
   Ordering?: string;
   /** Expression used for the search */
   Expr?: Record<string, any>;
+  /** Name of the graph */
+  Name?: string;
 };
 
 /**
@@ -542,6 +544,8 @@ export type NodeEdgeSearchRequest = {
   Ordering?: string;
   /** Expression used for the search */
   Expr?: Record<string, any>;
+  /** Name of the node or edge */
+  Name?: string;
 };
 
 /**
@@ -575,11 +579,14 @@ export type ReadFirstRequest = {
   Expr?: Record<string, any>;
 };
 
-export type EnumerateRequest = {
-  token?: string;
-  maxKeys?: number;
+export type IncludeDataAndSubordinates = {
   includeData?: boolean;
   includeSubordinates?: boolean;
+};
+
+export type EnumerateRequest = IncludeDataAndSubordinates & {
+  token?: string;
+  maxKeys?: number;
   skip?: number;
 };
 
