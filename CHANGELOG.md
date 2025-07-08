@@ -62,3 +62,10 @@ v1.0.8
 - updated test cases
 - updated README.md
 - updated CHANGELOG.md
+
+v1.0.9
+
+- added search by "Name" for Grsaph, Node and Edge Search method
+- added incldata & inclsub query param in read and read all methods of Graph, Node & Edge
+- updated README.md
+- updated CHANGELOG.md
