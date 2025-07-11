@@ -151,12 +151,18 @@ export class GraphSdk extends SdkBase {
   /**
    * Export a graph to GEXF format.
    * @param {string} guid - The GUID of the graph.
+   * @param {IncludeDataAndSubordinates} request - Information about the export request.
    * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
    * @returns {Promise<string>} - The GEXF XML data.
    */
-  async exportGexf(guid: string, cancellationToken?: AbortController): Promise<string> {
+  async exportGexf(
+    guid: string,
+    request?: IncludeDataAndSubordinates,
+    cancellationToken?: AbortController
+  ): Promise<string> {
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${guid}/export/gexf`;
-    return await this.get<string>(url, cancellationToken, undefined, true);
+    const params = Utils.createUrlParams(request);
+    return await this.get<string>(url + params, cancellationToken, undefined, true);
   }
 
   /**
