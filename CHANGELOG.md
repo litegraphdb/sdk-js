@@ -69,3 +69,9 @@ v1.0.9
 - added incldata & inclsub query param in read and read all methods of Graph, Node & Edge
 - updated README.md
 - updated CHANGELOG.md
+
+v1.0.10
+
+- added includeData & includeSub gexf
+- updated README.md
+- updated CHANGELOG.md
