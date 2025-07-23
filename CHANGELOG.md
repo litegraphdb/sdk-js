@@ -75,3 +75,7 @@ v1.0.10
 - added includeData & includeSub gexf
 - updated README.md
 - updated CHANGELOG.md
+
+v1.0.11
+
+- added new parameters to the vector search model

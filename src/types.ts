@@ -564,6 +564,14 @@ export type VectorSearchRequest = {
   Tags?: Record<string, any>;
   /** Expression used for filtering results */
   Expr?: Record<string, any>;
+  /** Top K results to return */
+  TopK?: number;
+  /** Minimum score to return */
+  MinimumScore?: number;
+  /** Maximum distance to return */
+  MaximumDistance?: number;
+  /**Minimum Inner Product to return */
+  MinimumInnerProduct?: number;
   /** Vector embeddings to search against */
   Embeddings: number[];
 };
