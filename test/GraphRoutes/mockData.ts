@@ -77,3 +77,27 @@ export const mockGraphStatisticsResponse = {
   },
 };
 
+export const mockVectorIndexStatsResponse = {
+  VectorCount: 0,
+  Dimensions: 384,
+  IndexType: 'HnswSqlite',
+  M: 16,
+  EfConstruction: 200,
+  DefaultEf: 50,
+  IndexFile: 'indexes/graph-00000000-0000-0000-0000-000000000000-hnsw.db',
+  IndexFileSizeBytes: 0,
+  EstimatedMemoryBytes: 0,
+  LastRebuildUtc: '2025-08-26T05:31:35.096002Z',
+  IsLoaded: true,
+  DistanceMetric: 'Cosine',
+};
+
+export const mockVectorIndexConfigResponse = {
+  VectorIndexType: 'HnswSqlite',
+  VectorIndexFile: 'graph-00000000-0000-0000-0000-000000000000-hnsw.db',
+  VectorDimensionality: 384,
+  VectorIndexM: 16,
+  VectorIndexEf: 50,
+  VectorIndexEfConstruction: 200,
+  VectorIndexThreshold: null,
+};

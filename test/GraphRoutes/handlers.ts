@@ -8,6 +8,8 @@ import {
   graphMockSearchApiResponse,
   mockEnumerateGraphsResponse,
   mockGraphStatisticsResponse,
+  mockVectorIndexConfigResponse,
+  mockVectorIndexStatsResponse,
 } from './mockData';
 import { mockEndpoint, mockTenantId } from '../setupTest';
 
@@ -63,6 +65,37 @@ export const handlers = [
     `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/stats`,
     ({ request, params, cookies }) => {
       return HttpResponse.json(mockGraphStatisticsResponse[mockGraphGuid]);
+    }
+  ),
+
+  http.put(
+    `${mockEndpoint}v2.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/vectorindex/enable`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockVectorIndexConfigResponse);
+    }
+  ),
+  http.post(
+    `${mockEndpoint}v2.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/vectorindex/rebuild`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(true);
+    }
+  ),
+  http.delete(
+    `${mockEndpoint}v2.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/vectorindex`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(true);
+    }
+  ),
+  http.get(
+    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/vectorindex/stats`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockVectorIndexStatsResponse);
+    }
+  ),
+  http.get(
+    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/vectorindex/config`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockVectorIndexConfigResponse);
     }
   ),
 ];

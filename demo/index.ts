@@ -194,6 +194,69 @@ const readAllGraphStatistics = async () => {
 
 // readAllGraphStatistics();
 
+const enableVectorIndex = async () => {
+  try {
+    const data = await api.Graph.enableVectorIndex(guid, {
+      VectorIndexType: 'HnswSqlite',
+      VectorIndexFile: 'graph-00000000-0000-0000-0000-000000000000-hnsw.db',
+      VectorIndexThreshold: null,
+      VectorDimensionality: 384,
+      VectorIndexM: 16,
+      VectorIndexEf: 50,
+      VectorIndexEfConstruction: 200,
+    });
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// enableVectorIndex();
+
+const rebuildVectorIndex = async () => {
+  try {
+    const data = await api.Graph.rebuildVectorIndex(guid);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// rebuildVectorIndex();
+
+const deleteVectorIndex = async () => {
+  try {
+    const data = await api.Graph.deleteVectorIndex(guid);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// deleteVectorIndex();
+
+const readVectorIndexStats = async () => {
+  try {
+    const data = await api.Graph.readVectorIndexStats(guid);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readVectorIndexStats();
+
+const readVectorIndexConfig = async () => {
+  try {
+    const data = await api.Graph.readVectorIndexConfig(guid);
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readVectorIndexConfig();
+
 // region Node
 const getNodeById = async () => {
   try {
@@ -1288,7 +1351,7 @@ const readManyVectors = async () => {
   }
 };
 
-readManyVectors();
+// readManyVectors();
 
 const createVector = async () => {
   try {
