@@ -11,6 +11,9 @@ import {
   IncludeDataAndSubordinates,
   ReadFirstRequest,
   SearchResult,
+  VectorIndexEnableRequest,
+  VectorIndexEnableResponse,
+  VectorIndexStatsResponse,
 } from '../types';
 import Utils from '../utils/Utils';
 import SdkBase from './SdkBase';
@@ -211,5 +214,89 @@ export class GraphSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/stats`;
     return await this.get<GraphStatistics>(url, cancellationToken);
+  }
+
+  /**
+   * Enable vector index for a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {VectorIndexEnableRequest} request - Information about the vector index configuration.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorIndexEnableResponse>} - The vector index configuration.
+   */
+  async enableVectorIndex(
+    graphGuid: string,
+    request: VectorIndexEnableRequest,
+    cancellationToken?: AbortController
+  ): Promise<VectorIndexEnableResponse> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('graphGuid');
+    }
+    if (!request) {
+      GenericExceptionHandlers.ArgumentNullException('Vector Index Request');
+    }
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/vectorindex/enable`;
+    return await this.putUpdate<VectorIndexEnableResponse>(url, request, cancellationToken);
+  }
+
+  /**
+   * Read vector index configuration for a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorIndexEnableResponse>} - The vector index configuration.
+   */
+  async readVectorIndexConfig(
+    graphGuid: string,
+    cancellationToken?: AbortController
+  ): Promise<VectorIndexEnableResponse> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('graphGuid');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/vectorindex/config`;
+    return await this.get<VectorIndexEnableResponse>(url, cancellationToken);
+  }
+
+  /**
+   * Read vector index statistics for a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<VectorIndexStatsResponse>} - The vector index statistics.
+   */
+  async readVectorIndexStats(
+    graphGuid: string,
+    cancellationToken?: AbortController
+  ): Promise<VectorIndexStatsResponse> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('graphGuid');
+    }
+    const url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/vectorindex/stats`;
+    return await this.get<VectorIndexStatsResponse>(url, cancellationToken);
+  }
+
+  /**
+   * Rebuild vector index for a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<boolean>} - True if the rebuild was successful.
+   */
+  async rebuildVectorIndex(graphGuid: string, cancellationToken?: AbortController): Promise<boolean> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('graphGuid');
+    }
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/vectorindex/rebuild`;
+    return await this.post<boolean>(url, {}, cancellationToken);
+  }
+
+  /**
+   * Delete vector index for a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<boolean>} - True if the deletion was successful.
+   */
+  async deleteVectorIndex(graphGuid: string, cancellationToken?: AbortController): Promise<boolean> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('graphGuid');
+    }
+    const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/vectorindex`;
+    return await this.del(url, cancellationToken);
   }
 }

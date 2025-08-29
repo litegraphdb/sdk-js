@@ -639,3 +639,71 @@ export type GraphStatistics = {
 };
 
 export type GraphStatisticsResponse = Record<string, GraphStatistics>;
+
+/**
+ * Vector Index Enable Request.
+ */
+export type VectorIndexEnableRequest = {
+  /** Type of vector index to use */
+  VectorIndexType: string;
+  /** File path for the vector index */
+  VectorIndexFile: string;
+  /** Threshold for vector indexing */
+  VectorIndexThreshold?: number | null;
+  /** Dimensionality of the vectors */
+  VectorDimensionality: number;
+  /** M parameter for HNSW index */
+  VectorIndexM: number;
+  /** EF parameter for HNSW index */
+  VectorIndexEf: number;
+  /** EF construction parameter for HNSW index */
+  VectorIndexEfConstruction: number;
+};
+
+/**
+ * Vector Index Enable Response.
+ */
+export type VectorIndexEnableResponse = {
+  /** Type of vector index being used */
+  VectorIndexType: string;
+  /** File path for the vector index */
+  VectorIndexFile: string;
+  /** Dimensionality of the vectors */
+  VectorDimensionality: number;
+  /** M parameter for HNSW index */
+  VectorIndexM: number;
+  /** EF parameter for HNSW index */
+  VectorIndexEf: number;
+  /** EF construction parameter for HNSW index */
+  VectorIndexEfConstruction: number;
+};
+
+/**
+ * Vector Index Statistics Response.
+ */
+export type VectorIndexStatsResponse = {
+  /** Number of vectors in the index */
+  VectorCount: number;
+  /** Dimensionality of the vectors */
+  Dimensions: number;
+  /** Type of vector index */
+  IndexType: string;
+  /** M parameter for HNSW index */
+  M: number;
+  /** EF construction parameter for HNSW index */
+  EfConstruction: number;
+  /** Default EF parameter for HNSW index */
+  DefaultEf: number;
+  /** File path for the vector index */
+  IndexFile: string;
+  /** Size of the index file in bytes */
+  IndexFileSizeBytes: number;
+  /** Estimated memory usage in bytes */
+  EstimatedMemoryBytes: number;
+  /** Last rebuild timestamp */
+  LastRebuildUtc: string;
+  /** Whether the index is loaded */
+  IsLoaded: boolean;
+  /** Distance metric used for similarity */
+  DistanceMetric: string;
+};

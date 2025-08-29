@@ -75,3 +75,8 @@ v1.0.10
 - added includeData & includeSub gexf
 - updated README.md
 - updated CHANGELOG.md
+
+v1.0.11
+- Added vector index endpoints
+- added test cases
+- updated read me

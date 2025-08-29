@@ -4,6 +4,8 @@ import {
   searchGraphData,
   mockEnumerateGraphsResponse,
   mockGraphStatisticsResponse,
+  mockVectorIndexStatsResponse,
+  mockVectorIndexConfigResponse,
 } from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
@@ -181,6 +183,39 @@ describe('GraphRoute Tests', () => {
         expect(err instanceof Error).toBe(true);
         expect(err.toString()).toBe('Error: ArgumentNullException: graphGuids is null or empty');
       }
+    });
+
+    test('should enable vector index', async () => {
+      const response = await api.Graph.enableVectorIndex(mockGraphGuid, {
+        VectorIndexType: 'HnswSqlite',
+        VectorIndexFile: 'graph-00000000-0000-0000-0000-000000000000-hnsw.db',
+        VectorDimensionality: 384,
+        VectorIndexM: 16,
+        VectorIndexEf: 50,
+        VectorIndexEfConstruction: 200,
+        VectorIndexThreshold: null,
+      });
+      expect(response).toEqual(mockVectorIndexConfigResponse);
+    });
+
+    test('should rebuild vector index', async () => {
+      const response = await api.Graph.rebuildVectorIndex(mockGraphGuid);
+      expect(response).toEqual(true);
+    });
+
+    test('should read vector index stats', async () => {
+      const response = await api.Graph.readVectorIndexStats(mockGraphGuid);
+      expect(response).toEqual(mockVectorIndexStatsResponse);
+    });
+
+    test('should read vector index config', async () => {
+      const response = await api.Graph.readVectorIndexConfig(mockGraphGuid);
+      expect(response).toEqual(mockVectorIndexConfigResponse);
+    });
+
+    test('should delete vector index', async () => {
+      const response = await api.Graph.deleteVectorIndex(mockGraphGuid);
+      expect(response).toEqual(true);
     });
   });
 });
