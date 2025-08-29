@@ -76,7 +76,7 @@ v1.0.10
 - updated README.md
 - updated CHANGELOG.md
 
-v1.0.1
+v1.0.11
 - Added vector index endpoints
 - added test cases
 - updated read me
