@@ -4,6 +4,11 @@
 
 LiteGraph is a lightweight graph database with both relational and vector support, built using Sqlite, with support for exporting to GEXF. LiteGraph is intended to be a multi-modal database primarily for providing persistence and retrieval for knowledge and artificial intelligence applications.
 
+
+## Documentation
+
+Full documentation is available at [https://litegraph.readme.io/](https://litegraph.readme.io/).
+
 ## Features
 
 - Multi-tenant support with tenant GUID management
