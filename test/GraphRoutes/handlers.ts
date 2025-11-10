@@ -10,6 +10,9 @@ import {
   mockGraphStatisticsResponse,
   mockVectorIndexConfigResponse,
   mockVectorIndexStatsResponse,
+  mockNodeGuid,
+  mockSubGraphStatisticsResponse,
+  mockSubGraphResponse,
 } from './mockData';
 import { mockEndpoint, mockTenantId } from '../setupTest';
 
@@ -96,6 +99,18 @@ export const handlers = [
     `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/vectorindex/config`,
     ({ request, params, cookies }) => {
       return HttpResponse.json(mockVectorIndexConfigResponse);
+    }
+  ),
+  http.get(
+    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/nodes/${mockNodeGuid}/subgraph/stats`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockSubGraphStatisticsResponse);
+    }
+  ),
+  http.get(
+    `${mockEndpoint}v1.0/tenants/${mockTenantId}/graphs/${mockGraphGuid}/nodes/${mockNodeGuid}/subgraph`,
+    ({ request, params, cookies }) => {
+      return HttpResponse.json(mockSubGraphResponse);
     }
   ),
 ];

@@ -707,3 +707,9 @@ export type VectorIndexStatsResponse = {
   /** Distance metric used for similarity */
   DistanceMetric: string;
 };
+
+export type ReadSubGraphResponse = {
+  Graph: Graph[];
+  Nodes: Node[];
+  Edges: Edge[];
+};

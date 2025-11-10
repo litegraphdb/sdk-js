@@ -77,6 +77,12 @@ v1.0.10
 - updated CHANGELOG.md
 
 v1.0.11
+
 - Added vector index endpoints
 - added test cases
 - updated read me
+
+v1.0.12
+
+- Added subgraph endpoints
+- added test cases

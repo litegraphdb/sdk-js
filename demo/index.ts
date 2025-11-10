@@ -1,7 +1,7 @@
 import { LiteGraphSdk } from 'litegraphdb';
 import { Edge, Graph, Node, NodeCreateRequest, NodeEdgeSearchRequest } from 'litegraphdb/dist/types/types';
 
-var api = new LiteGraphSdk('http://localhost:8701/', '00000000-0000-0000-0000-000000000000', 'litegraphadmin');
+var api = new LiteGraphSdk('http://view.homedns.org:8701/', '00000000-0000-0000-0000-000000000000', 'litegraphadmin');
 var guid = '00000000-0000-0000-0000-000000000000'; // {String}
 var nodeGuid = '00000000-0000-0000-0000-000000000000'; // {String}
 var edgeGuid = '00000000-0000-0000-0000-000000000000'; // {String}
@@ -15,6 +15,45 @@ var toNodeGuid = '<to-node-guid>';
 var fromNodeGuid = '<from-node-guid>';
 var edgeGuid = '00000000-0000-0000-0000-000000000000'; // {String}
 
+const readSubGraphStatistics = async () => {
+  try {
+    const data = await api.Graph.readSubGraphStatistics(
+      '00000000-0000-0000-0000-000000000000',
+      '2fec5d09-f959-486a-861d-eb9e926eee93',
+      {
+        maxDepth: 1,
+        maxNodes: 0,
+        maxEdges: 0,
+      }
+    );
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readSubGraphStatistics();
+
+const readSubGraph = async () => {
+  try {
+    const data = await api.Graph.readSubGraph(
+      '00000000-0000-0000-0000-000000000000',
+      '2fec5d09-f959-486a-861d-eb9e926eee93',
+      {
+        maxDepth: 1,
+        maxNodes: 0,
+        maxEdges: 0,
+        incldata: false,
+        inclsub: false,
+      }
+    );
+    console.log(data, 'chk data');
+  } catch (err) {
+    console.log('err:', JSON.stringify(err));
+  }
+};
+
+// readSubGraph();
 // read first
 
 const readFirstGraph = async () => {

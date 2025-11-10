@@ -10,6 +10,7 @@ import {
   GraphStatisticsResponse,
   IncludeDataAndSubordinates,
   ReadFirstRequest,
+  ReadSubGraphResponse,
   SearchResult,
   VectorIndexEnableRequest,
   VectorIndexEnableResponse,
@@ -298,5 +299,111 @@ export class GraphSdk extends SdkBase {
     }
     const url = `${this.config.endpoint}v2.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/vectorindex`;
     return await this.del(url, cancellationToken);
+  }
+
+  /**
+   * Read a subgraph starting from a given node within a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {string} nodeGuid - The GUID of the starting node.
+   * @param {{
+   *   maxDepth?: number;
+   *   maxNodes?: number;
+   *   maxEdges?: number;
+   *   incldata?: boolean;
+   *   inclsub?: boolean;
+   * }} [options] - Optional query parameters to control the subgraph extraction.
+   *   - maxDepth: Maximum traversal depth from the starting node.
+   *   - maxNodes: Maximum number of nodes to return. 0 means no limit.
+   *   - maxEdges: Maximum number of edges to return. 0 means no limit.
+   *   - incldata: Whether to include node/edge data.
+   *   - inclsub: Whether to include subordinate/related elements.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<ReadSubGraphResponse>} - The subgraph as returned by the API.
+   */
+  async readSubGraph(
+    graphGuid: string,
+    nodeGuid: string,
+    options: {
+      maxDepth?: number;
+      maxNodes?: number;
+      maxEdges?: number;
+      incldata?: boolean;
+      inclsub?: boolean;
+    } = {
+      maxDepth: 2,
+      maxNodes: 0,
+      maxEdges: 0,
+      incldata: false,
+      inclsub: false,
+    },
+    cancellationToken?: AbortController
+  ): Promise<ReadSubGraphResponse> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('graphGuid');
+    }
+    if (!nodeGuid) {
+      GenericExceptionHandlers.ArgumentNullException('nodeGuid');
+    }
+    let url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/subgraph`;
+
+    if (options) {
+      const queryParams = [];
+      if (typeof options.maxDepth === 'number') queryParams.push(`maxDepth=${options.maxDepth}`);
+      if (typeof options.maxNodes === 'number') queryParams.push(`maxNodes=${options.maxNodes}`);
+      if (typeof options.maxEdges === 'number') queryParams.push(`maxEdges=${options.maxEdges}`);
+      if (options.incldata) queryParams.push('incldata');
+      if (options.inclsub) queryParams.push('inclsub');
+      if (queryParams.length > 0) {
+        url += '?' + queryParams.join('&');
+      }
+    }
+
+    return await this.get<any>(url, cancellationToken);
+  }
+
+  /**
+   * Read subgraph statistics for a specific node in a graph.
+   * @param {string} graphGuid - The GUID of the graph.
+   * @param {string} nodeGuid - The GUID of the starting node.
+   * @param {Object} [options] - Optional query parameters.
+   * @param {number} [options.maxDepth=2] - Maximum traversal depth from the starting node.
+   * @param {number} [options.maxNodes=0] - Maximum number of nodes to consider. 0 means no limit.
+   * @param {number} [options.maxEdges=0] - Maximum number of edges to consider. 0 means no limit.
+   * @param {AbortController} [cancellationToken] - Optional cancellation token for cancelling the request.
+   * @returns {Promise<GraphStatistics>} - The statistics as returned by the API.
+   */
+  async readSubGraphStatistics(
+    graphGuid: string,
+    nodeGuid: string,
+    options: {
+      maxDepth?: number;
+      maxNodes?: number;
+      maxEdges?: number;
+    } = {
+      maxDepth: 2,
+      maxNodes: 0,
+      maxEdges: 0,
+    },
+    cancellationToken?: AbortController
+  ): Promise<GraphStatistics> {
+    if (!graphGuid) {
+      GenericExceptionHandlers.ArgumentNullException('graphGuid');
+    }
+    if (!nodeGuid) {
+      GenericExceptionHandlers.ArgumentNullException('nodeGuid');
+    }
+    let url = `${this.config.endpoint}v1.0/tenants/${this.config.tenantGuid}/graphs/${graphGuid}/nodes/${nodeGuid}/subgraph/stats`;
+
+    if (options) {
+      const queryParams = [];
+      if (typeof options.maxDepth === 'number') queryParams.push(`maxDepth=${options.maxDepth}`);
+      if (typeof options.maxNodes === 'number') queryParams.push(`maxNodes=${options.maxNodes}`);
+      if (typeof options.maxEdges === 'number') queryParams.push(`maxEdges=${options.maxEdges}`);
+      if (queryParams.length > 0) {
+        url += '?' + queryParams.join('&');
+      }
+    }
+
+    return await this.get<any>(url, cancellationToken);
   }
 }

@@ -6,6 +6,9 @@ import {
   mockGraphStatisticsResponse,
   mockVectorIndexStatsResponse,
   mockVectorIndexConfigResponse,
+  mockNodeGuid,
+  mockSubGraphStatisticsResponse,
+  mockSubGraphResponse,
 } from './mockData';
 import { api } from '../setupTest'; // Adjust paths as needed
 import { handlers } from './handlers';
@@ -114,7 +117,7 @@ describe('GraphRoute Tests', () => {
 
     test('should export a graph to GEXF format with abort', async () => {
       const cancellationToken = new AbortController();
-      await api.Graph.exportGexf(mockGraphGuid, cancellationToken);
+      await api.Graph.exportGexf(mockGraphGuid);
       cancellationToken.abort();
     });
 
@@ -216,6 +219,72 @@ describe('GraphRoute Tests', () => {
     test('should delete vector index', async () => {
       const response = await api.Graph.deleteVectorIndex(mockGraphGuid);
       expect(response).toEqual(true);
+    });
+
+    test('should read subgraph statistics', async () => {
+      const response = await api.Graph.readSubGraphStatistics(mockGraphGuid, mockNodeGuid);
+      expect(response).toEqual(mockSubGraphStatisticsResponse);
+    });
+
+    test('should read subgraph statistics with options', async () => {
+      const response = await api.Graph.readSubGraphStatistics(mockGraphGuid, mockNodeGuid, {
+        maxDepth: 3,
+        maxNodes: 100,
+        maxEdges: 50,
+      });
+      expect(response).toEqual(mockSubGraphStatisticsResponse);
+    });
+
+    test('should throw error when reading subgraph statistics with null or empty graphGuid', async () => {
+      try {
+        await api.Graph.readSubGraphStatistics(null as any, mockNodeGuid);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: graphGuid is null or empty');
+      }
+    });
+
+    test('should throw error when reading subgraph statistics with null or empty nodeGuid', async () => {
+      try {
+        await api.Graph.readSubGraphStatistics(mockGraphGuid, null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: nodeGuid is null or empty');
+      }
+    });
+
+    test('should read subgraph', async () => {
+      const response = await api.Graph.readSubGraph(mockGraphGuid, mockNodeGuid);
+      expect(response).toEqual(mockSubGraphResponse);
+    });
+
+    test('should read subgraph with options', async () => {
+      const response = await api.Graph.readSubGraph(mockGraphGuid, mockNodeGuid, {
+        maxDepth: 2,
+        maxNodes: 100,
+        maxEdges: 50,
+        incldata: true,
+        inclsub: true,
+      });
+      expect(response).toEqual(mockSubGraphResponse);
+    });
+
+    test('should throw error when reading subgraph with null or empty graphGuid', async () => {
+      try {
+        await api.Graph.readSubGraph(null as any, mockNodeGuid);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: graphGuid is null or empty');
+      }
+    });
+
+    test('should throw error when reading subgraph with null or empty nodeGuid', async () => {
+      try {
+        await api.Graph.readSubGraph(mockGraphGuid, null as any);
+      } catch (err) {
+        expect(err instanceof Error).toBe(true);
+        expect(err.toString()).toBe('Error: ArgumentNullException: nodeGuid is null or empty');
+      }
     });
   });
 });

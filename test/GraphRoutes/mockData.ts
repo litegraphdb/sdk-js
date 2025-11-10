@@ -101,3 +101,54 @@ export const mockVectorIndexConfigResponse = {
   VectorIndexEfConstruction: 200,
   VectorIndexThreshold: null,
 };
+
+export const mockNodeGuid = '01010101-0101-0101-0101-010101010101';
+
+export const mockSubGraphStatisticsResponse = {
+  Nodes: 5,
+  Edges: 3,
+  Labels: 2,
+  Tags: 1,
+  Vectors: 0,
+};
+
+export const mockSubGraphResponse = {
+  Graph: [graphData[mockGraphGuid]],
+  Nodes: [
+    {
+      id: 1,
+      GUID: '01010101-0101-0101-0101-010101010101',
+      GraphGUID: '01010101-0101-0101-0101-010101010101',
+      Name: 'Sample Node',
+      Data: {
+        Hello: 'World',
+      },
+      CreatedUtc: '2024-10-19T14:35:20.351Z',
+      LastUpdateUtc: '2024-10-19T14:35:20.351Z',
+      TenantGUID: '00000000-0000-0000-0000-000000000000',
+      Labels: [],
+      Tags: {},
+      Vectors: [],
+    },
+  ],
+  Edges: [
+    {
+      id: 1,
+      GUID: '01010101-0101-0101-0101-010101010101',
+      GraphGUID: '01010101-0101-0101-0101-010101010101',
+      Name: 'Sample Edge',
+      From: '01010101-0101-0101-0101-010101010101',
+      To: '02020202-0202-0202-0202-020202020202',
+      Cost: 10,
+      Data: {
+        Hello: 'World',
+      },
+      CreatedUtc: '2024-10-19T14:35:20.351Z',
+      LastUpdateUtc: '2024-10-19T14:35:20.351Z',
+      TenantGUID: '00000000-0000-0000-0000-000000000000',
+      Labels: [],
+      Tags: {},
+      Vectors: [],
+    },
+  ],
+};
